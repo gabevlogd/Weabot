@@ -8,10 +8,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Audio/_Debug/SA_DroneSFX.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Bases/BP_AIEntityPatroller_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Bases/BP_AIEntityPatroller_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Bases/BP_AIEntity_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Bases/BP_AIEntity_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Drone/BP_Drone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Drone/BP_Drone.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Base/BP_AIEntityPatroller_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Base/BP_AIEntityPatroller_Base.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/BP_Drone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/BP_Drone.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/Behaviour/Tasks/BTTask_DroneLookAtPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/Behaviour/Tasks/BTTask_DroneLookAtPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/Behaviour/Tasks/BTTask_DroneShoot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/Behaviour/Tasks/BTTask_DroneShoot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Turret/BP_Turret.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Turret/BP_Turret.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Laser/Components/AC_Laser.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Laser/Components/AC_Laser.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Laser/Components/BP_Laser.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Blueprints/Laser/Components/BP_Laser.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/_Debug/Enemies/Blueprints/BP_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/_Debug/Enemies/Blueprints/BP_Enemy_Base.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Characters/Player/Entities/BP_TransportDrone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Characters/Player/Entities/BP_TransportDrone.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Constants/Game/S_GameLevel.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Constants/Game/S_GameLevel.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/BP_Door.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/BP_Door.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/ConveyorBelt/BP_ConveyorBelt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/ConveyorBelt/BP_ConveyorBelt.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Components/ActorComponents/AC_Oscillator.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Components/ActorComponents/AC_Oscillator.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Enums/E_ConveyorBeltDirection.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Enums/E_ConveyorBeltType.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Enums/E_DoorState.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Enums/E_GameTime.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Enums/E_InteractebleState.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Utility/Structs/S_FloatRange.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/LV_DebugCode_0a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/LV_DebugCode_0a.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/LV_DebugCode_1a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/LV_DebugCode_1a.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +40,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../Editors/UE_5.3/Engine/Source/Runtime/Engine/Classes/Components/SkeletalMeshComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Editors/UE_5.3/Engine/Source/Runtime/Engine/Classes/Components/SkeletalMeshComponent.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -34,26 +51,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/code__1a",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/code__1a&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\Voider\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Voider\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="ProjectAI" type="Uproject" factoryName="rider.uproject">
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/ProjectAI.uproject" />
@@ -129,6 +146,7 @@
       <workItem from="1708562565784" duration="99000" />
       <workItem from="1709150881812" duration="1937000" />
       <workItem from="1709732324135" duration="240000" />
+      <workItem from="1710081275906" duration="744000" />
     </task>
     <servers />
   </component>

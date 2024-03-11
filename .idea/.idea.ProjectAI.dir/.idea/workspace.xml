@@ -7,13 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/BP_Drone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/AI/Behaviours/Drone/BP_Drone.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Characters/Player/Entities/BP_TransportDrone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Characters/Player/Entities/BP_TransportDrone.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/Hook/BP_Hook.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/Hook/BP_Hook.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/Hook/Components/AC_HookGrabber.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/Hook/Components/AC_HookGrabber.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/LV_DebugCode_1a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/LV_DebugCode_1a.umap" afterDir="false" />
-    </list>
+    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -130,7 +124,7 @@
       <workItem from="1709150881812" duration="1937000" />
       <workItem from="1709732324135" duration="240000" />
       <workItem from="1710081275906" duration="1257000" />
-      <workItem from="1710164267882" duration="360000" />
+      <workItem from="1710164267882" duration="861000" />
     </task>
     <servers />
   </component>

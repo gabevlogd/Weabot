@@ -8,39 +8,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Data/CountTaskData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Data/QuestData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Data/TaskData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Quest.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/QuestLog.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Task.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/CountTaskData.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/QuestData.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/TaskData.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Quest.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/QuestLog.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Task.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSUtility.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSUtility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/00000000000.xd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Characters/_Debug/.empty" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ConveyorBeltSystem/BP_ConveyorBelt.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ConveyorBeltSystem/Data/Enums/E_ConveyorBeltDirection.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ConveyorBeltSystem/Data/Enums/E_ConveyorBeltType.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ConveyorBeltSystem/Data/Enums/E_InteractebleState.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ConveyorBeltSystem/Materials/M_ConveyorBelt.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ConveyorBeltSystem/Materials/M_ConveyorBelt_Inst.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/QuestSystem/Components/AC_QuestManager.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/QuestSystem/Components/AC_QuestManager.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Player/Base/BP_EntityBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Player/Base/BP_EntityBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Managers/Events/Components/Utility/BFL_GameEventsUtility.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Managers/SaveSystem/Components/AC_SaveManager.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_a/LV_DebugCode_0a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_a/LV_DebugCode_0a.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Design/LV_PtTutorial_3a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Design/LV_PtTutorial_3a.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Design/LV_PtTutorial_4a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Design/LV_PtTutorial_4a.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectAI.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectAI.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Quest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Task.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Task.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Quest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Quest.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/QuestLog.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/QuestData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/QuestData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Quest.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Quest.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/QuestLog.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Task.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Task.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +66,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Uproject.ProjectAI.executor": "Debug",
+    "Uproject.ProjectAI.executor": "Run",
     "git-widget-placeholder": "feature/code__1a",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -180,6 +166,7 @@
       <workItem from="1710606269975" duration="84000" />
       <workItem from="1710607084944" duration="3971000" />
       <workItem from="1710697125400" duration="17386000" />
+      <workItem from="1710876466461" duration="26630000" />
     </task>
     <servers />
   </component>

@@ -3,14 +3,9 @@
 
 #include "Gameplay/QuestSystem/Task.h"
 
-void UTask::Init(UTaskData* Data)
+void UTask::Init(UTaskData* InitData)
 {
-	TaskData = Data;
-}
-
-bool UTask::IsTaskAchieved() const
-{
-	return bIsAchieved;
+	TaskData = InitData;
 }
 
 void UTask::AchieveTask()
@@ -18,4 +13,9 @@ void UTask::AchieveTask()
 	if(bIsAchieved) return; // If the task is already achieved, do not call it again to not trigger the event again
 	
 	bIsAchieved = true;
+}
+
+void UTask::ResetTask()
+{
+	bIsAchieved = false;
 }

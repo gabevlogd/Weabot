@@ -3,38 +3,52 @@
 
 #include "Gameplay/QuestSystem/Quest.h"
 
-void UQuest::Init(UQuestData* Data)
+
+void UQuest::Init(UQuestData* InitData)
 {
-	QuestData = Data;
+	QuestData = InitData;
 	
-	for (UTaskData* TaskData : Data->TasksData)
+	for (UTaskData* TaskData : InitData->TasksData)
 	{
 		UTask* Task = NewObject<UTask>();
 		Task->Init(TaskData);
-		TasksMap.Add(TaskData, Task);
+		AllTasks.Add(TaskData, Task);
 	}
 }
 
-void UQuest::AchieveTask(const UTaskData* TaskData) const
+void UQuest::AchieveQuestTask(const UTaskData* TaskDataKey) const
 {
-	UTask* Task = nullptr;
-	if(!TryGetTask(TaskData, Task)) return;
+	UTask* Task = GetTask(TaskDataKey);
+	if (!Task) return;
+	
 	Task->AchieveTask();
 }
 
-bool UQuest::IsQuestCompleted() const
+void UQuest::AchieveAllTasks() const
 {
-	for (auto& Task : TasksMap)
+	for (auto& Task : AllTasks)
+		Task.Value->AchieveTask();
+}
+
+bool UQuest::AreAllTasksAchieved() const
+{
+	for (auto& Task : AllTasks)
 	{
-		if (!Task.Value->IsTaskAchieved())
+		if (!Task.Value->bIsAchieved)
 			return false;
 	}
 	return true;
 }
 
-bool UQuest::TryGetTask(const UTaskData* TaskData, const UTask* Task) const
+bool UQuest::IsTaskAchieved(const UTaskData* TaskDataKey) const
 {
-	if (!TasksMap.Contains(TaskData)) return false;
-	Task = TasksMap[TaskData];
-	return true;
+	const UTask* Task = GetTask(TaskDataKey);
+	if (!Task) return false;
+	
+	return Task->bIsAchieved;
+}
+
+UTask* UQuest::GetTask(const UTaskData* TaskDataKey) const
+{
+	return AllTasks.FindRef(TaskDataKey);
 }

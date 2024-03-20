@@ -17,5 +17,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Quest Data")
 	FString QuestName;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Quest Data")
-	TArray<UTaskData*> TasksData;
+	TSet<UTaskData*> TasksData;
 };

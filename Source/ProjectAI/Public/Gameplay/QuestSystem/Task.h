@@ -8,7 +8,7 @@
 #include "Task.generated.h"
 
 
-UCLASS()
+UCLASS(NotBlueprintable, NotBlueprintType)
 class PROJECTAI_API UTask : public UObject
 {
 	GENERATED_BODY()
@@ -20,7 +20,11 @@ public:
 	bool bIsAchieved;
 
 public:
-	void Init(UTaskData* Data);
-	bool IsTaskAchieved() const;
+	void Init(UTaskData* InitData);
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveTask();
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	void ResetTask();
 };

@@ -20,8 +20,8 @@ public:
 	static void Init(UQuestManager* QuestManager);
 	
 	/**
-	 * Get the found QuestLog.
-	 * @return QuestLog.
+	 * Get the found QuestManager.
+	 * @return QuestManager.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	static UQuestManager* GetQuestManager();

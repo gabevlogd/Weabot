@@ -8,7 +8,7 @@
 #include "Task.generated.h"
 
 
-UCLASS(NotBlueprintable, NotBlueprintType)
+UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UTask : public UObject
 {
 	GENERATED_BODY()

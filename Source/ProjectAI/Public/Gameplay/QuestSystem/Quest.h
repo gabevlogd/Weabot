@@ -10,7 +10,7 @@
 #include "Quest.generated.h"
 
 
-UCLASS(NotBlueprintable, NotBlueprintType)
+UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UQuest : public UObject
 {
 	GENERATED_BODY()
@@ -26,12 +26,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveQuestTask(const UTaskData* TaskDataKey) const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveAllTasks() const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool AreAllTasksAchieved() const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool IsTaskAchieved(const UTaskData* TaskDataKey) const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UTask* GetTask(const UTaskData* TaskDataKey) const;
 };

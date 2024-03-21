@@ -10,6 +10,9 @@
 #include "Quest.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQuestCompleted);
+
+
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UQuest : public UObject
 {
@@ -20,22 +23,29 @@ public:
 	UQuestData* QuestData;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Quest")
 	TMap<UTaskData*, UTask*> AllTasks;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Quest")
+	bool bIsQuestCompleted;
+	UPROPERTY(BlueprintAssignable, Category = "Quest System")
+	FOnQuestCompleted OnQuestCompleted;
 	
 public:
 	void Init(UQuestData* InitData);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void AchieveQuestTask(const UTaskData* TaskDataKey) const;
+	void AchieveQuestTask(const UTaskData* TaskDataKey);
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveAllTasks() const;
-	
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	bool AreAllTasksAchieved() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool IsTaskAchieved(const UTaskData* TaskDataKey) const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UTask* GetTask(const UTaskData* TaskDataKey) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	void ResetQuest();
+
+private:
+	bool AreAllTasksAchieved() const;
 };

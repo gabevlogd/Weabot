@@ -8,6 +8,9 @@
 #include "Task.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskAchieved);
+
+
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UTask : public UObject
 {
@@ -18,7 +21,9 @@ public:
 	UTaskData* TaskData;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Task")
 	bool bIsAchieved;
-
+	UPROPERTY(BlueprintAssignable, Category = "Quest System")
+	FOnTaskAchieved OnTaskAchieved;
+	
 public:
 	void Init(UTaskData* InitData);
 

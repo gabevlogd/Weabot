@@ -18,43 +18,65 @@ void UQuestManager::BeginPlay()
 
 void UQuestManager::Init()
 {
-	if (QuestsData.IsEmpty())
+	if (DefaultQuestsData.IsEmpty())
 	{
 		UE_LOG(LogTemp, Error, TEXT("QS: QuestsData array is empty. Cannot initialize the QuestLog."));
 		return;
 	}
 
-	for (UQuestData* QuestData : QuestsData)
-	{
-		UQuest* Quest = NewObject<UQuest>();
-		Quest->Init(QuestData);
-
-		// QuestData->GetUniqueID(); Could use a unique ID for the key
-		AllQuests.Add(QuestData, Quest);
-
-		if (bInitAllQuestsAsActive)
-			ActiveQuests.Add(Quest);
-		else
-			InactiveQuests.Add(Quest);
-	}
+	for (UQuestData* QuestData : DefaultQuestsData)
+		AddQuest(QuestData, bSetDefaultQuestsAsActive);
 
 	UQSUtility::Init(this);
 }
 
+void UQuestManager::AddQuest(UQuestData* QuestData, const bool bIsActiveQuest)
+{
+	if (!QuestData)
+	{
+		UE_LOG(LogTemp, Error, TEXT("QS: QuestData is null. Cannot add the quest."));
+		return;
+	}
+	
+	UQuest* Quest = NewObject<UQuest>();
+	Quest->Init(QuestData);
+
+	// QuestData->GetUniqueID(); Could use a unique ID for the key
+	AllQuests.Add(QuestData, Quest);
+
+	if (bIsActiveQuest)
+		ActiveQuests.Add(Quest);
+	else
+		InactiveQuests.Add(Quest);
+}
+
+void UQuestManager::RemoveQuest(const UQuestData* QuestDataKey)
+{
+	UQuest* Quest = GetQuest(QuestDataKey);
+	if (!Quest) return;
+
+	AllQuests.Remove(QuestDataKey);
+	ActiveQuests.Remove(Quest);
+	InactiveQuests.Remove(Quest);
+	CompletedQuests.Remove(Quest);
+}
+
 void UQuestManager::AchieveTaskInActiveQuests(const UTaskData* TaskDataKey)
 {
-	for (const UQuest* Quest : ActiveQuests)
+	TArray<UQuest*> TempActiveQuests = ActiveQuests; // Shallow copy, avoid modifying the original array while iterating
+
+	for (const UQuest* Quest : TempActiveQuests)
 		AchieveTaskInQuest(Quest->QuestData, TaskDataKey);
 }
 
 void UQuestManager::AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTaskData* TaskDataKey)
 {
-	const UQuest* Quest = GetQuest(QuestDataKey);
+	UQuest* Quest = GetQuest(QuestDataKey);
 	if (!Quest) return;
-
+	
 	Quest->AchieveQuestTask(TaskDataKey);
 
-	if (Quest->AreAllTasksAchieved())
+	if (Quest->bIsQuestCompleted)
 		AddToCompletedQuests(Quest->QuestData);
 }
 
@@ -91,17 +113,17 @@ void UQuestManager::AddToCompletedQuests(const UQuestData* QuestDataKey, const b
 	InactiveQuests.Remove(Quest);
 }
 
-bool UQuestManager::IsQuestCompleted(const UQuestData* QuestDataKey) const
+bool UQuestManager::IsInCompletedQuestsList(const UQuestData* QuestDataKey) const
 {
 	return CompletedQuests.Contains(GetQuest(QuestDataKey));
 }
 
-bool UQuestManager::IsQuestActive(const UQuestData* QuestDataKey) const
+bool UQuestManager::IsInActiveQuestsList(const UQuestData* QuestDataKey) const
 {
 	return ActiveQuests.Contains(GetQuest(QuestDataKey));
 }
 
-bool UQuestManager::IsQuestInactive(const UQuestData* QuestDataKey) const
+bool UQuestManager::IsInInactiveQuestsList(const UQuestData* QuestDataKey) const
 {
 	return InactiveQuests.Contains(GetQuest(QuestDataKey));
 }
@@ -111,16 +133,21 @@ bool UQuestManager::IsTaskAchieved(const UQuestData* QuestDataKey, const UTaskDa
 	const UQuest* Quest = GetQuest(QuestDataKey);
 	
 	if (!Quest) return false;
-	if (!IsQuestActive(QuestDataKey))
+	if (!IsInActiveQuestsList(QuestDataKey))
 	{
-		if (IsQuestInactive(QuestDataKey))
+		if (IsInInactiveQuestsList(QuestDataKey))
 			return false;
 
-		if (IsQuestCompleted(QuestDataKey))
+		if (IsInCompletedQuestsList(QuestDataKey))
 			return true;
 	}
 
 	return Quest->IsTaskAchieved(TaskDataKey);
+}
+
+UQuest* UQuestManager::GetQuest(const UQuestData* QuestDataKey) const
+{
+	return AllQuests.FindRef(QuestDataKey);
 }
 
 #if WITH_EDITOR
@@ -140,8 +167,3 @@ void UQuestManager::LogAllQuests() const
 	}
 }
 #endif
-
-UQuest* UQuestManager::GetQuest(const UQuestData* QuestDataKey) const
-{
-	return AllQuests.FindRef(QuestDataKey);
-}

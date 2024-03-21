@@ -11,8 +11,8 @@ void UTask::Init(UTaskData* InitData)
 void UTask::AchieveTask()
 {
 	if(bIsAchieved) return; // If the task is already achieved, do not call it again to not trigger the event again
-	
 	bIsAchieved = true;
+	OnTaskAchieved.Broadcast();
 }
 
 void UTask::ResetTask()

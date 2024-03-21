@@ -16,16 +16,24 @@ void UQuest::Init(UQuestData* InitData)
 	}
 }
 
-void UQuest::AchieveQuestTask(const UTaskData* TaskDataKey) const
+void UQuest::AchieveQuestTask(const UTaskData* TaskDataKey)
 {
+	if (bIsQuestCompleted) return;
+	
 	UTask* Task = GetTask(TaskDataKey);
 	if (!Task) return;
 	
 	Task->AchieveTask();
+	bIsQuestCompleted = AreAllTasksAchieved();
+
+	if (bIsQuestCompleted)
+		OnQuestCompleted.Broadcast();
 }
 
 void UQuest::AchieveAllTasks() const
 {
+	if (bIsQuestCompleted) return;
+	
 	for (auto& Task : AllTasks)
 		Task.Value->AchieveTask();
 }
@@ -51,4 +59,12 @@ bool UQuest::IsTaskAchieved(const UTaskData* TaskDataKey) const
 UTask* UQuest::GetTask(const UTaskData* TaskDataKey) const
 {
 	return AllTasks.FindRef(TaskDataKey);
+}
+
+void UQuest::ResetQuest()
+{
+	for(const auto& Task : AllTasks)
+		Task.Value->ResetTask();
+
+	bIsQuestCompleted = false;
 }

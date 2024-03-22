@@ -67,6 +67,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UQuest* GetQuest(const UQuestData* QuestDataKey) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	TArray<UQuest*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
 	
 #if WITH_EDITOR
 	UFUNCTION(BlueprintCallable, Category = "Quest System")

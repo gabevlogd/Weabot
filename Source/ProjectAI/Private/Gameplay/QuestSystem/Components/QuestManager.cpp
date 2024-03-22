@@ -150,6 +150,19 @@ UQuest* UQuestManager::GetQuest(const UQuestData* QuestDataKey) const
 	return AllQuests.FindRef(QuestDataKey);
 }
 
+TArray<UQuest*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const
+{
+	TArray<UQuest*> FilteredQuests;
+
+	for (const auto& QuestTuple : AllQuests)
+	{
+		if (QuestTuple.Key->QuestFilter == QuestFilterData)
+			FilteredQuests.Add(QuestTuple.Value);
+	}
+
+	return FilteredQuests;
+}
+
 #if WITH_EDITOR
 void UQuestManager::LogAllQuests() const
 {

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "QuestFilterData.h"
 #include "TaskData.h"
 #include "Engine/DataAsset.h"
 #include "QuestData.generated.h"
@@ -16,6 +17,10 @@ class PROJECTAI_API UQuestData : public UPrimaryDataAsset
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Quest Data")
 	FString QuestName;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Quest Data")
+	FString QuestDescription;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Quest Data")
+	UQuestFilterData* QuestFilter;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Quest Data")
 	TSet<UTaskData*> TasksData;
 };

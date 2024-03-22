@@ -73,11 +73,18 @@ void UQuestManager::AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTa
 {
 	UQuest* Quest = GetQuest(QuestDataKey);
 	if (!Quest) return;
+
+	const UTask* Task = Quest->GetTask(TaskDataKey);
+	if (!Task || Task->bIsAchieved) return;
 	
 	Quest->AchieveQuestTask(TaskDataKey);
-
+	OnAnyTaskCompleted.Broadcast();
+	
 	if (Quest->bIsQuestCompleted)
+	{
 		AddToCompletedQuests(Quest->QuestData);
+		OnAnyQuestCompleted.Broadcast();
+	}
 }
 
 void UQuestManager::AddToActiveQuests(const UQuestData* QuestDataKey)

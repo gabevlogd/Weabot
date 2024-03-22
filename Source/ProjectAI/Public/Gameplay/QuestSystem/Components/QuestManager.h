@@ -7,6 +7,11 @@
 #include "Gameplay/QuestSystem/Quest.h"
 #include "QuestManager.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyQuestCompleted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyTaskCompleted);
+
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API UQuestManager : public UActorComponent
 {
@@ -26,6 +31,11 @@ public:
 	TArray<UQuest*> InactiveQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
 	TArray<UQuest*> CompletedQuests;
+
+	UPROPERTY(BlueprintAssignable, Category = "Quest System")
+	FOnAnyQuestCompleted OnAnyQuestCompleted;
+	UPROPERTY(BlueprintAssignable, Category = "Quest System")
+	FOnAnyTaskCompleted OnAnyTaskCompleted;
 	
 public:
 	UQuestManager();

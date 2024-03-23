@@ -2,9 +2,10 @@
 
 
 #include "Gameplay/QuestSystem/Components/TaskAchiever.h"
+#include "Gameplay/QuestSystem/Utility/QSUtility.h"
 
 
-UTaskAchiever::UTaskAchiever()
+UTaskAchiever::UTaskAchiever(): TaskToAchieve(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }

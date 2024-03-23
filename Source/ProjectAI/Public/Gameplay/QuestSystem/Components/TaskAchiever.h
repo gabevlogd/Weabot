@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Gameplay/QuestSystem/Utility/QSUtility.h"
+#include "Gameplay/QuestSystem/Data/TaskData.h"
 #include "TaskAchiever.generated.h"
 
 

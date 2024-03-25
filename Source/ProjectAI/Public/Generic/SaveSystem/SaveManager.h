@@ -9,7 +9,12 @@
 #include "SaveManager.generated.h"
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReadyToSave);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnPrepareSave,
+	UGenericSaveGame*, SaveGameData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnPrepareLoad,
+	UGenericSaveGame*, SaveGameData);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(
 	FOnSaveGame,
 	const FString&, SlotName,
@@ -34,11 +39,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System")
 	FString SaveSlotName;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
-	FOnReadyToSave OnReadyToSave;
+	FOnPrepareSave OnPrepareSave;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
-	FOnSaveGame OnGameSaved;
+	FOnPrepareLoad OnPrepareLoad;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
-	FOnLoadGame OnGameLoaded;
+	FOnSaveGame OnSaveGame;
+	UPROPERTY(BlueprintAssignable, Category = "Save System")
+	FOnLoadGame OnLoadGame;
 
 private:
 	UPROPERTY()
@@ -52,7 +59,7 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	UGenericSaveGame* GetSaveGame() const;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	virtual void Save();
 	
@@ -60,6 +67,7 @@ public:
 	virtual void Load();
 
 private:
-	void OnSaveGame(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
-	void OnLoadGame(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
+	void OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
+	void OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
+	void CheckFileExistence(TSubclassOf<USaveGame> SaveClass);
 };

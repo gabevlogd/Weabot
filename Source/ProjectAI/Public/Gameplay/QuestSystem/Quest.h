@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Data/QuestData.h"
 #include "Data/TaskData.h"
+#include "Data/Enums/QuestType.h"
+#include "Data/Structs/QuestSaveData.h"
 #include "Gameplay/QuestSystem/Task.h"
 #include "UObject/Object.h"
 #include "Quest.generated.h"
@@ -27,6 +29,9 @@ public:
 	bool bIsQuestCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
 	FOnQuestCompleted OnQuestCompleted;
+
+private:
+	EQuestType CurrentQuestType;
 	
 public:
 	void Init(UQuestData* InitData);
@@ -43,6 +48,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UTask* GetTask(const UTaskData* TaskDataKey) const;
 
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	UTask* GetTaskByName(const FName TaskName) const;
+	
+	void SetQuestType(EQuestType QuestType);
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	EQuestType GetQuestType() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	FQuestSaveData GetQuestSaveData() const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void ResetQuest();
 

@@ -23,7 +23,7 @@ public:
 	 * Gets the found QuestManager.
 	 * @return QuestManager.
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	UFUNCTION(BlueprintPure, Category = "Quest System")
 	static UQuestManager* GetQuestManager();
 
 	/**

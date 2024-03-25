@@ -3,6 +3,7 @@
 
 #include "Gameplay/QuestSystem/Task.h"
 
+
 void UTask::Init(UTaskData* InitData)
 {
 	TaskData = InitData;
@@ -13,6 +14,13 @@ void UTask::AchieveTask()
 	if(bIsAchieved) return; // If the task is already achieved, do not call it again to not trigger the event again
 	bIsAchieved = true;
 	OnTaskAchieved.Broadcast();
+}
+
+FTaskSaveData UTask::GetTaskSaveData() const
+{
+	FTaskSaveData TaskSaveData = FTaskSaveData();
+	TaskSaveData.bIsAchieved = bIsAchieved;
+	return TaskSaveData;
 }
 
 void UTask::ResetTask()

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Gameplay/QuestSystem/Quest.h"
+#include "Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h"
 #include "QuestManager.generated.h"
 
 
@@ -18,9 +19,9 @@ class PROJECTAI_API UQuestManager : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, Category = "QuestLog")
+	UPROPERTY(EditDefaultsOnly, Category = "QuestLog")
 	bool bSetDefaultQuestsAsActive = true;
-	UPROPERTY(EditAnywhere, Category = "QuestLog")
+	UPROPERTY(EditDefaultsOnly, Category = "QuestLog")
 	TSet<UQuestData*> DefaultQuestsData;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
@@ -39,9 +40,16 @@ public:
 	
 public:
 	UQuestManager();
-	
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void Init();
 
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	void InitWithSaveData(FQuestLogSaveData QuestLogInitData);
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	FQuestLogSaveData GetQuestLogSaveData() const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AddQuest(UQuestData* QuestData, bool bIsActiveQuest);
 
@@ -78,6 +86,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UQuest* GetQuest(const UQuestData* QuestDataKey) const;
 
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	UQuest* GetQuestByName(const FName QuestName) const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	TArray<UQuest*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
 	

@@ -13,7 +13,8 @@ UQuestManager::UQuestManager()
 void UQuestManager::BeginPlay()
 {
 	Super::BeginPlay();
-	Init();
+	UQSUtility::Init(this); // Initialize the utility class here, as it needs the QuestManager reference
+	// Init(); Not initializing in BeginPlay, as it should be called manually to be more modular
 }
 
 void UQuestManager::Init()
@@ -26,8 +27,58 @@ void UQuestManager::Init()
 
 	for (UQuestData* QuestData : DefaultQuestsData)
 		AddQuest(QuestData, bSetDefaultQuestsAsActive);
+}
 
-	UQSUtility::Init(this);
+void UQuestManager::InitWithSaveData(FQuestLogSaveData QuestLogInitData)
+{
+	Init();
+
+	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogInitData.Quests)
+	{
+		const UQuest* Quest = GetQuestByName(QuestsData.Key);
+		if (!Quest) continue; // If the quest is not found, skip it
+		
+		for (const TTuple<FName, FTaskSaveData> TaskSaveData : QuestsData.Value.Tasks)
+		{
+			UTask* Task = Quest->GetTaskByName(TaskSaveData.Key);
+			if (!Task) continue; // If the task is not found, skip it
+			
+			Task->bIsAchieved = TaskSaveData.Value.bIsAchieved;
+		}
+
+		switch (QuestsData.Value.QuestType)
+		{
+			case None:
+				break;
+			
+			case Active:
+				AddToActiveQuests(Quest->QuestData);
+				break;
+			
+			case Inactive:
+				AddToInactiveQuests(Quest->QuestData);
+				break;
+			
+			case Completed:
+				AddToCompletedQuests(Quest->QuestData);
+				break;
+			
+			default: ;
+		}
+	}
+}
+
+FQuestLogSaveData UQuestManager::GetQuestLogSaveData() const
+{
+	FQuestLogSaveData QuestLogSaveData;
+
+	for (const TTuple<UQuestData*, UQuest*> QuestTuple : AllQuests)
+	{
+		FQuestSaveData QuestSaveData = QuestTuple.Value->GetQuestSaveData();
+		QuestLogSaveData.Quests.Add(QuestTuple.Key->GetFName(), QuestSaveData);
+	}
+
+	return QuestLogSaveData;
 }
 
 void UQuestManager::AddQuest(UQuestData* QuestData, const bool bIsActiveQuest)
@@ -37,7 +88,7 @@ void UQuestManager::AddQuest(UQuestData* QuestData, const bool bIsActiveQuest)
 		UE_LOG(LogTemp, Error, TEXT("QS: QuestData is null. Cannot add the quest."));
 		return;
 	}
-	
+
 	UQuest* Quest = NewObject<UQuest>();
 	Quest->Init(QuestData);
 
@@ -45,9 +96,9 @@ void UQuestManager::AddQuest(UQuestData* QuestData, const bool bIsActiveQuest)
 	AllQuests.Add(QuestData, Quest);
 
 	if (bIsActiveQuest)
-		ActiveQuests.Add(Quest);
+		AddToActiveQuests(QuestData);
 	else
-		InactiveQuests.Add(Quest);
+		AddToInactiveQuests(QuestData);
 }
 
 void UQuestManager::RemoveQuest(const UQuestData* QuestDataKey)
@@ -76,10 +127,10 @@ void UQuestManager::AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTa
 
 	const UTask* Task = Quest->GetTask(TaskDataKey);
 	if (!Task || Task->bIsAchieved) return;
-	
+
 	Quest->AchieveQuestTask(TaskDataKey);
 	OnAnyTaskCompleted.Broadcast();
-	
+
 	if (Quest->bIsQuestCompleted)
 	{
 		AddToCompletedQuests(Quest->QuestData);
@@ -91,7 +142,8 @@ void UQuestManager::AddToActiveQuests(const UQuestData* QuestDataKey)
 {
 	UQuest* Quest = GetQuest(QuestDataKey);
 	if (!Quest) return;
-	
+
+	Quest->SetQuestType(EQuestType::Active);
 	ActiveQuests.Add(Quest);
 	InactiveQuests.Remove(Quest);
 	CompletedQuests.Remove(Quest);
@@ -102,6 +154,7 @@ void UQuestManager::AddToInactiveQuests(const UQuestData* QuestDataKey)
 	UQuest* Quest = GetQuest(QuestDataKey);
 	if (!Quest) return;
 
+	Quest->SetQuestType(EQuestType::Inactive);
 	InactiveQuests.Add(Quest);
 	ActiveQuests.Remove(Quest);
 	CompletedQuests.Remove(Quest);
@@ -114,7 +167,8 @@ void UQuestManager::AddToCompletedQuests(const UQuestData* QuestDataKey, const b
 
 	if (bAchieveAllTasks)
 		Quest->AchieveAllTasks();
-	
+
+	Quest->SetQuestType(EQuestType::Completed);
 	CompletedQuests.Add(Quest);
 	ActiveQuests.Remove(Quest);
 	InactiveQuests.Remove(Quest);
@@ -138,7 +192,7 @@ bool UQuestManager::IsInInactiveQuestsList(const UQuestData* QuestDataKey) const
 bool UQuestManager::IsTaskAchieved(const UQuestData* QuestDataKey, const UTaskData* TaskDataKey) const
 {
 	const UQuest* Quest = GetQuest(QuestDataKey);
-	
+
 	if (!Quest) return false;
 	if (!IsInActiveQuestsList(QuestDataKey))
 	{
@@ -155,6 +209,17 @@ bool UQuestManager::IsTaskAchieved(const UQuestData* QuestDataKey, const UTaskDa
 UQuest* UQuestManager::GetQuest(const UQuestData* QuestDataKey) const
 {
 	return AllQuests.FindRef(QuestDataKey);
+}
+
+UQuest* UQuestManager::GetQuestByName(const FName QuestName) const
+{
+	for (const auto& QuestTuple : AllQuests)
+	{
+		if (QuestTuple.Key->GetFName() == QuestName)
+			return QuestTuple.Value;
+	}
+
+	return nullptr;
 }
 
 TArray<UQuest*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const

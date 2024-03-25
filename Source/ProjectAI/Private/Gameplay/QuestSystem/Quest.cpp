@@ -7,7 +7,7 @@
 void UQuest::Init(UQuestData* InitData)
 {
 	QuestData = InitData;
-	
+
 	for (UTaskData* TaskData : InitData->TasksData)
 	{
 		UTask* Task = NewObject<UTask>();
@@ -59,6 +59,40 @@ bool UQuest::IsTaskAchieved(const UTaskData* TaskDataKey) const
 UTask* UQuest::GetTask(const UTaskData* TaskDataKey) const
 {
 	return AllTasks.FindRef(TaskDataKey);
+}
+
+UTask* UQuest::GetTaskByName(const FName TaskName) const
+{
+	for (const auto& Task : AllTasks)
+	{
+		if (Task.Value->TaskData->GetFName() == TaskName)
+			return Task.Value;
+	}
+	
+	return nullptr;
+}
+
+void UQuest::SetQuestType(const EQuestType QuestType)
+{
+	CurrentQuestType = QuestType;
+}
+
+EQuestType UQuest::GetQuestType() const
+{
+	return CurrentQuestType;
+}
+
+FQuestSaveData UQuest::GetQuestSaveData() const
+{
+	FQuestSaveData QuestSaveData = FQuestSaveData();
+	
+	for (const auto& Task : AllTasks)
+	{
+		QuestSaveData.QuestType = CurrentQuestType;
+		QuestSaveData.Tasks.Add(Task.Key->GetFName(), Task.Value->GetTaskSaveData());
+	}
+
+	return QuestSaveData;
 }
 
 void UQuest::ResetQuest()

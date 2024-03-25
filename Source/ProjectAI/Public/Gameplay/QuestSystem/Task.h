@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Data/TaskData.h"
+#include "Data/Structs/TaskSaveData.h"
 #include "UObject/Object.h"
 #include "Task.generated.h"
 
@@ -30,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveTask();
 
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	FTaskSaveData GetTaskSaveData() const;
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void ResetTask();
 };

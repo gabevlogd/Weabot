@@ -28,7 +28,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
 	UGenericSaveGame*, SaveGameData);
 
 
-UCLASS(BlueprintType)
+UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API USaveManager : public UObject
 {
 	GENERATED_BODY()

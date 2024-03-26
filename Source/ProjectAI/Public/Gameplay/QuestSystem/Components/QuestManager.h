@@ -10,10 +10,10 @@
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyQuestCompleted);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyTaskCompleted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyTaskAchieved);
 
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(NotBlueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API UQuestManager : public UActorComponent
 {
 	GENERATED_BODY()
@@ -23,7 +23,6 @@ public:
 	bool bSetDefaultQuestsAsActive = true;
 	UPROPERTY(EditDefaultsOnly, Category = "QuestLog")
 	TSet<UQuestData*> DefaultQuestsData;
-	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
 	TMap<UQuestData*, UQuest*> AllQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
@@ -32,11 +31,10 @@ public:
 	TArray<UQuest*> InactiveQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
 	TArray<UQuest*> CompletedQuests;
-
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
 	FOnAnyQuestCompleted OnAnyQuestCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
-	FOnAnyTaskCompleted OnAnyTaskCompleted;
+	FOnAnyTaskAchieved OnAnyTaskAchieved;
 	
 public:
 	UQuestManager();
@@ -45,16 +43,10 @@ public:
 	void Init();
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void InitWithSaveData(FQuestLogSaveData QuestLogInitData);
+	void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	FQuestLogSaveData GetQuestLogSaveData() const;
-	
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void AddQuest(UQuestData* QuestData, bool bIsActiveQuest);
-
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void RemoveQuest(const UQuestData* QuestDataKey);
+	FQuestLogSaveData CreateSaveData() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveTaskInActiveQuests(const UTaskData* TaskDataKey);
@@ -99,4 +91,6 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+	void AddQuest(UQuestData* QuestData, bool bIsActiveQuest);
+	void RemoveQuest(const UQuestData* QuestDataKey);
 };

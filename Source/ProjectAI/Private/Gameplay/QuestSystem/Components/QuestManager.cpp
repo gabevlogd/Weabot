@@ -10,13 +10,6 @@ UQuestManager::UQuestManager()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UQuestManager::BeginPlay()
-{
-	Super::BeginPlay();
-	UQSUtility::Init(this); // Initialize the utility class here, as it needs the QuestManager reference
-	// Init(); Not initializing in BeginPlay, as it should be called manually to be more modular
-}
-
 void UQuestManager::Init()
 {
 	if (DefaultQuestsData.IsEmpty())
@@ -29,11 +22,9 @@ void UQuestManager::Init()
 		AddQuest(QuestData, bSetDefaultQuestsAsActive);
 }
 
-void UQuestManager::InitWithSaveData(FQuestLogSaveData QuestLogInitData)
+void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 {
-	Init();
-
-	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogInitData.Quests)
+	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
 	{
 		const UQuest* Quest = GetQuestByName(QuestsData.Key);
 		if (!Quest) continue; // If the quest is not found, skip it
@@ -48,9 +39,6 @@ void UQuestManager::InitWithSaveData(FQuestLogSaveData QuestLogInitData)
 
 		switch (QuestsData.Value.QuestType)
 		{
-			case None:
-				break;
-			
 			case Active:
 				AddToActiveQuests(Quest->QuestData);
 				break;
@@ -68,7 +56,7 @@ void UQuestManager::InitWithSaveData(FQuestLogSaveData QuestLogInitData)
 	}
 }
 
-FQuestLogSaveData UQuestManager::GetQuestLogSaveData() const
+FQuestLogSaveData UQuestManager::CreateSaveData() const
 {
 	FQuestLogSaveData QuestLogSaveData;
 
@@ -79,37 +67,6 @@ FQuestLogSaveData UQuestManager::GetQuestLogSaveData() const
 	}
 
 	return QuestLogSaveData;
-}
-
-void UQuestManager::AddQuest(UQuestData* QuestData, const bool bIsActiveQuest)
-{
-	if (!QuestData)
-	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestData is null. Cannot add the quest."));
-		return;
-	}
-
-	UQuest* Quest = NewObject<UQuest>();
-	Quest->Init(QuestData);
-
-	// QuestData->GetUniqueID(); Could use a unique ID for the key
-	AllQuests.Add(QuestData, Quest);
-
-	if (bIsActiveQuest)
-		AddToActiveQuests(QuestData);
-	else
-		AddToInactiveQuests(QuestData);
-}
-
-void UQuestManager::RemoveQuest(const UQuestData* QuestDataKey)
-{
-	UQuest* Quest = GetQuest(QuestDataKey);
-	if (!Quest) return;
-
-	AllQuests.Remove(QuestDataKey);
-	ActiveQuests.Remove(Quest);
-	InactiveQuests.Remove(Quest);
-	CompletedQuests.Remove(Quest);
 }
 
 void UQuestManager::AchieveTaskInActiveQuests(const UTaskData* TaskDataKey)
@@ -129,7 +86,7 @@ void UQuestManager::AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTa
 	if (!Task || Task->bIsAchieved) return;
 
 	Quest->AchieveQuestTask(TaskDataKey);
-	OnAnyTaskCompleted.Broadcast();
+	OnAnyTaskAchieved.Broadcast();
 
 	if (Quest->bIsQuestCompleted)
 	{
@@ -252,3 +209,41 @@ void UQuestManager::LogAllQuests() const
 	}
 }
 #endif
+
+void UQuestManager::BeginPlay()
+{
+	Super::BeginPlay();
+	Init();
+	UQSUtility::Init(this); // Initialize the utility class here, as it needs the QuestManager reference
+}
+
+void UQuestManager::AddQuest(UQuestData* QuestData, const bool bIsActiveQuest)
+{
+	if (!QuestData)
+	{
+		UE_LOG(LogTemp, Error, TEXT("QS: QuestData is null. Cannot add the quest."));
+		return;
+	}
+
+	UQuest* Quest = NewObject<UQuest>();
+	Quest->Init(QuestData);
+
+	// QuestData->GetUniqueID(); Could use a unique ID for the key
+	AllQuests.Add(QuestData, Quest);
+
+	if (bIsActiveQuest)
+		AddToActiveQuests(QuestData);
+	else
+		AddToInactiveQuests(QuestData);
+}
+
+void UQuestManager::RemoveQuest(const UQuestData* QuestDataKey)
+{
+	UQuest* Quest = GetQuest(QuestDataKey);
+	if (!Quest) return;
+
+	AllQuests.Remove(QuestDataKey);
+	ActiveQuests.Remove(Quest);
+	InactiveQuests.Remove(Quest);
+	CompletedQuests.Remove(Quest);
+}

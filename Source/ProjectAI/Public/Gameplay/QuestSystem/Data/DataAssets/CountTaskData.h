@@ -12,6 +12,10 @@ class PROJECTAI_API UCountTaskData : public UTaskData
 {
 	GENERATED_BODY()
 
+public:
 	UPROPERTY(EditAnywhere, Category = "Task Data")
-	int32 AchieveCount;
+	int32 CountToAchieve;
+
+public:
+	virtual ETaskType GetTaskType() const override;
 };

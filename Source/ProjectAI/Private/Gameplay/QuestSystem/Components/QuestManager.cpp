@@ -5,7 +5,8 @@
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
-#include "Gameplay/QuestSystem/UObjects/Tasks/Task.h"
+#include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
+#include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
 
 UQuestManager::UQuestManager()
@@ -35,6 +36,8 @@ void UQuestManager::Init()
 
 void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 {
+	TrackedQuest = GetQuestByName(QuestLogSaveData.TrackedQuestName);
+	
 	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
 	{
 		const UQuestBase* Quest = GetQuestByName(QuestsData.Key);
@@ -42,10 +45,13 @@ void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 		
 		for (const TTuple<FName, FTaskSaveData> TaskSaveData : QuestsData.Value.Tasks)
 		{
-			UTask* Task = Quest->GetTaskByName(TaskSaveData.Key);
+			UTaskBase* Task = Quest->GetTaskByName(TaskSaveData.Key);
 			if (!Task) continue; // If the task is not found, skip it
-			
+
 			Task->bIsAchieved = TaskSaveData.Value.bIsAchieved;
+			
+			if (UCountTask* CountTask = Cast<UCountTask>(Task))
+				CountTask->SetCurrentCount(TaskSaveData.Value.CurrentAchieveCount);
 		}
 
 		switch (QuestsData.Value.QuestStatus)
@@ -73,11 +79,20 @@ FQuestLogSaveData UQuestManager::CreateSaveData() const
 
 	for (const TTuple<UQuestData*, UQuestBase*> QuestTuple : AllQuests)
 	{
-		FQuestSaveData QuestSaveData = QuestTuple.Value->GetQuestSaveData();
+		FQuestSaveData QuestSaveData = QuestTuple.Value->CreateQuestSaveData();
 		QuestLogSaveData.Quests.Add(QuestTuple.Key->GetFName(), QuestSaveData);
 	}
-
+	QuestLogSaveData.TrackedQuestName = TrackedQuest ? TrackedQuest->QuestData->GetFName() : NAME_None;
 	return QuestLogSaveData;
+}
+
+void UQuestManager::TrackQuest(const UQuestData* QuestDataKey)
+{
+	UQuestBase* Quest = GetQuest(QuestDataKey);
+	if (!Quest) return;
+
+	TrackedQuest = Quest;
+	OnQuestTracked.Broadcast(TrackedQuest);
 }
 
 void UQuestManager::AchieveTaskInActiveQuests(const UTaskData* TaskDataKey)
@@ -93,7 +108,7 @@ void UQuestManager::AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTa
 	UQuestBase* Quest = GetQuest(QuestDataKey);
 	if (!Quest) return;
 
-	const UTask* Task = Quest->GetTask(TaskDataKey);
+	const UTaskBase* Task = Quest->GetTask(TaskDataKey);
 	if (!Task || Task->bIsAchieved) return;
 
 	Quest->AchieveQuestTask(TaskDataKey);
@@ -134,7 +149,7 @@ void UQuestManager::AddToCompletedQuests(const UQuestData* QuestDataKey, const b
 	if (!Quest) return;
 
 	if (bAchieveAllTasks)
-		Quest->AchieveAllTasks();
+		Quest->AchieveAllTasks(true);
 
 	Quest->SetQuestStatus(EQuestStatus::Completed);
 	CompletedQuests.Add(Quest);

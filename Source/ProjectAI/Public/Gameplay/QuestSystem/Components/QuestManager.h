@@ -13,6 +13,9 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyQuestCompleted);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyTaskAchieved);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnQuestTracked,
+	const UQuestBase*, Quest);
 
 
 UCLASS(NotBlueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -23,6 +26,8 @@ class PROJECTAI_API UQuestManager : public UActorComponent
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "QuestLog")
 	UQuestLogData* QuestLogData;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
+	UQuestBase* TrackedQuest;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
 	TMap<UQuestData*, UQuestBase*> AllQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
@@ -35,6 +40,8 @@ public:
 	FOnAnyQuestCompleted OnAnyQuestCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
 	FOnAnyTaskAchieved OnAnyTaskAchieved;
+	UPROPERTY(BlueprintAssignable, Category = "Quest System")
+	FOnQuestTracked OnQuestTracked;
 	
 public:
 	UQuestManager();
@@ -47,6 +54,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	FQuestLogSaveData CreateSaveData() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	void TrackQuest(const UQuestData* QuestDataKey);
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveTaskInActiveQuests(const UTaskData* TaskDataKey);

@@ -2,7 +2,8 @@
 
 
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
-#include "Gameplay/QuestSystem/UObjects/Tasks/Task.h"
+#include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
+#include "Gameplay/QuestSystem/Utility/QSFactory.h"
 
 
 void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
@@ -12,8 +13,7 @@ void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
 	
 	for (UTaskData* TaskData : InitData->TasksData)
 	{
-		UTask* Task = NewObject<UTask>();
-		Task->Init(TaskData, this);
+		UTaskBase* Task = UQSFactory::CreateTaskByType(this, TaskData, TaskData->GetTaskType());
 		AllTasks.Add(TaskData, Task);
 	}
 }
@@ -22,28 +22,28 @@ void UQuestBase::AchieveQuestTask(const UTaskData* TaskDataKey)
 {
 }
 
-void UQuestBase::AchieveAllTasks() const
+void UQuestBase::AchieveAllTasks(const bool bFullyAchieve) const
 {
 	if (bIsQuestCompleted) return;
-	
-	for (auto& Task : AllTasks)
-		Task.Value->AchieveTask();
+
+	for(const TTuple<UTaskData*, UTaskBase*> Task : AllTasks)
+		Task.Value->AchieveTask(bFullyAchieve);
 }
 
 bool UQuestBase::IsTaskAchieved(const UTaskData* TaskDataKey) const
 {
-	const UTask* Task = GetTask(TaskDataKey);
+	const UTaskBase* Task = GetTask(TaskDataKey);
 	if (!Task) return false;
 	
 	return Task->bIsAchieved;
 }
 
-UTask* UQuestBase::GetTask(const UTaskData* TaskDataKey) const
+UTaskBase* UQuestBase::GetTask(const UTaskData* TaskDataKey) const
 {
 	return AllTasks.FindRef(TaskDataKey);
 }
 
-UTask* UQuestBase::GetTaskByName(const FName TaskName) const
+UTaskBase* UQuestBase::GetTaskByName(const FName TaskName) const
 {
 	for (const auto& Task : AllTasks)
 	{
@@ -69,14 +69,14 @@ EQuestType UQuestBase::GetQuestType() const
 	return QuestType;
 }
 
-FQuestSaveData UQuestBase::GetQuestSaveData() const
+FQuestSaveData UQuestBase::CreateQuestSaveData() const
 {
 	FQuestSaveData QuestSaveData = FQuestSaveData();
 	
 	for (const auto& Task : AllTasks)
 	{
 		QuestSaveData.QuestStatus = QuestStatus;
-		QuestSaveData.Tasks.Add(Task.Key->GetFName(), Task.Value->GetTaskSaveData());
+		QuestSaveData.Tasks.Add(Task.Key->GetFName(), Task.Value->CreateTaskSaveData());
 	}
 
 	return QuestSaveData;

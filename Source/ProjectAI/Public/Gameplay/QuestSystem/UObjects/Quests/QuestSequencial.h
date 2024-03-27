@@ -7,7 +7,7 @@
 #include "QuestSequencial.generated.h"
 
 
-UCLASS()
+UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UQuestSequencial : public UQuestBase
 {
 	GENERATED_BODY()

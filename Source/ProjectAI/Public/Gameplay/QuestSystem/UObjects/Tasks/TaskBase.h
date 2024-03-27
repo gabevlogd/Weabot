@@ -6,15 +6,15 @@
 #include "Gameplay/QuestSystem/Data/DataAssets/TaskData.h"
 #include "Gameplay/QuestSystem/Data/Structs/TaskSaveData.h"
 #include "UObject/Object.h"
-#include "Task.generated.h"
+#include "TaskBase.generated.h"
 
 class UQuestBase;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTaskAchieved);
 
 
-UCLASS(NotBlueprintable, BlueprintType)
-class PROJECTAI_API UTask : public UObject
+UCLASS(Abstract, NotBlueprintable, BlueprintType)
+class PROJECTAI_API UTaskBase : public UObject
 {
 	GENERATED_BODY()
 
@@ -29,14 +29,17 @@ public:
 	FOnTaskAchieved OnTaskAchieved;
 	
 public:
-	void Init(UTaskData* InitData, UQuestBase* Quest);
+	virtual void Init(UTaskData* InitData, UQuestBase* Quest);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void AchieveTask();
-
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	FTaskSaveData GetTaskSaveData() const;
+	virtual void AchieveTask(bool bFullyAchieve = false);
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void ResetTask();
+	virtual FTaskSaveData CreateTaskSaveData() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	virtual void ResetTask();
+
+protected:
+	void TriggerAchievement();
 };

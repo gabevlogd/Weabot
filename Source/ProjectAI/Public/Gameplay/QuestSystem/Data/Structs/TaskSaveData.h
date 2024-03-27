@@ -13,4 +13,6 @@ struct FTaskSaveData
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TaskSaveData")
 	bool bIsAchieved;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TaskSaveData")
+	int32 CurrentAchieveCount;
 };

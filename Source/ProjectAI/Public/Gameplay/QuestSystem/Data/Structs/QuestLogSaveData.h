@@ -14,4 +14,6 @@ struct FQuestLogSaveData
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLogSaveData" )
 	TMap<FName, FQuestSaveData> Quests;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestSaveData")
+	FName TrackedQuestName;
 };

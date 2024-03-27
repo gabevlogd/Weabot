@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Gameplay/QuestSystem/Data/Enums/TaskType.h"
 #include "TaskData.generated.h"
 
 
@@ -17,4 +18,9 @@ public:
 	FString TaskName;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Task Data")
 	FString Description;
+
+public:
+	UFUNCTION(BlueprintPure, Category = "Quest System")
+	virtual ETaskType GetTaskType() const;
 };
+

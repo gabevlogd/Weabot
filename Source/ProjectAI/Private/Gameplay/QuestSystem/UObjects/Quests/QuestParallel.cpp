@@ -2,14 +2,14 @@
 
 
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestParallel.h"
-#include "Gameplay/QuestSystem/UObjects/Tasks/Task.h"
+#include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
 
 void UQuestParallel::AchieveQuestTask(const UTaskData* TaskDataKey)
 {
 	if (bIsQuestCompleted) return;
 	
-	UTask* Task = GetTask(TaskDataKey);
+	UTaskBase* Task = GetTask(TaskDataKey);
 	if (!Task) return;
 	
 	Task->AchieveTask();

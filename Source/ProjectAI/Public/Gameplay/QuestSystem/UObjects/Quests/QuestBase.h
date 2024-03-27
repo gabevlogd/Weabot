@@ -9,7 +9,7 @@
 #include "UObject/Object.h"
 #include "QuestBase.generated.h"
 
-class UTask;
+class UTaskBase;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQuestCompleted);
 
@@ -23,7 +23,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Quest")
 	UQuestData* QuestData;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Quest")
-	TMap<UTaskData*, UTask*> AllTasks;
+	TMap<UTaskData*, UTaskBase*> AllTasks;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Quest")
 	bool bIsQuestCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
@@ -40,16 +40,16 @@ public:
 	virtual void AchieveQuestTask(const UTaskData* TaskDataKey);
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void AchieveAllTasks() const;
+	void AchieveAllTasks(const bool bFullyAchieve = false) const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool IsTaskAchieved(const UTaskData* TaskDataKey) const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	UTask* GetTask(const UTaskData* TaskDataKey) const;
+	UTaskBase* GetTask(const UTaskData* TaskDataKey) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	UTask* GetTaskByName(const FName TaskName) const;
+	UTaskBase* GetTaskByName(const FName TaskName) const;
 	
 	void SetQuestStatus(EQuestStatus Status);
 
@@ -60,7 +60,7 @@ public:
 	EQuestType GetQuestType() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	FQuestSaveData GetQuestSaveData() const;
+	FQuestSaveData CreateQuestSaveData() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void ResetQuest();

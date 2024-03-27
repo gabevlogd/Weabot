@@ -53,4 +53,11 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	static void CompleteQuestNow(const UQuestData* QuestDataKey);
+
+	/**
+	 * Tracks a quest.
+	 * @param QuestDataKey The quest to track.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	static void TrackQuest(const UQuestData* QuestDataKey);
 };

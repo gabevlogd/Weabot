@@ -19,11 +19,7 @@ void UTransformSaver::OnPrepareSave_Implementation(UGenericSaveGame* SaveGameDat
 void UTransformSaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UGenericSaveGame* LoadedData)
 {
 	Super::OnLoadCompletedEvent_Implementation(SlotName, UserIndex, LoadedData);
-	UE_LOG(LogTemp, Warning, TEXT("OwnerTransformSavable::OnLoadCompletedEvent_Implementation"));
-	
 	const FName OwnerUniqueID = GetUniqueNameID();
-	
-	UE_LOG(LogTemp, Warning, TEXT("Owner Unique ID: %s"), *OwnerUniqueID.ToString());
 	
 	if (LoadedData->ActorTransforms.Contains(OwnerUniqueID))
 	{

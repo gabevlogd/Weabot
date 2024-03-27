@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Gameplay/QuestSystem/Quest.h"
+#include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
+#include "Gameplay/QuestSystem/Data/DataAssets/QuestData.h"
+#include "Gameplay/QuestSystem/Data/DataAssets/QuestLogData.h"
 #include "Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h"
 #include "QuestManager.generated.h"
 
@@ -20,17 +22,15 @@ class PROJECTAI_API UQuestManager : public UActorComponent
 
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "QuestLog")
-	bool bSetDefaultQuestsAsActive = true;
-	UPROPERTY(EditDefaultsOnly, Category = "QuestLog")
-	TSet<UQuestData*> DefaultQuestsData;
+	UQuestLogData* QuestLogData;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
-	TMap<UQuestData*, UQuest*> AllQuests;
+	TMap<UQuestData*, UQuestBase*> AllQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
-	TArray<UQuest*> ActiveQuests;
+	TArray<UQuestBase*> ActiveQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
-	TArray<UQuest*> InactiveQuests;
+	TArray<UQuestBase*> InactiveQuests;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestLog")
-	TArray<UQuest*> CompletedQuests;
+	TArray<UQuestBase*> CompletedQuests;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
 	FOnAnyQuestCompleted OnAnyQuestCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
@@ -76,13 +76,13 @@ public:
 	bool IsTaskAchieved(const UQuestData* QuestDataKey, const UTaskData* TaskDataKey) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	UQuest* GetQuest(const UQuestData* QuestDataKey) const;
+	UQuestBase* GetQuest(const UQuestData* QuestDataKey) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	UQuest* GetQuestByName(const FName QuestName) const;
+	UQuestBase* GetQuestByName(const FName QuestName) const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	TArray<UQuest*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
+	TArray<UQuestBase*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
 	
 #if WITH_EDITOR
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
@@ -91,6 +91,6 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
-	void AddQuest(UQuestData* QuestData, bool bIsActiveQuest);
+	void AddQuest(UQuestData* QuestData, const FQuestEntryData QuestEntryData);
 	void RemoveQuest(const UQuestData* QuestDataKey);
 };

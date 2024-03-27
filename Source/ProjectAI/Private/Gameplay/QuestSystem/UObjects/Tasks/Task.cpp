@@ -1,0 +1,30 @@
+// Copyright The Prototypers, Inc. All Rights Reserved.
+
+
+#include "Gameplay/QuestSystem/UObjects/Tasks/Task.h"
+
+
+void UTask::Init(UTaskData* InitData, UQuestBase* Quest)
+{
+	TaskData = InitData;
+	RelatedQuest = Quest;
+}
+
+void UTask::AchieveTask()
+{
+	if(bIsAchieved) return; // If the task is already achieved, do not call it again to not trigger the event again
+	bIsAchieved = true;
+	OnTaskAchieved.Broadcast();
+}
+
+FTaskSaveData UTask::GetTaskSaveData() const
+{
+	FTaskSaveData TaskSaveData = FTaskSaveData();
+	TaskSaveData.bIsAchieved = bIsAchieved;
+	return TaskSaveData;
+}
+
+void UTask::ResetTask()
+{
+	bIsAchieved = false;
+}

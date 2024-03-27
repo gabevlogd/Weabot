@@ -14,8 +14,7 @@ struct FQuestSaveData
 	GENERATED_BODY()
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestSaveData")
-	TEnumAsByte<EQuestType> QuestType;
-
+	EQuestStatus QuestStatus;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestSaveData")
 	TMap<FName, FTaskSaveData> Tasks;
 };

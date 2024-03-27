@@ -3,10 +3,9 @@
 #pragma once
 
 UENUM(BlueprintType)
-enum EQuestType
+enum class EQuestType : uint8
 {
 	None UMETA(DisplayName = "None"),
-	Active UMETA(DisplayName = "Active"),
-	Inactive UMETA(DisplayName = "Inactive"),
-	Completed UMETA(DisplayName = "Completed")
+	Parallel UMETA(DisplayName = "Parallel"),
+	Sequential UMETA(DisplayName = "Sequential")
 };

@@ -66,5 +66,18 @@ void UQSUtility::CompleteQuestNow(const UQuestData* QuestDataKey)
 		return;
 	}
 
-	QuestManager->AddToCompletedQuests(QuestDataKey);
+	QuestManager->AddToCompletedQuests(QuestDataKey, true);
+}
+
+void UQSUtility::TrackQuest(const UQuestData* QuestDataKey)
+{
+	UQuestManager* QuestManager = GetQuestManager();
+	
+	if(!QuestManager)
+	{
+		UE_LOG(LogTemp, Error, TEXT("QS: QuestManager is null. Cannot track the quest."));
+		return;
+	}
+
+	QuestManager->TrackQuest(QuestDataKey);
 }

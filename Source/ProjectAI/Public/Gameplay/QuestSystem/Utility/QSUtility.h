@@ -20,37 +20,44 @@ public:
 	static void Init(UQuestManager* QuestManager);
 	
 	/**
-	 * Get the found QuestLog.
-	 * @return QuestLog.
+	 * Gets the found QuestManager.
+	 * @return QuestManager.
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	UFUNCTION(BlueprintPure, Category = "Quest System")
 	static UQuestManager* GetQuestManager();
 
 	/**
-	 * Achieve a task in the active quests.
+	 * Achieves a task in the active quests list.
 	 * @param TaskDataKey The task to achieve.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	static void AchieveTask(const UTaskData* TaskDataKey);
 
 	/**
-	 * Put the quest in the Active Quests list.
+	 * Puts the quest in the active quests list.
 	 * @param QuestDataKey The quest to activate.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	static void ActivateQuest(const UQuestData* QuestDataKey);
 
 	/**
-	 * Put the quest in the Inactive Quests list.
+	 * Puts the quest in the inactive quests list.
 	 * @param QuestDataKey The quest to deactivate.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	static void DeactivateQuest(const UQuestData* QuestDataKey);
 
 	/**
-	 * Put the quest in the Completed Quests list achieving all its tasks.
+	 * Puts the quest in the completed quests list and achieves all its tasks.
 	 * @param QuestDataKey The quest to complete.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	static void CompleteQuestNow(const UQuestData* QuestDataKey);
+
+	/**
+	 * Tracks a quest.
+	 * @param QuestDataKey The quest to track.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	static void TrackQuest(const UQuestData* QuestDataKey);
 };

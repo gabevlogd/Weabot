@@ -17,4 +17,6 @@ struct FQuestSaveData
 	EQuestStatus QuestStatus;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestSaveData")
 	TMap<FName, FTaskSaveData> Tasks;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestSaveData")
+	int32 CurrentTaskIndex;
 };

@@ -18,7 +18,7 @@ void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
 	}
 }
 
-void UQuestBase::AchieveQuestTask(const UTaskData* TaskDataKey)
+void UQuestBase::AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve)
 {
 }
 

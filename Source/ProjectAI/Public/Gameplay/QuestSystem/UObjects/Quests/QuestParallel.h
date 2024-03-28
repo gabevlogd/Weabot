@@ -15,5 +15,5 @@ class PROJECTAI_API UQuestParallel : public UQuestBase
 	GENERATED_BODY()
 
 public:
-	virtual void AchieveQuestTask(const UTaskData* TaskDataKey) override;
+	virtual void AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve) override;
 };

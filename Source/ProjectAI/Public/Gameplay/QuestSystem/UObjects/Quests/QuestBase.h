@@ -37,7 +37,7 @@ public:
 	virtual void Init(UQuestData* InitData, EQuestType QuestType);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	virtual void AchieveQuestTask(const UTaskData* TaskDataKey);
+	virtual void AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve = false);
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveAllTasks(const bool bFullyAchieve = false) const;
@@ -60,7 +60,7 @@ public:
 	EQuestType GetQuestType() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	FQuestSaveData CreateQuestSaveData() const;
+	virtual FQuestSaveData CreateQuestSaveData() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void ResetQuest();

@@ -5,6 +5,7 @@
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
+#include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
@@ -29,7 +30,7 @@ void UQuestManager::Init()
 			UE_LOG(LogTemp, Warning, TEXT("QS: A QuestData in the QuestLogData is null. Skipping..."));
 			continue;
 		}
-		
+
 		AddQuest(QuestEntry.Key, QuestEntry.Value);
 	}
 }
@@ -37,38 +38,47 @@ void UQuestManager::Init()
 void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 {
 	TrackedQuest = GetQuestByName(QuestLogSaveData.TrackedQuestName);
-	
+
 	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
 	{
-		const UQuestBase* Quest = GetQuestByName(QuestsData.Key);
+		UQuestBase* Quest = GetQuestByName(QuestsData.Key);
 		if (!Quest) continue; // If the quest is not found, skip it
+
+		if (UQuestSequencial* SequencialQuest = Cast<UQuestSequencial>(Quest))
+		{
+			SequencialQuest->SetCurrentTaskIndex(QuestsData.Value.CurrentTaskIndex);
+		}
 		
 		for (const TTuple<FName, FTaskSaveData> TaskSaveData : QuestsData.Value.Tasks)
 		{
 			UTaskBase* Task = Quest->GetTaskByName(TaskSaveData.Key);
 			if (!Task) continue; // If the task is not found, skip it
 
-			Task->bIsAchieved = TaskSaveData.Value.bIsAchieved;
-			
-			if (UCountTask* CountTask = Cast<UCountTask>(Task))
-				CountTask->SetCurrentCount(TaskSaveData.Value.CurrentAchieveCount);
-		}
+			if (TaskSaveData.Value.bIsAchieved)
+				Task->AchieveTask(true);
+			// Do not set manually bIsAchieved, as each task has its own logic
 
-		switch (QuestsData.Value.QuestStatus)
-		{
+			if (UCountTask* CountTask = Cast<UCountTask>(Task))
+			{
+				CountTask->SetCurrentCount(TaskSaveData.Value.CurrentAchieveCount);
+			}
+
+			switch (QuestsData.Value.QuestStatus)
+			{
 			case EQuestStatus::Active:
 				AddToActiveQuests(Quest->QuestData);
 				break;
-			
+
 			case EQuestStatus::Inactive:
 				AddToInactiveQuests(Quest->QuestData);
 				break;
-			
+
 			case EQuestStatus::Completed:
 				AddToCompletedQuests(Quest->QuestData);
 				break;
-			
+
 			default: ;
+			}
 		}
 	}
 }
@@ -97,7 +107,8 @@ void UQuestManager::TrackQuest(const UQuestData* QuestDataKey)
 
 void UQuestManager::AchieveTaskInActiveQuests(const UTaskData* TaskDataKey)
 {
-	TArray<UQuestBase*> TempActiveQuests = ActiveQuests; // Shallow copy, avoid modifying the original array while iterating
+	TArray<UQuestBase*> TempActiveQuests = ActiveQuests;
+	// Shallow copy, avoid modifying the original array while iterating
 
 	for (const UQuestBase* Quest : TempActiveQuests)
 		AchieveTaskInQuest(Quest->QuestData, TaskDataKey);
@@ -257,25 +268,25 @@ void UQuestManager::AddQuest(UQuestData* QuestData, const FQuestEntryData QuestE
 		UE_LOG(LogTemp, Error, TEXT("QS: Quest is null. Cannot add the quest."));
 		return;
 	}
-	
+
 	// QuestData->GetUniqueID(); Could use a unique ID for the key
 	AllQuests.Add(QuestData, Quest);
 
 	switch (QuestEntryData.InitialQuestStatus)
 	{
-		case EQuestStatus::Active:
-			AddToActiveQuests(QuestData);
-			break;
-		
-		case EQuestStatus::Inactive:
-			AddToInactiveQuests(QuestData);
-			break;
-		
-		case EQuestStatus::Completed:
-			AddToCompletedQuests(QuestData, true);
-			break;
-		
-		default: ;
+	case EQuestStatus::Active:
+		AddToActiveQuests(QuestData);
+		break;
+
+	case EQuestStatus::Inactive:
+		AddToInactiveQuests(QuestData);
+		break;
+
+	case EQuestStatus::Completed:
+		AddToCompletedQuests(QuestData, true);
+		break;
+
+	default: ;
 	}
 }
 

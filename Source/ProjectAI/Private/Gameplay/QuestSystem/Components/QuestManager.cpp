@@ -1,12 +1,10 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 
 #include "Gameplay/QuestSystem/Components/QuestManager.h"
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
-#include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
-#include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
 

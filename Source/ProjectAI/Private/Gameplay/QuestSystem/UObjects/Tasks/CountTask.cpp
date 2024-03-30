@@ -1,4 +1,4 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 
 #include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"

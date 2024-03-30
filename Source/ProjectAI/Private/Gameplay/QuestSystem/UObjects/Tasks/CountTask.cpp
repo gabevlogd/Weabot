@@ -14,6 +14,12 @@ void UCountTask::Init(UTaskData* InitData, UQuestBase* Quest)
 		CountToAchieve = CountTaskData->CountToAchieve;
 }
 
+void UCountTask::LoadSaveData(const FTaskSaveData& TaskSaveData)
+{
+	Super::LoadSaveData(TaskSaveData);
+	CurrentCount = TaskSaveData.CurrentAchieveCount;
+}
+
 void UCountTask::AchieveTask(const bool bFullyAchieve)
 {
 	if (bIsAchieved) return;
@@ -43,11 +49,6 @@ void UCountTask::ResetTask()
 {
 	Super::ResetTask();
 	CurrentCount = 0;
-}
-
-void UCountTask::SetCurrentCount(const int32 NewCount)
-{
-	CurrentCount = NewCount;
 }
 
 int32 UCountTask::GetCurrentCount() const

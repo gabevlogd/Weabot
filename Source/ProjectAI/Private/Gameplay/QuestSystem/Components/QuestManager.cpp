@@ -38,47 +38,29 @@ void UQuestManager::Init()
 void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 {
 	TrackedQuest = GetQuestByName(QuestLogSaveData.TrackedQuestName);
-
+	
 	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
 	{
 		UQuestBase* Quest = GetQuestByName(QuestsData.Key);
 		if (!Quest) continue; // If the quest is not found, skip it
 
-		if (UQuestSequencial* SequencialQuest = Cast<UQuestSequencial>(Quest))
-		{
-			SequencialQuest->SetCurrentTaskIndex(QuestsData.Value.CurrentTaskIndex);
-		}
+		Quest->LoadSaveData(QuestsData.Value);
 		
-		for (const TTuple<FName, FTaskSaveData> TaskSaveData : QuestsData.Value.Tasks)
+		switch (QuestsData.Value.QuestStatus)
 		{
-			UTaskBase* Task = Quest->GetTaskByName(TaskSaveData.Key);
-			if (!Task) continue; // If the task is not found, skip it
-
-			if (TaskSaveData.Value.bIsAchieved)
-				Task->AchieveTask(true);
-			// Do not set manually bIsAchieved, as each task has its own logic
-
-			if (UCountTask* CountTask = Cast<UCountTask>(Task))
-			{
-				CountTask->SetCurrentCount(TaskSaveData.Value.CurrentAchieveCount);
-			}
-
-			switch (QuestsData.Value.QuestStatus)
-			{
 			case EQuestStatus::Active:
 				AddToActiveQuests(Quest->QuestData);
 				break;
-
+		
 			case EQuestStatus::Inactive:
 				AddToInactiveQuests(Quest->QuestData);
 				break;
-
+		
 			case EQuestStatus::Completed:
 				AddToCompletedQuests(Quest->QuestData);
 				break;
-
+		
 			default: ;
-			}
 		}
 	}
 }

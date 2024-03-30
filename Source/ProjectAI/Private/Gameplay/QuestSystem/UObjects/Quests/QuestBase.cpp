@@ -18,6 +18,17 @@ void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
 	}
 }
 
+void UQuestBase::LoadSaveData(FQuestSaveData QuestSaveData)
+{
+	for (auto TaskSaveData : QuestSaveData.Tasks)
+	{
+		UTaskBase* Task = GetTaskByFName(TaskSaveData.Key);
+		if (!Task) continue; // If the task is not found, skip it
+		
+		Task->LoadSaveData(TaskSaveData.Value);
+	}
+}
+
 void UQuestBase::AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve)
 {
 }
@@ -43,7 +54,7 @@ UTaskBase* UQuestBase::GetTask(const UTaskData* TaskDataKey) const
 	return AllTasks.FindRef(TaskDataKey);
 }
 
-UTaskBase* UQuestBase::GetTaskByName(const FName TaskName) const
+UTaskBase* UQuestBase::GetTaskByFName(const FName TaskName) const
 {
 	for (const auto& Task : AllTasks)
 	{

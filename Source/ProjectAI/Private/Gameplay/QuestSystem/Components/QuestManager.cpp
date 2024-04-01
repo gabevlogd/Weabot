@@ -8,7 +8,7 @@
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
 
-UQuestManager::UQuestManager()
+UQuestManager::UQuestManager(): QuestLogData(nullptr), TrackedQuest(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
@@ -31,15 +31,29 @@ void UQuestManager::Init()
 
 		AddQuest(QuestEntry.Key, QuestEntry.Value);
 	}
+
+	TrackQuest(QuestLogData->FirstTrackedQuest);
+}
+
+FQuestLogSaveData UQuestManager::CreateSaveData() const
+{
+	FQuestLogSaveData QuestLogSaveData;
+
+	for (const TTuple<UQuestData*, UQuestBase*> QuestTuple : AllQuests)
+	{
+		FQuestSaveData QuestSaveData = QuestTuple.Value->CreateQuestSaveData();
+		QuestLogSaveData.Quests.Add(QuestTuple.Key->GetFName(), QuestSaveData);
+	}
+	
+	QuestLogSaveData.TrackedQuestFName = TrackedQuest ? TrackedQuest->QuestData->GetFName() : NAME_None;
+	return QuestLogSaveData;
 }
 
 void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 {
-	TrackedQuest = GetQuestByName(QuestLogSaveData.TrackedQuestName);
-	
 	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
 	{
-		UQuestBase* Quest = GetQuestByName(QuestsData.Key);
+		UQuestBase* Quest = GetQuestByFName(QuestsData.Key);
 		if (!Quest) continue; // If the quest is not found, skip it
 
 		Quest->LoadSaveData(QuestsData.Value);
@@ -61,19 +75,8 @@ void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 			default: ;
 		}
 	}
-}
 
-FQuestLogSaveData UQuestManager::CreateSaveData() const
-{
-	FQuestLogSaveData QuestLogSaveData;
-
-	for (const TTuple<UQuestData*, UQuestBase*> QuestTuple : AllQuests)
-	{
-		FQuestSaveData QuestSaveData = QuestTuple.Value->CreateQuestSaveData();
-		QuestLogSaveData.Quests.Add(QuestTuple.Key->GetFName(), QuestSaveData);
-	}
-	QuestLogSaveData.TrackedQuestName = TrackedQuest ? TrackedQuest->QuestData->GetFName() : NAME_None;
-	return QuestLogSaveData;
+	TrackQuestByFName(QuestLogSaveData.TrackedQuestFName);
 }
 
 void UQuestManager::TrackQuest(const UQuestData* QuestDataKey)
@@ -185,17 +188,6 @@ UQuestBase* UQuestManager::GetQuest(const UQuestData* QuestDataKey) const
 	return AllQuests.FindRef(QuestDataKey);
 }
 
-UQuestBase* UQuestManager::GetQuestByName(const FName QuestName) const
-{
-	for (const auto& QuestTuple : AllQuests)
-	{
-		if (QuestTuple.Key->GetFName() == QuestName)
-			return QuestTuple.Value;
-	}
-
-	return nullptr;
-}
-
 TArray<UQuestBase*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const
 {
 	TArray<UQuestBase*> FilteredQuests;
@@ -207,6 +199,26 @@ TArray<UQuestBase*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* Que
 	}
 
 	return FilteredQuests;
+}
+
+UQuestBase* UQuestManager::GetQuestByFName(const FName QuestFName) const
+{
+	for (const auto& QuestTuple : AllQuests)
+	{
+		if (QuestTuple.Key->GetFName() == QuestFName)
+			return QuestTuple.Value;
+	}
+
+	return nullptr;
+}
+
+void UQuestManager::TrackQuestByFName(const FName QuestFName)
+{
+	UQuestBase* Quest = GetQuestByFName(QuestFName);
+	if (!Quest) return;
+
+	TrackedQuest = Quest;
+	OnQuestTracked.Broadcast(TrackedQuest);
 }
 
 #if WITH_EDITOR

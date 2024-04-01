@@ -19,7 +19,6 @@ private:
 	static FProfileData CurrentProfile;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void Init();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")

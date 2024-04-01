@@ -16,5 +16,7 @@ class PROJECTAI_API UQuestLogData : public UPrimaryDataAsset
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "QuestLogData")
+	UQuestData* FirstTrackedQuest;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "QuestLogData")
 	TMap<UQuestData*, FQuestEntryData> QuestEntries;
 };

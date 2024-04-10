@@ -51,6 +51,7 @@ FQuestLogSaveData UQuestManager::CreateSaveData() const
 
 void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 {
+	ResetQuestLog();
 	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
 	{
 		UQuestBase* Quest = GetQuestByFName(QuestsData.Key);
@@ -75,8 +76,10 @@ void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
 			default: ;
 		}
 	}
-
-	TrackQuestByFName(QuestLogSaveData.TrackedQuestFName);
+	
+	TrackedQuest = nullptr;
+	if (QuestLogSaveData.TrackedQuestFName != NAME_None)
+		TrackQuestByFName(QuestLogSaveData.TrackedQuestFName);
 }
 
 void UQuestManager::TrackQuest(const UQuestData* QuestDataKey)
@@ -201,6 +204,15 @@ TArray<UQuestBase*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* Que
 	return FilteredQuests;
 }
 
+void UQuestManager::ResetQuestLog()
+{
+	ActiveQuests.Empty();
+	InactiveQuests.Empty();
+	CompletedQuests.Empty();
+	TrackedQuest = nullptr;
+	Init();
+}
+
 UQuestBase* UQuestManager::GetQuestByFName(const FName QuestFName) const
 {
 	for (const auto& QuestTuple : AllQuests)
@@ -254,7 +266,7 @@ void UQuestManager::AddQuest(UQuestData* QuestData, const FQuestEntryData QuestE
 		return;
 	}
 
-	UQuestBase* Quest = UQSFactory::CreateQuestByType(QuestData, QuestEntryData.QuestType);
+	UQuestBase* Quest = UQSFactory::CreateQuestByType(QuestData, QuestEntryData);
 	if (!Quest)
 	{
 		UE_LOG(LogTemp, Error, TEXT("QS: Quest is null. Cannot add the quest."));

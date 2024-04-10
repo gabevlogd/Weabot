@@ -8,26 +8,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Data/Saves/LastSelectedSlotSave.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/00000000000.xd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/ProfilesSystem/Buttons/WBP_ProfileButton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/ProfilesSystem/Buttons/WBP_ProfileButton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/WBP_Task.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/WBP_Task.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savables/Saver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savables/Saver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savables/TransformSaver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savables/TransformSaver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/DefaultSaveGame.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/ProfilesManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SlotsManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSFactory.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SlotsManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SlotsManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Utility/SVUtility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Utility/SVUtility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Components/Savables/Saver.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Components/Savables/Saver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Data/Structs/ProfileData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Data/Structs/SaveSlotData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/DefaultSaveGame.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Data/Saves/DefaultSaveGame.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/ProfilesManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SlotsManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSFactory.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSFactory.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Data/Saves/LastSelectedSlotSave.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Data/Saves/SlotsInfoSave.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SaveManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SaveManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SlotsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SlotsManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Utility/SVUtility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Utility/SVUtility.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,6 +203,7 @@
       <workItem from="1711986139668" duration="4184000" />
       <workItem from="1712713109387" duration="13973000" />
       <workItem from="1712727209046" duration="2350000" />
+      <workItem from="1712752121826" duration="19766000" />
     </task>
     <servers />
   </component>

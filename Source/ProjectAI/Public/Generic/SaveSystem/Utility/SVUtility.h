@@ -23,11 +23,14 @@ public:
 	static USaveManager* GetSaveManager();
 	
 	UFUNCTION(BlueprintPure, Category = "Save System")
-	static UDefaultSaveGame* GetSaveGameData();
-	
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void SaveGame();
+	static UDefaultSaveGame* GetSaveGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void LoadGame();
+	static void SaveAsNewSlot();
+	
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void SaveOnSelectedSlot();
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void LoadFromSelectedSlot();
 };

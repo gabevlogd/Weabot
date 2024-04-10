@@ -16,17 +16,22 @@ USaveManager* USVUtility::GetSaveManager()
 	return CurrentSaveManager;
 }
 
-UDefaultSaveGame* USVUtility::GetSaveGameData()
+UDefaultSaveGame* USVUtility::GetSaveGame()
 {
 	return CurrentSaveManager->GetSaveGame();
 }
 
-void USVUtility::SaveGame()
+void USVUtility::SaveAsNewSlot()
 {
-	CurrentSaveManager->Save();
+	CurrentSaveManager->SaveAsNewSlot();
 }
 
-void USVUtility::LoadGame()
+void USVUtility::SaveOnSelectedSlot()
 {
-	CurrentSaveManager->Load();
+	CurrentSaveManager->SaveOnSelectedSlot();
+}
+
+void USVUtility::LoadFromSelectedSlot()
+{
+	CurrentSaveManager->LoadFromSelectedSlot();
 }

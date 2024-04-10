@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
-#include "LastSelectedSlotSave.generated.h"
+#include "SlotsInfoSave.generated.h"
 
 
 UCLASS()
-class PROJECTAI_API ULastSelectedSlotSave : public USaveGame
+class PROJECTAI_API USlotsInfoSave : public USaveGame
 {
 	GENERATED_BODY()
 

@@ -20,7 +20,7 @@ private:
 	int32 CurrentTaskIndex = 0;
 	
 public:
-	virtual void Init(UQuestData* InitData, const EQuestType Type) override;
+	virtual void Init(UQuestData* InitData, const FQuestEntryData& EntryData) override;
 	virtual void LoadSaveData(FQuestSaveData QuestSaveData) override;
 	virtual void AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve) override;
 	virtual void ResetQuest() override;

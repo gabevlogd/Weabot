@@ -91,6 +91,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	TArray<UQuestBase*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
 	
+	void ResetQuestLog();
 	UQuestBase* GetQuestByFName(const FName QuestFName) const;
 	void TrackQuestByFName(const FName QuestFName);
 	

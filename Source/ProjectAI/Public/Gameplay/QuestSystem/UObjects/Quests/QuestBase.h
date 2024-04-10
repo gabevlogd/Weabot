@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Gameplay/QuestSystem/Data/DataAssets/QuestData.h"
 #include "Gameplay/QuestSystem/Data/Enums/QuestStatus.h"
+#include "Gameplay/QuestSystem/Data/Structs/QuestEntryData.h"
 #include "Gameplay/QuestSystem/Data/Structs/QuestSaveData.h"
 #include "UObject/Object.h"
 #include "QuestBase.generated.h"
@@ -32,9 +33,10 @@ public:
 private:
 	EQuestType QuestType;
 	EQuestStatus QuestStatus;
+	FQuestEntryData QuestEntryData;
 	
 public:
-	virtual void Init(UQuestData* InitData, EQuestType QuestType);
+	virtual void Init(UQuestData* InitData, const FQuestEntryData& EntryData);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void LoadSaveData(FQuestSaveData QuestSaveData);

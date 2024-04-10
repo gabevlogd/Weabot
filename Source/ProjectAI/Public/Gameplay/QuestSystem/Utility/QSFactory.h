@@ -14,6 +14,6 @@ class PROJECTAI_API UQSFactory : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static UQuestBase* CreateQuestByType(UQuestData* QuestData, const EQuestType QuestType);
+	static UQuestBase* CreateQuestByType(UQuestData* QuestData, const FQuestEntryData& QuestEntryData);
 	static UTaskBase* CreateTaskByType(UQuestBase* RelatedQuest, UTaskData* TaskData, const ETaskType TaskType);
 };

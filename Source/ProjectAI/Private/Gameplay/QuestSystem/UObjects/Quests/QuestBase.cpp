@@ -6,10 +6,11 @@
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 
 
-void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
+void UQuestBase::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 {
 	QuestData = InitData;
-	QuestType = Type;
+	QuestType = EntryData.QuestType;
+	QuestEntryData = EntryData;
 	
 	for (UTaskData* TaskData : InitData->TasksData)
 	{
@@ -20,6 +21,7 @@ void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
 
 void UQuestBase::LoadSaveData(FQuestSaveData QuestSaveData)
 {
+	ResetQuest();
 	for (auto TaskSaveData : QuestSaveData.Tasks)
 	{
 		UTaskBase* Task = GetTaskByFName(TaskSaveData.Key);
@@ -95,6 +97,7 @@ FQuestSaveData UQuestBase::CreateQuestSaveData() const
 
 void UQuestBase::ResetQuest()
 {
+	SetQuestStatus(QuestEntryData.InitialQuestStatus);
 	for(const auto& Task : AllTasks)
 		Task.Value->ResetTask();
 

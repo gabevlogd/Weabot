@@ -5,9 +5,9 @@
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
 
-void UQuestSequencial::Init(UQuestData* InitData, const EQuestType Type)
+void UQuestSequencial::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 {
-	Super::Init(InitData, Type);
+	Super::Init(InitData, EntryData);
 	TasksByIndex = InitData->TasksData;
 }
 

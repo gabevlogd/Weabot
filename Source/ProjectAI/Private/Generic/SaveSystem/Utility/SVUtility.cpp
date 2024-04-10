@@ -16,7 +16,7 @@ USaveManager* USVUtility::GetSaveManager()
 	return CurrentSaveManager;
 }
 
-USaveGame* USVUtility::GetSaveGameData()
+UDefaultSaveGame* USVUtility::GetSaveGameData()
 {
 	return CurrentSaveManager->GetSaveGame();
 }

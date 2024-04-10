@@ -23,7 +23,7 @@ public:
 	static USaveManager* GetSaveManager();
 	
 	UFUNCTION(BlueprintPure, Category = "Save System")
-	static USaveGame* GetSaveGameData();
+	static UDefaultSaveGame* GetSaveGameData();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void SaveGame();

@@ -21,10 +21,24 @@ void UTransformSaver::OnLoadCompletedEvent_Implementation(const FString& SlotNam
 	Super::OnLoadCompletedEvent_Implementation(SlotName, UserIndex, LoadedData);
 	const FName OwnerUniqueID = GetUniqueSaveID();
 	
-	if (LoadedData->ActorTransforms.Contains(OwnerUniqueID))
-		GetOwner()->SetActorTransform(LoadedData->ActorTransforms[OwnerUniqueID]);
+	// Check if LoadedData and ActorTransforms are valid
+	if (LoadedData && LoadedData->ActorTransforms.Contains(OwnerUniqueID))
+	{
+		AActor* Owner = GetOwner();
+		// Check if Owner is valid
+		if (Owner)
+		{
+			Owner->SetActorTransform(LoadedData->ActorTransforms[OwnerUniqueID]);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Owner is null"));
+		}
+	}
 	else
-		UE_LOG( LogTemp, Warning, TEXT("Owner Unique ID not found in the loaded data") );
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Owner Unique ID not found in the loaded data"));
+	}
 }
 
 FTransform UTransformSaver::GetOwnerTransform() const

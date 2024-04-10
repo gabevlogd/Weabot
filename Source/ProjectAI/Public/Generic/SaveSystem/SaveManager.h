@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DefaultSaveGame.h"
+#include "Data/Saves/DefaultSaveGame.h"
 #include "GameFramework/SaveGame.h"
 #include "UObject/Object.h"
 #include "SaveManager.generated.h"
 
+#define DEFAULT_SAVE_GAME_NAME "Default"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnPrepareSave,
@@ -35,7 +36,7 @@ class PROJECTAI_API USaveManager : public UObject
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System")
-	TSubclassOf<UDefaultSaveGame> SaveGameClass;
+	TSubclassOf<UDefaultSaveGame> CurrentSaveGameClass;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
 	FOnPrepareSave OnPrepareSave;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
@@ -53,22 +54,19 @@ public:
 	USaveManager();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void Init(const TSubclassOf<USaveGame> SaveClass);
+	void Init(const TSubclassOf<USaveGame> SaveGameClass);
 	
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	UDefaultSaveGame* GetSaveGame() const;
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	virtual void Save();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	virtual void Load();
 
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static FString GetSaveSlotName();
-
+	bool CreateFile(const FString& SlotFileName);
 private:
 	void OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
 	void OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
-	void CheckFileExistence(TSubclassOf<USaveGame> SaveClass);
 };

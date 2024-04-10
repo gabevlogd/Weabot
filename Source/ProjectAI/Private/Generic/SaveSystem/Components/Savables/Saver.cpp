@@ -2,8 +2,7 @@
 
 
 #include "Generic/SaveSystem/Components/Savables/Saver.h"
-
-#include "Generic/SaveSystem/ProfilesManager.h"
+#include "Generic/SaveSystem/SlotsManager.h"
 #include "Generic/SaveSystem/Utility/SVUtility.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -15,10 +14,10 @@ USaver::USaver()
 
 FName USaver::GetUniqueSaveID() const
 {
-	const FString ProfileName = UProfilesManager::GetCurrentProfile().ProfileName;
+	const FString SlotName = USlotsManager::GetSelectedSlotName();
 	const FString OwnerName = GetOwner()->GetName();
 	const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-	const FString UniqueID = ProfileName + "_" + OwnerName + "::" + LevelName;
+	const FString UniqueID = SlotName + "_" + OwnerName + "::" + LevelName;
 	const int32 Hash = GetTypeHash(UniqueID);
 	const FString Hex = FString::Printf(TEXT("%08X"), Hash);
 	

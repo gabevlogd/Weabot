@@ -8,10 +8,12 @@
 #include "UObject/Object.h"
 #include "SaveManager.generated.h"
 
+#define SAVE_EXTENSION ".sav"
 #define SAVES_DIRECTORY "Saves/"
+#define SAVES_DIRECTORY_FULLPATH FPaths::ProjectSavedDir() + TEXT("SaveGames/" + SAVES_DIRECTORY)
 #define SAVE_SLOT_NAME "save_"
 #define AUTO_SAVE_SLOT_NAME "auto_save_"
-#define SLOTS_INFO_SLOT_NAME "saveinfo"
+#define SLOTS_INFO_SAVE_NAME "saveinfo"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnPrepareSave,
@@ -70,20 +72,23 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	UDefaultSaveGame* GetSaveGame() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	virtual void SaveAsNewSlot();
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	TArray<UDefaultSaveGame*> GetAllSaveGames();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	virtual void SaveOnSlot(const FString& SlotName);
+	void SaveAsNewSlot();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	virtual void LoadFromSlot(const FString& SlotName);
+	void SaveOnSlot(const FString& SlotName);
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	void LoadFromSlot(const FString& SlotName);
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	virtual void SaveOnSelectedSlot();
+	void SaveOnSelectedSlot();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	virtual void LoadFromSelectedSlot();
+	void LoadFromSelectedSlot();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void PauseAutoSave();
@@ -91,10 +96,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void UnPauseAutoSave();
 
-	FTimerManager& GetWorldTimerManager() const;
 	void SaveAsAutoSave();
 	bool CreateFile(const FString& SlotFileName);
 private:
 	void OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
 	void OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
+	FTimerManager& GetWorldTimerManager() const;
 };

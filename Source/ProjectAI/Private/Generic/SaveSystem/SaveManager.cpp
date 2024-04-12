@@ -41,6 +41,22 @@ UDefaultSaveGame* USaveManager::GetSaveGame() const
 	return SaveGameData;
 }
 
+TArray<UDefaultSaveGame*> USaveManager::GetAllSaveGames()
+{
+	TArray<UDefaultSaveGame*> SaveGames;
+	TArray<FString> SlotNames;
+	USlotsManager::GetSlotFileNames(SlotNames);
+
+	for (const FString& SaveGameName : SlotNames)
+	{
+		if (UDefaultSaveGame* DefaultSaveGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveGameName, 0)))
+			SaveGames.Add(DefaultSaveGame);
+	}
+
+	SaveGames.Sort();
+	return SaveGames;
+}
+
 void USaveManager::SaveAsNewSlot()
 {
 	USlotsManager::CreateSlotFile();
@@ -72,7 +88,7 @@ void USaveManager::SaveOnSelectedSlot()
 {
 	if (!USlotsManager::IsSelectedSlotValid()) return;
 	
-	const FString SlotName = USlotsManager::GetSelectedSlotName();
+	const FString SlotName = USlotsManager::GetSelectedSaveSlotName();
 	SaveOnSlot(SlotName);
 }
 
@@ -80,7 +96,7 @@ void USaveManager::LoadFromSelectedSlot()
 {
 	if (!USlotsManager::IsSelectedSlotValid()) return;
 	
-	const FString SlotName = USlotsManager::GetSelectedSlotName();
+	const FString SlotName = USlotsManager::GetSelectedSaveSlotName();
 	LoadFromSlot(SlotName);
 }
 
@@ -96,17 +112,20 @@ void USaveManager::UnPauseAutoSave()
 	GetWorldTimerManager().UnPauseTimer(AutoSaveTimerHandle);
 }
 
-FTimerManager& USaveManager::GetWorldTimerManager() const
-{
-	return GetWorld()->GetTimerManager();
-}
-
 void USaveManager::SaveAsAutoSave()
 {
 	if (!bAutoSave) return;
 	FString AutoSaveSlotName;
 	USlotsManager::CreateAutoSaveSlotFile(AutoSaveSlotName);
 	SaveOnSlot(AutoSaveSlotName);
+}
+
+bool USaveManager::CreateFile(const FString& SlotFileName)
+{
+	if (UGameplayStatics::DoesSaveGameExist(SlotFileName, 0)) return false;
+
+	SaveGameData = Cast<UDefaultSaveGame>(UGameplayStatics::CreateSaveGameObject(CurrentSaveGameClass));
+	return UGameplayStatics::SaveGameToSlot(SaveGameData, SAVES_DIRECTORY + SlotFileName, 0);
 }
 
 void USaveManager::OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const
@@ -122,10 +141,7 @@ void USaveManager::OnLoadGameCompleted(const FString& SlotName, const int32 User
 	OnLoadGame.Broadcast(SlotName, UserIndex, SaveGameData);
 }
 
-bool USaveManager::CreateFile(const FString& SlotFileName)
+FTimerManager& USaveManager::GetWorldTimerManager() const
 {
-	if (UGameplayStatics::DoesSaveGameExist(SlotFileName, 0)) return false;
-
-	SaveGameData = Cast<UDefaultSaveGame>(UGameplayStatics::CreateSaveGameObject(CurrentSaveGameClass));
-	return UGameplayStatics::SaveGameToSlot(SaveGameData, SAVES_DIRECTORY + SlotFileName, 0);
+	return GetWorld()->GetTimerManager();
 }

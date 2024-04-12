@@ -24,4 +24,14 @@ public:
 		SaveSlotData = FSaveSlotData();
 		ActorTransforms = TMap<FName, FTransform>();
 	}
+
+	bool operator<(const UDefaultSaveGame& Other) const
+	{
+		return SaveSlotData.LastSaveDate < Other.SaveSlotData.LastSaveDate;
+	}
+
+	bool operator>(const UDefaultSaveGame& Other) const
+	{
+		return SaveSlotData.LastSaveDate > Other.SaveSlotData.LastSaveDate;
+	}
 };

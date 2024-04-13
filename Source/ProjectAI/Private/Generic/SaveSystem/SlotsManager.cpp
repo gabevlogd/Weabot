@@ -3,7 +3,6 @@
 
 #include "Generic/SaveSystem/SlotsManager.h"
 #include "Generic/SaveSystem/Data/Saves/DefaultSaveGame.h"
-#include "Generic/SaveSystem/Data/Saves/SlotsInfoSave.h"
 #include "Generic/SaveSystem/Utility/SVUtility.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -14,23 +13,20 @@ USaveManager* USlotsManager::CurrentSaveManager = nullptr;
 void USlotsManager::Init(USaveManager* SaveManager)
 {
 	if (!SaveManager) return;
-	
+
 	CurrentSaveManager = SaveManager;
-	
-	if (!DoesAnySlotFileExist())
-	{
-		CreateSlotFile();
-		return;
-	}
-	
-	LoadSlotsInfo();
+
+	// if (!DoesAnySlotFileExist())
+	// {
+	// 	CreateSlotFile();
+	// 	return;
+	// }
 }
 
 bool USlotsManager::SelectSaveSlot(const FString& SlotName)
 {
 	if (!DoesSlotFileExist(SlotName)) return false;
 	SelectedSaveSlotName = SlotName;
-	SaveSlotsInfo();
 	return true;
 }
 
@@ -39,34 +35,10 @@ FString USlotsManager::GetSelectedSaveSlotName()
 	return SelectedSaveSlotName;
 }
 
-bool USlotsManager::CreateSlotFileOfName(const FString& SlotName, const bool bSelectCreatedSlot)
-{
-	if (!IsSlotNameValid(SlotName)) return false;
-
-	if (CurrentSaveManager->CreateFile(SlotName))
-	{
-		if (bSelectCreatedSlot)
-			SelectSaveSlot(SlotName);
-		
-		UDefaultSaveGame* SaveGameData = CurrentSaveManager->GetSaveGame();
-		FSaveSlotData& SlotData = SaveGameData->SaveSlotData;
-		SlotData = FSaveSlotData();
-		SlotData.SlotName = SlotName;
-		return true;
-	}
-	
-	return false;
-}
-
-bool USlotsManager::CreateSlotFile()
-{
-	const FString NextSlotName = SAVE_SLOT_NAME + FString::FromInt(GetNumberOfSlots());
-	return CreateSlotFileOfName(NextSlotName);
-}
-
 bool USlotsManager::DeleteSlotFile(const FString& SlotName)
 {
 	if (!DoesSlotFileExist(SlotName)) return false;
+	SelectMostRecentSaveSlot(); // Select the most recent slot after deleting the current one to avoid invalid selection
 	return UGameplayStatics::DeleteGameInSlot(SlotName, 0);
 }
 
@@ -84,7 +56,128 @@ bool USlotsManager::DoesSlotFileExist(const FString& SlotName)
 
 bool USlotsManager::DoesAnySlotFileExist()
 {
-	return GetNumberOfSlots() > 0;
+	int32 AutoSaveSlots;
+	int32 SaveSlots;
+	return GetNumberOfSlots(AutoSaveSlots, SaveSlots) > 0;
+}
+
+TArray<FSaveSlotData> USlotsManager::GetAllSlotsData()
+{
+	TArray<FSaveSlotData> Slots;
+	TArray<FString> SlotNames;
+	USlotsManager::GetSlotFilesNames(SlotNames);
+
+	for (const FString& SaveGameName : SlotNames)
+	{
+		if (const UDefaultSaveGame* DefaultSaveGame = Cast<UDefaultSaveGame>(
+			UGameplayStatics::LoadGameFromSlot(SaveGameName, 0)))
+			Slots.Add(DefaultSaveGame->SaveSlotData);
+	}
+
+	return Slots;
+}
+
+bool USlotsManager::GetSlotFilesNames(TArray<FString>& OutSaveFiles, bool bHasExtension)
+{
+	const FString SaveDirectory = SAVES_DIRECTORY_FULLPATH;
+	IFileManager& FileManager = IFileManager::Get();
+
+	if (!FileManager.DirectoryExists(*SaveDirectory)) return false;
+
+	FileManager.FindFiles(OutSaveFiles, *SaveDirectory, TEXT(SAVE_EXTENSION));
+
+	if (!bHasExtension)
+	{
+		for (FString& SlotName : OutSaveFiles)
+			SlotName.RemoveFromEnd(SAVE_EXTENSION);
+	}
+
+	return OutSaveFiles.Num() > 0;
+}
+
+int32 USlotsManager::GetNumberOfSlots(int32& OutAutoSavesSlotsNumber, int32& OutManualSaveSlotsNumber)
+{
+	TArray<FString> SaveFiles;
+	OutManualSaveSlotsNumber = 0;
+	OutAutoSavesSlotsNumber = 0;
+	if (!GetSlotFilesNames(SaveFiles)) return 0;
+
+	for (const FString& SlotName : SaveFiles)
+	{
+		if (SlotName.Contains(AUTO_SAVE_SLOT_NAME))
+			OutAutoSavesSlotsNumber++;
+	}
+
+	OutManualSaveSlotsNumber = SaveFiles.Num() - OutAutoSavesSlotsNumber;
+	return SaveFiles.Num();
+}
+
+void USlotsManager::SelectMostRecentSaveSlot()
+{
+	FSaveSlotData SlotData;
+	GetMostRecentSlotData(SlotData);
+	SelectSaveSlot(SlotData.SlotName);
+}
+
+void USlotsManager::SelectMostAncientSaveSlot()
+{
+	FSaveSlotData SlotData;
+	GetMostAncientSlotData(SlotData);
+	SelectSaveSlot(SlotData.SlotName);
+}
+
+bool USlotsManager::GetMostRecentSlotData(FSaveSlotData& OutSlotData)
+{
+	const TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
+	if (SaveGames.Num() <= 0) return false;
+
+	OutSlotData = SaveGames[0]->SaveSlotData;
+	return true;
+}
+
+bool USlotsManager::GetMostAncientSlotData(FSaveSlotData& OutSlotData, bool bIsAutoSave)
+{
+	TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
+
+	if (bIsAutoSave)
+	{
+		SaveGames.RemoveAll([](const UDefaultSaveGame* SaveGame)
+		{
+			return !SaveGame->SaveSlotData.SlotName.Contains(AUTO_SAVE_SLOT_NAME);
+		});
+	}
+	
+	if (SaveGames.Num() <= 0) return false;
+
+	OutSlotData = SaveGames[SaveGames.Num() - 1]->SaveSlotData;
+	return true;
+}
+
+bool USlotsManager::CreateSlotFileOfName(const FString& SlotName, const bool bSelectCreatedSlot)
+{
+	if (!IsSlotNameValid(SlotName)) return false;
+
+	if (CurrentSaveManager->CreateFile(SlotName))
+	{
+		if (bSelectCreatedSlot)
+			SelectSaveSlot(SlotName);
+
+		UDefaultSaveGame* SaveGameData = CurrentSaveManager->GetSaveGame();
+		SaveGameData->CreateSlotData(SlotName);
+		SaveSlotData(SaveGameData);
+		return true;
+	}
+
+	return false;
+}
+
+bool USlotsManager::CreateSlotFile()
+{
+	int32 AutoSaveSlots;
+	int32 SaveSlots;
+	GetNumberOfSlots(AutoSaveSlots, SaveSlots);
+	const FString NextSlotName = SAVE_SLOT_NAME + FString::FromInt(SaveSlots);
+	return CreateSlotFileOfName(NextSlotName);
 }
 
 bool USlotsManager::IsSelectedSlotValid()
@@ -95,99 +188,43 @@ bool USlotsManager::IsSelectedSlotValid()
 bool USlotsManager::IsSlotNameValid(const FString& SlotName)
 {
 	return
-	!SlotName.IsEmpty()
-	&& !DoesSlotFileExist(SlotName);
-}
-
-TArray<FSaveSlotData> USlotsManager::GetAllSlots()
-{
-	TArray<FSaveSlotData> Slots;
-	TArray<FString> SlotNames;
-	USlotsManager::GetSlotFileNames(SlotNames);
-
-	for (const FString& SaveGameName : SlotNames)
-	{
-		if (const UDefaultSaveGame* DefaultSaveGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveGameName, 0)))
-			Slots.Add(DefaultSaveGame->SaveSlotData);
-	}
-	
-	return Slots;
-}
-
-bool USlotsManager::GetSlotFileNames(TArray<FString>& OutSaveFiles)
-{
-	const FString SaveDirectory = SAVES_DIRECTORY_FULLPATH;
-	IFileManager& FileManager = IFileManager::Get();
-
-	if (!FileManager.DirectoryExists(*SaveDirectory)) return false;
-	
-	FileManager.FindFiles(OutSaveFiles, *SaveDirectory, TEXT(SAVE_EXTENSION));
-	return OutSaveFiles.Num() > 0;
-}
-
-int32 USlotsManager::GetNumberOfSlots()
-{
-	TArray<FString> SaveFiles;
-	if (GetSlotFileNames(SaveFiles)) return 0;
-	return SaveFiles.Num();
-}
-
-bool USlotsManager::GetMostRecentSlotData(FSaveSlotData& OutSlotData)
-{
-	FSaveSlotData Result = FSaveSlotData();
-	TArray<FString> SaveFiles;
-	if (!GetSlotFileNames(SaveFiles)) return false;
-
-	FDateTime MostRecentDate = FDateTime::MinValue();
-	for(const FString& SlotName : SaveFiles)
-	{
-		const UDefaultSaveGame* SaveGameInstance = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SlotName, 0));
-
-		if (SaveGameInstance->SaveSlotData.LastSaveDate > MostRecentDate)
-		{
-			MostRecentDate = SaveGameInstance->SaveSlotData.LastSaveDate;
-			Result = SaveGameInstance->SaveSlotData;
-		}
-	}
-
-	return true;
+		!SlotName.IsEmpty();
 }
 
 bool USlotsManager::CreateAutoSaveSlotFile(FString& SlotName)
 {
-	SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(GetNumberOfSlots());
+	int32 AutoSaveSlots;
+	int32 SaveSlots;
+	GetNumberOfSlots(AutoSaveSlots, SaveSlots);
+	SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(AutoSaveSlots);
+
+	if (AutoSaveSlots > CurrentSaveManager->MaxAutoSaves)
+	{
+		FSaveSlotData SlotData;
+		GetMostAncientSlotData(SlotData, true);
+		SlotName = SlotData.SlotName;
+	}
+	
 	return CreateSlotFileOfName(SlotName, false);
 }
 
-void USlotsManager::SaveSlotData(FSaveSlotData& SlotData)
+void USlotsManager::SaveSlotData(UDefaultSaveGame* SaveGame)
 {
-	SlotData.LastSaveDate = FDateTime::Now();
-
+	SaveGame->SaveSlotData.LastSaveDate = FDateTime::Now();
+	
 	if (GEngine && GEngine->GameViewport)
 	{
 		if (const UWorld* World = GEngine->GameViewport->GetWorld())
 		{
-			if (const APlayerController* PlayerController = World->GetFirstPlayerController())
+			if (!UGameplayStatics::IsGamePaused(World))
 			{
-				const float TimeSinceCreation = PlayerController->GetGameTimeSinceCreation();
-				SlotData.TimePlayed += TimeSinceCreation;
+				if (const APlayerController* PlayerController = World->GetFirstPlayerController())
+				{
+					const float TimeSinceCreation = PlayerController->GetGameTimeSinceCreation();
+					const FTimespan TimeToAdd = FTimespan::FromSeconds(TimeSinceCreation);
+					SaveGame->SaveSlotData.TimePlayed += TimeToAdd;
+				}
 			}
 		}
 	}
-}
-
-void USlotsManager::SaveSlotsInfo()
-{
-	USlotsInfoSave* SaveGameInstance = Cast<USlotsInfoSave>(UGameplayStatics::CreateSaveGameObject(USlotsInfoSave::StaticClass()));
-	SaveGameInstance->LastSelectedSaveSlotName = SelectedSaveSlotName;
-	UGameplayStatics::SaveGameToSlot(SaveGameInstance, SLOTS_INFO_SAVE_NAME, 0);
-}
-
-void USlotsManager::LoadSlotsInfo()
-{
-	const USlotsInfoSave* SaveGameInstance = Cast<USlotsInfoSave>(UGameplayStatics::LoadGameFromSlot(SLOTS_INFO_SAVE_NAME, 0));
-	if (!SaveGameInstance) return;
-	
-	SelectedSaveSlotName = SaveGameInstance->LastSelectedSaveSlotName;
-	SelectSaveSlot(SelectedSaveSlotName);
 }

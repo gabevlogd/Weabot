@@ -13,7 +13,6 @@
 #define SAVES_DIRECTORY_FULLPATH FPaths::ProjectSavedDir() + TEXT("SaveGames/" + SAVES_DIRECTORY)
 #define SAVE_SLOT_NAME "save_"
 #define AUTO_SAVE_SLOT_NAME "auto_save_"
-#define SLOTS_INFO_SAVE_NAME "saveinfo"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnPrepareSave,
@@ -46,6 +45,8 @@ public:
 	bool bAutoSave = true;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System", meta = (ClampMin = "30.0"))
 	float AutoSaveInterval = 60.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System", meta = (ClampMin = "1"))
+	int MaxAutoSaves = 3;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
 	FOnPrepareSave OnPrepareSave;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
@@ -67,7 +68,7 @@ public:
 	USaveManager();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void Init(const TSubclassOf<USaveGame> SaveGameClass, const bool bUseAutoSave, const float AutoSaveIntervalSeconds);
+	void Init(const TSubclassOf<USaveGame> SaveGameClass, const bool bUseAutoSave, const float AutoSaveIntervalSeconds, const int MaxAutoSavesNumber);
 	
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	UDefaultSaveGame* GetSaveGame() const;

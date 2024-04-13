@@ -17,7 +17,7 @@ class PROJECTAI_API USlotsManager : public UBlueprintFunctionLibrary
 private:
 	static FString SelectedSaveSlotName;
 	static USaveManager* CurrentSaveManager;
-	
+
 public:
 	static void Init(USaveManager* SaveManager);
 
@@ -35,22 +35,6 @@ public:
 	 */
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static FString GetSelectedSaveSlotName();
-
-	/**
-	 * Creates a slot file with the given name.
-	 * @param SlotName The name of the slot to create.
-	 * @param bSelectCreatedSlot If true, the created slot will be selected.
-	 * @return True if the slot file was created, false otherwise.
-	 */
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static bool CreateSlotFileOfName(const FString& SlotName, bool bSelectCreatedSlot = true);
-
-	/**
-	 * Creates the next slot file and selects it.
-	 * @return True if the slot file was created, false otherwise.
-	 */
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static bool CreateSlotFile();
 
 	/**
 	 * Deletes the slot file with the given name.
@@ -80,12 +64,50 @@ public:
 	 */
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool DoesAnySlotFileExist();
+	
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static TArray<FSaveSlotData> GetAllSlotsData();
+
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static bool GetSlotFilesNames(TArray<FString>& OutSaveFiles, bool bHasExtension = true);
 
 	/**
-	 * Checks if the selected slot is valid.
-	 * @return True if the selected slot is valid, false otherwise.
+	 * Gets the number of save slots.
+	 * @return The number of save slots.
 	 */
 	UFUNCTION(BlueprintPure, Category = "Save System")
+	static int32 GetNumberOfSlots(int32& OutAutoSavesSlotsNumber, int32& OutManualSaveSlotsNumber);
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void SelectMostRecentSaveSlot();
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void SelectMostAncientSaveSlot();
+	
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static bool GetMostRecentSlotData(FSaveSlotData& OutSlotData);
+
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static bool GetMostAncientSlotData(FSaveSlotData& OutSlotData, bool bIsAutoSave = false);
+
+	/**
+ 	* Creates a slot file with the given name.
+ 	* @param SlotName The name of the slot to create.
+ 	* @param bSelectCreatedSlot If true, the created slot will be selected.
+ 	* @return True if the slot file was created, false otherwise.
+ 	*/
+	static bool CreateSlotFileOfName(const FString& SlotName, bool bSelectCreatedSlot = true);
+
+	/**
+	 * Creates the next slot file and selects it.
+	 * @return True if the slot file was created, false otherwise.
+	 */
+	static bool CreateSlotFile();
+
+	/**
+ 	* Checks if the selected slot is valid.
+ 	* @return True if the selected slot is valid, false otherwise.
+ 	*/
 	static bool IsSelectedSlotValid();
 
 	/**
@@ -93,27 +115,8 @@ public:
 	 * @param SlotName The name of the slot to check.
 	 * @return True if the slot name is valid, false otherwise.
 	 */
-	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool IsSlotNameValid(const FString& SlotName);
-
-	UFUNCTION(BlueprintPure, Category = "Save System")
-	static TArray<FSaveSlotData> GetAllSlots();
 	
-	UFUNCTION(BlueprintPure, Category = "Save System")
-	static bool GetSlotFileNames(TArray<FString>& OutSaveFiles);
-	
-	/**
-	 * Gets the number of save slots.
-	 * @return The number of save slots.
-	 */
-	UFUNCTION(BlueprintPure, Category = "Save System")
-	static int32 GetNumberOfSlots();
-
-	UFUNCTION(BlueprintPure, Category = "Save System")
-	static bool GetMostRecentSlotData(FSaveSlotData& OutSlotData);
-
 	static bool CreateAutoSaveSlotFile(FString& SlotName);
-	static void SaveSlotData(FSaveSlotData& SlotData);
-	static void SaveSlotsInfo();
-	static void LoadSlotsInfo();
+	static void SaveSlotData(UDefaultSaveGame* SaveGame);
 };

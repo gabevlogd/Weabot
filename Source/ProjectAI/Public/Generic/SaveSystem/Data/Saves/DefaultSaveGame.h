@@ -25,6 +25,12 @@ public:
 		ActorTransforms = TMap<FName, FTransform>();
 	}
 
+	void CreateSlotData(const FString& SlotName)
+	{
+		SaveSlotData = FSaveSlotData();
+		SaveSlotData.SlotName = SlotName;
+	}
+
 	bool operator<(const UDefaultSaveGame& Other) const
 	{
 		return SaveSlotData.LastSaveDate < Other.SaveSlotData.LastSaveDate;

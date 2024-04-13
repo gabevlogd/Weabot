@@ -12,7 +12,7 @@ USaveManager::USaveManager(): SaveGameData(nullptr)
 {
 }
 
-void USaveManager::Init(const TSubclassOf<USaveGame> SaveGameClass, const bool bUseAutoSave, const float AutoSaveIntervalSeconds)
+void USaveManager::Init(const TSubclassOf<USaveGame> SaveGameClass, const bool bUseAutoSave, const float AutoSaveIntervalSeconds, const int MaxAutoSavesNumber)
 {
 	if (!SaveGameClass)
 	{
@@ -23,10 +23,10 @@ void USaveManager::Init(const TSubclassOf<USaveGame> SaveGameClass, const bool b
 	CurrentSaveGameClass = SaveGameClass;
 	bAutoSave = bUseAutoSave;
 	AutoSaveInterval = AutoSaveIntervalSeconds;
+	MaxAutoSaves = MaxAutoSavesNumber;
 	
 	USVUtility::Init(this);
 	USlotsManager::Init(this);
-	LoadFromSelectedSlot();
 	
 	if (bAutoSave)
 	{
@@ -45,15 +45,19 @@ TArray<UDefaultSaveGame*> USaveManager::GetAllSaveGames()
 {
 	TArray<UDefaultSaveGame*> SaveGames;
 	TArray<FString> SlotNames;
-	USlotsManager::GetSlotFileNames(SlotNames);
-
+	USlotsManager::GetSlotFilesNames(SlotNames, false);
+	
 	for (const FString& SaveGameName : SlotNames)
 	{
-		if (UDefaultSaveGame* DefaultSaveGame = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveGameName, 0)))
+		USaveGame* SaveGame = UGameplayStatics::LoadGameFromSlot(SAVES_DIRECTORY + SaveGameName, 0);
+		if (UDefaultSaveGame* DefaultSaveGame = Cast<UDefaultSaveGame>(SaveGame))
+		{
 			SaveGames.Add(DefaultSaveGame);
+		}
 	}
 
 	SaveGames.Sort();
+	Algo::Reverse(SaveGames); // Sort in descending order, so the most recent save is the first one
 	return SaveGames;
 }
 
@@ -67,7 +71,7 @@ void USaveManager::SaveOnSlot(const FString& SlotName)
 {
 	if (!USlotsManager::DoesSlotFileExist(SlotName)) return;
 	
-	USlotsManager::SaveSlotData(SaveGameData->SaveSlotData);
+	USlotsManager::SaveSlotData(SaveGameData);
 	OnPrepareSave.Broadcast(SaveGameData); // Notify the game that it's going to save, so all the savable objects can push their data to the save game object
 	FAsyncSaveGameToSlotDelegate SavedDelegate;
 	SavedDelegate.BindUObject(this, &USaveManager::OnSaveGameCompleted);

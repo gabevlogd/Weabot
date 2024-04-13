@@ -24,7 +24,7 @@ struct FSaveSlotData
 	{
 		CreationDate = FDateTime::Now();
 		LastSaveDate = FDateTime::Now();
-		TimePlayed = FDateTime::Now();
+		TimePlayed = FDateTime::MinValue();
 	}
 
 	bool operator==(const FSaveSlotData& Other) const

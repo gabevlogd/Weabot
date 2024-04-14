@@ -74,4 +74,4 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 # Coopilot files
-# .idea/.idea.ProjectAI.dir/.idea/copilot/*
+.idea/.idea.ProjectAI.dir/.idea/copilot/*

@@ -14,7 +14,6 @@ class UTaskBase;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnQuestCompleted);
 
-
 UCLASS(Abstract, BlueprintType)
 class PROJECTAI_API UQuestBase : public UObject
 {
@@ -29,12 +28,12 @@ public:
 	bool bIsQuestCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
 	FOnQuestCompleted OnQuestCompleted;
-	
+
 private:
 	EQuestType QuestType;
 	EQuestStatus QuestStatus;
 	FQuestEntryData QuestEntryData;
-	
+
 public:
 	virtual void Init(UQuestData* InitData, const FQuestEntryData& EntryData);
 
@@ -43,19 +42,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve = false);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveAllTasks(const bool bFullyAchieve = false) const;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool IsTaskAchieved(const UTaskData* TaskDataKey) const;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UTaskBase* GetTask(const UTaskData* TaskDataKey) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UTaskBase* GetTaskByFName(const FName TaskName) const;
-	
+
 	void SetQuestStatus(EQuestStatus Status);
 
 	UFUNCTION(BlueprintPure, Category = "Quest System")
@@ -63,10 +62,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Quest System")
 	EQuestType GetQuestType() const;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual FQuestSaveData CreateQuestSaveData() const;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void ResetQuest();
 

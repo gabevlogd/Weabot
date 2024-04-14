@@ -7,7 +7,6 @@
 #include "Gameplay/QuestSystem/Data/DataAssets/TaskData.h"
 #include "TaskAchiever.generated.h"
 
-
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API UTaskAchiever : public UActorComponent
 {

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
-#include "Generic/SaveSystem/Data/Structs/SaveSlotData.h"
+#include "..\Structs\SlotInfoData.h"
 #include "DefaultSaveGame.generated.h"
 
 
@@ -15,29 +15,29 @@ class PROJECTAI_API UDefaultSaveGame : public USaveGame
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
-	FSaveSlotData SaveSlotData;
+	FSlotInfoData SlotInfoData;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	TMap<FName, FTransform> ActorTransforms;
 
 	UDefaultSaveGame()
 	{
-		SaveSlotData = FSaveSlotData();
+		SlotInfoData = FSlotInfoData();
 		ActorTransforms = TMap<FName, FTransform>();
 	}
 
-	void CreateSlotData(const FString& SlotName)
+	void CreateSlotInfoData(const FString& SlotName)
 	{
-		SaveSlotData = FSaveSlotData();
-		SaveSlotData.SlotName = SlotName;
+		SlotInfoData = FSlotInfoData();
+		SlotInfoData.SlotName = SlotName;
 	}
 
 	bool operator<(const UDefaultSaveGame& Other) const
 	{
-		return SaveSlotData.LastSaveDate < Other.SaveSlotData.LastSaveDate;
+		return SlotInfoData.LastSaveDate < Other.SlotInfoData.LastSaveDate;
 	}
 
 	bool operator>(const UDefaultSaveGame& Other) const
 	{
-		return SaveSlotData.LastSaveDate > Other.SaveSlotData.LastSaveDate;
+		return SlotInfoData.LastSaveDate > Other.SlotInfoData.LastSaveDate;
 	}
 };

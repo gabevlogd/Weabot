@@ -2,43 +2,54 @@
 
 
 #include "Generic/SaveSystem/SaveManager.h"
+#include "Generic/SaveSystem/AutoSaveManager.h"
 #include "Generic/SaveSystem/SlotsManager.h"
 #include "Generic/SaveSystem/Data/Saves/DefaultSaveGame.h"
-#include "Generic/SaveSystem/Utility/SVUtility.h"
+#include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
 
 
-USaveManager::USaveManager(): SaveGameData(nullptr)
+USaveManager::USaveManager(): bIsAutoSaveEnabled(false), CurrentSaveGameInstance(nullptr)
 {
 }
 
-void USaveManager::Init(const TSubclassOf<USaveGame> SaveGameClass, const bool bUseAutoSave, const float AutoSaveIntervalSeconds, const int MaxAutoSavesNumber)
+void USaveManager::Init(const TSubclassOf<USaveGame> SGClass, const FAutoSaveData ASaveData, bool bCanEverUseAutoSave)
 {
-	if (!SaveGameClass)
+	if (!SGClass)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Save Game Class is not valid."));
 		return;
 	}
 
-	CurrentSaveGameClass = SaveGameClass;
-	bAutoSave = bUseAutoSave;
-	AutoSaveInterval = AutoSaveIntervalSeconds;
-	MaxAutoSaves = MaxAutoSavesNumber;
+	SaveGameClass = SGClass;
+	AutoSaveData = ASaveData;
+	bIsAutoSaveEnabled = bCanEverUseAutoSave;
 	
-	USVUtility::Init(this);
-	USlotsManager::Init(this);
-	
-	if (bAutoSave)
+	if (!SelectMostRecentSaveGame())
 	{
-		AutoSaveTimerHandle = FTimerHandle();
-		GetWorldTimerManager().SetTimer(AutoSaveTimerHandle, this, &USaveManager::SaveAsAutoSave, AutoSaveInterval, true);
-		UnPauseAutoSave();
+		// Create a new save game object to avoid nullptr exceptions
+		// so if the game tries to save before selecting a slot, it will not crash,
+		// but the save game object will be empty
+		CurrentSaveGameInstance = NewObject<UDefaultSaveGame>(this, SaveGameClass);
 	}
+		
+	USSUtility::Init(this);
+	USlotsManager::Init(this);
+
+	if (bIsAutoSaveEnabled)
+		UAutoSaveManager::Init(this);
 }
 
-UDefaultSaveGame* USaveManager::GetSaveGame() const
+bool USaveManager::SelectSaveGameSlot(const FString& SlotName)
 {
-	return SaveGameData;
+	if (!USlotsManager::DoesSlotFileExist(SlotName)) return false;
+	CurrentSaveGameInstance = Cast<UDefaultSaveGame>(UGameplayStatics::LoadGameFromSlot(SAVES_DIRECTORY + SlotName, 0));
+	return CurrentSaveGameInstance != nullptr;
+}
+
+UDefaultSaveGame* USaveManager::GetSaveGameInstance() const
+{
+	return CurrentSaveGameInstance;
 }
 
 TArray<UDefaultSaveGame*> USaveManager::GetAllSaveGames()
@@ -49,103 +60,159 @@ TArray<UDefaultSaveGame*> USaveManager::GetAllSaveGames()
 	
 	for (const FString& SaveGameName : SlotNames)
 	{
-		USaveGame* SaveGame = UGameplayStatics::LoadGameFromSlot(SAVES_DIRECTORY + SaveGameName, 0);
-		if (UDefaultSaveGame* DefaultSaveGame = Cast<UDefaultSaveGame>(SaveGame))
+		USaveGame* Save = UGameplayStatics::LoadGameFromSlot(SAVES_DIRECTORY + SaveGameName, 0);
+		if (UDefaultSaveGame* DefSaveGame = Cast<UDefaultSaveGame>(Save))
 		{
-			SaveGames.Add(DefaultSaveGame);
+			SaveGames.Add(DefSaveGame);
 		}
 	}
 
+	// Sort in descending order, so the most recent save is the first one
 	SaveGames.Sort();
-	Algo::Reverse(SaveGames); // Sort in descending order, so the most recent save is the first one
+	Algo::Reverse(SaveGames);
 	return SaveGames;
 }
 
-void USaveManager::SaveAsNewSlot()
+bool USaveManager::SelectMostRecentSaveGame()
 {
-	USlotsManager::CreateSlotFile();
+	if(FSlotInfoData SlotData; USlotsManager::GetMostRecentSlotInfoData(SlotData))
+	{
+		SelectSaveGameSlot(SlotData.SlotName);
+		return true;
+	}
+
+	return false;
+}
+
+bool USaveManager::SelectMostAncientSaveGame()
+{
+	if(FSlotInfoData SlotData; USlotsManager::GetMostAncientSlotInfoData(SlotData))
+	{
+		SelectSaveGameSlot(SlotData.SlotName);
+		return true;
+	}
+
+	return false;
+}
+
+bool USaveManager::DeleteSaveGameFile(const FString& SlotName)
+{
+	// Select the most recent slot after deleting the current one to avoid invalid selection
+	SelectMostRecentSaveGame();
+	
+	return UGameplayStatics::DeleteGameInSlot(SlotName, 0);
+}
+
+void USaveManager::DeleteAllSaveGameFiles()
+{
+	ClearSaveGameInstance(); // Clear the current save game instance to avoid invalid selection
+	const FString SaveDirectory = SAVES_DIRECTORY_FULLPATH;
+	IFileManager& FileManager = IFileManager::Get();
+	FileManager.DeleteDirectory(*SaveDirectory, false, true);
+}
+
+void USaveManager::SaveAsManualSave()
+{
+	const int32 SaveSlots = USlotsManager::GetTotalManualSaveSlots();
+	const FString NextManualSlotName = SAVE_SLOT_NAME + FString::FromInt(SaveSlots);
+	
+	CreateAndSaveSlot(NextManualSlotName);
+}
+
+void USaveManager::SaveOnSelectedSlot()
+{
+	if (!CurrentSaveGameInstance) return;
+	const FString SlotName = CurrentSaveGameInstance->SlotInfoData.SlotName;
+	Save(SlotName);
+}
+
+void USaveManager::CreateAndSaveSlot(const FString& SlotName)
+{
+	CreateSaveSlotFile(SlotName);
 	SaveOnSelectedSlot();
 }
 
-void USaveManager::SaveOnSlot(const FString& SlotName)
+void USaveManager::LoadFromSelectedSlot()
 {
-	if (!USlotsManager::DoesSlotFileExist(SlotName)) return;
-	
-	USlotsManager::SaveSlotData(SaveGameData);
-	OnPrepareSave.Broadcast(SaveGameData); // Notify the game that it's going to save, so all the savable objects can push their data to the save game object
-	FAsyncSaveGameToSlotDelegate SavedDelegate;
-	SavedDelegate.BindUObject(this, &USaveManager::OnSaveGameCompleted);
-	UGameplayStatics::AsyncSaveGameToSlot(SaveGameData, SAVES_DIRECTORY + SlotName, 0, SavedDelegate);
+	if (!CurrentSaveGameInstance) return;
+	const FString SlotName = CurrentSaveGameInstance->SlotInfoData.SlotName;
+	Load(SlotName);
 }
 
-void USaveManager::LoadFromSlot(const FString& SlotName)
+bool USaveManager::CreateSaveSlotFile(const FString& SlotName)
+{
+	if (!USlotsManager::IsSlotNameValid(SlotName)) return false;
+	
+	UDefaultSaveGame* Save = Cast<UDefaultSaveGame>(UGameplayStatics::CreateSaveGameObject(SaveGameClass));
+	Save->CreateSlotInfoData(SlotName);
+	UpdateSaveGameSlotInfoData(Save);
+
+	if (UGameplayStatics::SaveGameToSlot(Save, SAVES_DIRECTORY + SlotName, 0))
+	{
+		SelectSaveGameSlot(SlotName);
+		return true;
+	}
+
+	return false;
+}
+
+void USaveManager::Save(const FString& SlotName)
+{
+	if (!CurrentSaveGameInstance) return;
+	
+	UpdateSaveGameSlotInfoData(CurrentSaveGameInstance);
+	// Notify the game that it's going to save, so all the saver objects can push their data to the save game object
+	OnPrepareSave.Broadcast(CurrentSaveGameInstance);
+	FAsyncSaveGameToSlotDelegate SavedDelegate;
+	SavedDelegate.BindUObject(this, &USaveManager::OnSaveGameCompleted);
+	UGameplayStatics::AsyncSaveGameToSlot(CurrentSaveGameInstance, SAVES_DIRECTORY + SlotName, 0, SavedDelegate);
+}
+
+void USaveManager::Load(const FString& SlotName)
 {
 	if (!USlotsManager::DoesSlotFileExist(SlotName)) return;
 	
-	OnPrepareLoad.Broadcast(SaveGameData);
+	OnPrepareLoad.Broadcast(CurrentSaveGameInstance);
 	FAsyncLoadGameFromSlotDelegate LoadedDelegate;
 	LoadedDelegate.BindUObject(this, &USaveManager::OnLoadGameCompleted);
 	UGameplayStatics::AsyncLoadGameFromSlot(SAVES_DIRECTORY + SlotName, 0, LoadedDelegate);
 }
 
-void USaveManager::SaveOnSelectedSlot()
+void USaveManager::UpdateSaveGameSlotInfoData(UDefaultSaveGame* Save) const
 {
-	if (!USlotsManager::IsSelectedSlotValid()) return;
+	Save->SlotInfoData.LastSaveDate = FDateTime::Now();
 	
-	const FString SlotName = USlotsManager::GetSelectedSaveSlotName();
-	SaveOnSlot(SlotName);
+	if (GEngine && GEngine->GameViewport)
+	{
+		if (const UWorld* World = GEngine->GameViewport->GetWorld())
+		{
+			if (!UGameplayStatics::IsGamePaused(World))
+			{
+				if (const APlayerController* PlayerController = World->GetFirstPlayerController())
+				{
+					const float TimeSinceCreation = PlayerController->GetGameTimeSinceCreation();
+					const FTimespan TimeToAdd = FTimespan::FromSeconds(TimeSinceCreation);
+					Save->SlotInfoData.TimePlayed += TimeToAdd;
+				}
+			}
+		}
+	}
 }
 
-void USaveManager::LoadFromSelectedSlot()
+void USaveManager::ClearSaveGameInstance()
 {
-	if (!USlotsManager::IsSelectedSlotValid()) return;
-	
-	const FString SlotName = USlotsManager::GetSelectedSaveSlotName();
-	LoadFromSlot(SlotName);
-}
-
-void USaveManager::PauseAutoSave()
-{
-	bIsAutoSaveEnabled = false;
-	GetWorldTimerManager().PauseTimer(AutoSaveTimerHandle);
-}
-
-void USaveManager::UnPauseAutoSave()
-{
-	bIsAutoSaveEnabled = true;
-	GetWorldTimerManager().UnPauseTimer(AutoSaveTimerHandle);
-}
-
-void USaveManager::SaveAsAutoSave()
-{
-	if (!bAutoSave) return;
-	FString AutoSaveSlotName;
-	USlotsManager::CreateAutoSaveSlotFile(AutoSaveSlotName);
-	SaveOnSlot(AutoSaveSlotName);
-}
-
-bool USaveManager::CreateFile(const FString& SlotFileName)
-{
-	if (UGameplayStatics::DoesSaveGameExist(SlotFileName, 0)) return false;
-
-	SaveGameData = Cast<UDefaultSaveGame>(UGameplayStatics::CreateSaveGameObject(CurrentSaveGameClass));
-	return UGameplayStatics::SaveGameToSlot(SaveGameData, SAVES_DIRECTORY + SlotFileName, 0);
+	CurrentSaveGameInstance = nullptr;
 }
 
 void USaveManager::OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const
 {
 	UE_LOG(LogTemp, Warning, TEXT("Save Game %s"), bSuccess ? TEXT("Success") : TEXT("Failed"));
-	OnSaveGame.Broadcast(SlotName, UserIndex, bSuccess, SaveGameData);
+	OnSaveGame.Broadcast(SlotName, UserIndex, bSuccess, CurrentSaveGameInstance);
 }
 
 void USaveManager::OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Load Game %s"), LoadedData ? TEXT("Success") : TEXT("Failed"));
-	SaveGameData = Cast<UDefaultSaveGame>(LoadedData);
-	OnLoadGame.Broadcast(SlotName, UserIndex, SaveGameData);
-}
-
-FTimerManager& USaveManager::GetWorldTimerManager() const
-{
-	return GetWorld()->GetTimerManager();
+	CurrentSaveGameInstance = Cast<UDefaultSaveGame>(LoadedData);
+	OnLoadGame.Broadcast(SlotName, UserIndex, CurrentSaveGameInstance);
 }

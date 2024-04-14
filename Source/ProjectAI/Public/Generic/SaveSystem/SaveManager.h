@@ -3,35 +3,33 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Constants/SaveConstants.h"
 #include "Data/Saves/DefaultSaveGame.h"
+#include "Data/Structs/AutoSaveData.h"
 #include "GameFramework/SaveGame.h"
 #include "UObject/Object.h"
 #include "SaveManager.generated.h"
 
-#define SAVE_EXTENSION ".sav"
-#define SAVES_DIRECTORY "Saves/"
-#define SAVES_DIRECTORY_FULLPATH FPaths::ProjectSavedDir() + TEXT("SaveGames/" + SAVES_DIRECTORY)
-#define SAVE_SLOT_NAME "save_"
-#define AUTO_SAVE_SLOT_NAME "auto_save_"
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnPrepareSave,
 	UDefaultSaveGame*, SaveGameData);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnPrepareLoad,
 	UDefaultSaveGame*, SaveGameData);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(
 	FOnSaveGame,
 	const FString&, SlotName,
 	const int32, UserIndex,
 	bool, bSuccess,
 	UDefaultSaveGame*, SaveGameData);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
 	FOnLoadGame,
 	const FString&, SlotName,
 	const int32, UserIndex,
 	UDefaultSaveGame*, SaveGameData);
-
 
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API USaveManager : public UObject
@@ -39,14 +37,13 @@ class PROJECTAI_API USaveManager : public UObject
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System")
-	TSubclassOf<UDefaultSaveGame> CurrentSaveGameClass;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System")
-	bool bAutoSave = true;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System", meta = (ClampMin = "30.0"))
-	float AutoSaveInterval = 60.0f;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Save System", meta = (ClampMin = "1"))
-	int MaxAutoSaves = 3;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
+	TSubclassOf<UDefaultSaveGame> SaveGameClass;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
+	bool bIsAutoSaveEnabled;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
+	FAutoSaveData AutoSaveData;
+	
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
 	FOnPrepareSave OnPrepareSave;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
@@ -58,49 +55,54 @@ public:
 
 private:
 	UPROPERTY()
-	UDefaultSaveGame* SaveGameData;
-	UPROPERTY()
-	FTimerHandle AutoSaveTimerHandle;
-	UPROPERTY()
-	bool bIsAutoSaveEnabled = true;
+	UDefaultSaveGame* CurrentSaveGameInstance;
 
 public:
 	USaveManager();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void Init(const TSubclassOf<USaveGame> SaveGameClass, const bool bUseAutoSave, const float AutoSaveIntervalSeconds, const int MaxAutoSavesNumber);
+	void Init(const TSubclassOf<USaveGame> SGClass, FAutoSaveData ASaveData, bool bCanEverUseAutoSave);
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	bool SelectSaveGameSlot(const FString& SlotName);
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	bool SelectMostRecentSaveGame();
+
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	bool SelectMostAncientSaveGame();
 	
 	UFUNCTION(BlueprintPure, Category = "Save System")
-	UDefaultSaveGame* GetSaveGame() const;
+	UDefaultSaveGame* GetSaveGameInstance() const;
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	TArray<UDefaultSaveGame*> GetAllSaveGames();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void SaveAsNewSlot();
+	bool DeleteSaveGameFile(const FString& SlotName);
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void SaveOnSlot(const FString& SlotName);
+	void DeleteAllSaveGameFiles();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void LoadFromSlot(const FString& SlotName);
+	void SaveAsManualSave();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void SaveOnSelectedSlot();
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	void CreateAndSaveSlot(const FString& SlotName);
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void LoadFromSelectedSlot();
 
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void PauseAutoSave();
-
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void UnPauseAutoSave();
-
-	void SaveAsAutoSave();
-	bool CreateFile(const FString& SlotFileName);
+	bool CreateSaveSlotFile(const FString& SlotName);
+	
 private:
+	void Save(const FString& SlotName);
+	void Load(const FString& SlotName);
+	void UpdateSaveGameSlotInfoData(UDefaultSaveGame* Save) const;
+	void ClearSaveGameInstance();
 	void OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
 	void OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
-	FTimerManager& GetWorldTimerManager() const;
 };

@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SaveSlotData.generated.h"
+#include "SlotInfoData.generated.h"
 
 
 USTRUCT(BlueprintType)
-struct FSaveSlotData
+struct FSlotInfoData
 {
 	GENERATED_BODY()
 
@@ -20,14 +20,14 @@ struct FSaveSlotData
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FDateTime TimePlayed;
 
-	FSaveSlotData()
+	FSlotInfoData()
 	{
 		CreationDate = FDateTime::Now();
 		LastSaveDate = FDateTime::Now();
 		TimePlayed = FDateTime::MinValue();
 	}
 
-	bool operator==(const FSaveSlotData& Other) const
+	bool operator==(const FSlotInfoData& Other) const
 	{
 		return SlotName == Other.SlotName;
 	}

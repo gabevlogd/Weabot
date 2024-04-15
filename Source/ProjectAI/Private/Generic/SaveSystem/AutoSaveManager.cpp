@@ -2,7 +2,7 @@
 
 #include "Generic/SaveSystem/AutoSaveManager.h"
 #include "Generic/SaveSystem/SaveManager.h"
-#include "Generic/SaveSystem/SlotsManager.h"
+#include "Generic/SaveSystem/Utility/SlotsUtility.h"
 
 
 USaveManager* UAutoSaveManager::CurrentSaveManager = nullptr;
@@ -43,7 +43,7 @@ void UAutoSaveManager::SaveAsAutoSave()
 
 bool UAutoSaveManager::CreateAutoSaveSlotFile(FString& SlotName)
 {
-	const int32 CurrentAutoSavesNumber = USlotsManager::GetTotalAutoSaveSlots();
+	const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots();
 
 	SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
 	if (CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)

@@ -2,7 +2,7 @@
 
 
 #include "Generic/SaveSystem/Components/Savers/Saver.h"
-#include "Generic/SaveSystem/SlotsManager.h"
+#include "Generic/SaveSystem/Utility/SlotsUtility.h"
 #include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
 

@@ -1,15 +1,15 @@
 // Copyright Denis Faraci, Inc. All Rights Reserved.
 
 
-#include "Generic/SaveSystem/SlotsManager.h"
+#include "Generic/SaveSystem/Utility/SlotsUtility.h"
 #include "Generic/SaveSystem/Data/Saves/DefaultSaveGame.h"
 #include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
 
 
-USaveManager* USlotsManager::CurrentSaveManager = nullptr;
+USaveManager* USlotsUtility::CurrentSaveManager = nullptr;
 
-void USlotsManager::Init(USaveManager* SaveManager)
+void USlotsUtility::Init(USaveManager* SaveManager)
 {
 	if (!SaveManager) return;
 
@@ -22,17 +22,17 @@ void USlotsManager::Init(USaveManager* SaveManager)
 	// }
 }
 
-bool USlotsManager::DoesSlotFileExist(const FString& SlotName)
+bool USlotsUtility::DoesSlotFileExist(const FString& SlotName)
 {
 	return UGameplayStatics::DoesSaveGameExist(SAVES_DIRECTORY + SlotName, 0);
 }
 
-bool USlotsManager::DoesAnySlotFileExist()
+bool USlotsUtility::DoesAnySlotFileExist()
 {
 	return GetTotalSlots() > 0;
 }
 
-bool USlotsManager::GetSlotFilesNames(TArray<FString>& OutSaveFiles, const bool bWithExtension)
+bool USlotsUtility::GetSlotFilesNames(TArray<FString>& OutSaveFiles, const bool bWithExtension)
 {
 	const FString SaveDirectory = SAVES_DIRECTORY_FULLPATH;
 	IFileManager& FileManager = IFileManager::Get();
@@ -50,14 +50,14 @@ bool USlotsManager::GetSlotFilesNames(TArray<FString>& OutSaveFiles, const bool 
 	return OutSaveFiles.Num() > 0;
 }
 
-int32 USlotsManager::GetTotalSlots()
+int32 USlotsUtility::GetTotalSlots()
 {
 	TArray<FString> SaveFiles;
 	if (!GetSlotFilesNames(SaveFiles)) return 0;
 	return SaveFiles.Num();
 }
 
-int32 USlotsManager::GetTotalAutoSaveSlots()
+int32 USlotsUtility::GetTotalAutoSaveSlots()
 {
 	TArray<FString> SaveFiles;
 	int32 AutoSaveSlotsNumber = 0;
@@ -72,14 +72,14 @@ int32 USlotsManager::GetTotalAutoSaveSlots()
 	return AutoSaveSlotsNumber;
 }
 
-int32 USlotsManager::GetTotalManualSaveSlots()
+int32 USlotsUtility::GetTotalManualSaveSlots()
 {
 	const int32 TotalSaves = GetTotalSlots();
 	const int32 AutoSaveSlots = GetTotalAutoSaveSlots();
 	return TotalSaves - AutoSaveSlots;
 }
 
-bool USlotsManager::GetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, const bool bIgnoreAutoSaves)
+bool USlotsUtility::GetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, const bool bIgnoreAutoSaves)
 {
 	TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
 
@@ -97,7 +97,7 @@ bool USlotsManager::GetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, const 
 	return true;
 }
 
-bool USlotsManager::GetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, const bool bIgnoreAutoSaves)
+bool USlotsUtility::GetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, const bool bIgnoreAutoSaves)
 {
 	TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
 	
@@ -115,7 +115,7 @@ bool USlotsManager::GetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, const
 	return true;
 }
 
-bool USlotsManager::IsSlotNameValid(const FString& SlotName)
+bool USlotsUtility::IsSlotNameValid(const FString& SlotName)
 {
 	return
 		!SlotName.IsEmpty();

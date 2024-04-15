@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SaveManager.h"
-#include "Data/Structs/SlotInfoData.h"
+#include "Generic/SaveSystem/SaveManager.h"
+#include "Generic/SaveSystem/Data/Structs/SlotInfoData.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "SlotsManager.generated.h"
+#include "SlotsUtility.generated.h"
 
 UCLASS()
-class PROJECTAI_API USlotsManager : public UBlueprintFunctionLibrary
+class PROJECTAI_API USlotsUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
@@ -18,10 +18,10 @@ private:
 
 public:
 	static void Init(USaveManager* SaveManager);
-	
+
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool DoesSlotFileExist(const FString& SlotName);
-	
+
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool DoesAnySlotFileExist();
 
@@ -30,18 +30,18 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static int32 GetTotalSlots();
-	
+
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static int32 GetTotalAutoSaveSlots();
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static int32 GetTotalManualSaveSlots();
-	
+
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool GetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, bool bIgnoreAutoSaves = false);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool GetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, bool bIgnoreAutoSaves = false);
-	
+
 	static bool IsSlotNameValid(const FString& SlotName);
 };

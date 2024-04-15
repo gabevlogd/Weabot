@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
-#include "..\Structs\SlotInfoData.h"
+#include "Generic/SaveSystem/Data/Structs/SlotInfoData.h"
 #include "DefaultSaveGame.generated.h"
 
 
@@ -29,15 +29,5 @@ public:
 	{
 		SlotInfoData = FSlotInfoData();
 		SlotInfoData.SlotName = SlotName;
-	}
-
-	bool operator<(const UDefaultSaveGame& Other) const
-	{
-		return SlotInfoData.LastSaveDate < Other.SlotInfoData.LastSaveDate;
-	}
-
-	bool operator>(const UDefaultSaveGame& Other) const
-	{
-		return SlotInfoData.LastSaveDate > Other.SlotInfoData.LastSaveDate;
 	}
 };

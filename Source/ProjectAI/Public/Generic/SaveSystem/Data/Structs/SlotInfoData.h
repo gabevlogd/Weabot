@@ -31,4 +31,14 @@ struct FSlotInfoData
 	{
 		return SlotName == Other.SlotName;
 	}
+
+	bool operator<(const FSlotInfoData& Other) const
+	{
+		return LastSaveDate < Other.LastSaveDate;
+	}
+
+	bool operator>(const FSlotInfoData& Other) const
+	{
+		return LastSaveDate > Other.LastSaveDate;
+	}
 };

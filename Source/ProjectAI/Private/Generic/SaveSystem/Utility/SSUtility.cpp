@@ -21,17 +21,7 @@ UDefaultSaveGame* USSUtility::GetSaveGame()
 	return CurrentSaveManager->GetSaveGameInstance();
 }
 
-void USSUtility::SaveAsManualSave()
+void USSUtility::ManualSave()
 {
-	CurrentSaveManager->SaveAsManualSave();
-}
-
-void USSUtility::SaveOnSelectedSlot()
-{
-	CurrentSaveManager->SaveOnSelectedSlot();
-}
-
-void USSUtility::LoadFromSelectedSlot()
-{
-	CurrentSaveManager->LoadFromSelectedSlot();
+	CurrentSaveManager->ManualSave();
 }

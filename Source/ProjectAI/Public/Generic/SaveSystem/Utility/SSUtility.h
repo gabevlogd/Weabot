@@ -26,11 +26,5 @@ public:
 	static UDefaultSaveGame* GetSaveGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void SaveAsManualSave();
-	
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void SaveOnSelectedSlot();
-
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void LoadFromSelectedSlot();
+	static void ManualSave();
 };

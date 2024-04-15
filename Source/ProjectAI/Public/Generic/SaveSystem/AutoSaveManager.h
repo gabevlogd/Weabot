@@ -32,8 +32,7 @@ public:
 	static bool IsAutoSavePaused();
 	
 private:
-	static bool GetMostAncientAutoSaveSlotInfoData(FSlotInfoData& OutSlotData);
-	static void SaveAsAutoSave();
-	static bool CreateAutoSaveSlotFile(FString& SlotName);
+	static void AutoSave();
+	static void CreateAutoSaveSlotFile(FString& SlotName);
 	static FTimerManager* GetWorldTimerManager();
 };

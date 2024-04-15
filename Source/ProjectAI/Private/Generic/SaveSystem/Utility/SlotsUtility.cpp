@@ -32,7 +32,7 @@ bool USlotsUtility::DoesAnySlotFileExist()
 	return GetTotalSlots() > 0;
 }
 
-bool USlotsUtility::GetSlotFilesNames(TArray<FString>& OutSaveFiles, const bool bWithExtension)
+bool USlotsUtility::TryGetSlotFileNames(TArray<FString>& OutSaveFiles, const bool bWithExtension)
 {
 	const FString SaveDirectory = SAVES_DIRECTORY_FULLPATH;
 	IFileManager& FileManager = IFileManager::Get();
@@ -53,7 +53,7 @@ bool USlotsUtility::GetSlotFilesNames(TArray<FString>& OutSaveFiles, const bool 
 int32 USlotsUtility::GetTotalSlots()
 {
 	TArray<FString> SaveFiles;
-	if (!GetSlotFilesNames(SaveFiles)) return 0;
+	if (!TryGetSlotFileNames(SaveFiles)) return 0;
 	return SaveFiles.Num();
 }
 
@@ -61,7 +61,7 @@ int32 USlotsUtility::GetTotalAutoSaveSlots()
 {
 	TArray<FString> SaveFiles;
 	int32 AutoSaveSlotsNumber = 0;
-	if (!GetSlotFilesNames(SaveFiles)) return 0;
+	if (!TryGetSlotFileNames(SaveFiles)) return 0;
 
 	for (const FString& SlotName : SaveFiles)
 	{
@@ -79,39 +79,36 @@ int32 USlotsUtility::GetTotalManualSaveSlots()
 	return TotalSaves - AutoSaveSlots;
 }
 
-bool USlotsUtility::GetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, const bool bIgnoreAutoSaves)
+bool USlotsUtility::TryGetSlotInfosOfType(TArray<FSlotInfoData>& OutSlotInfos, ESaveTypeFilter Type)
 {
-	TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
+    OutSlotInfos = CurrentSaveManager->GetSaveInfos();
 
-	if (bIgnoreAutoSaves)
-	{
-		SaveGames.RemoveAll([](const UDefaultSaveGame* SaveGame)
-		{
-			return SaveGame->SlotInfoData.SlotName.Contains(AUTO_SAVE_SLOT_NAME);
-		});
-	}
-	
-	if (SaveGames.Num() <= 0) return false; // Do the check after, so we don't have to do it twice
-	
-	OutSlotData = SaveGames[0]->SlotInfoData;
+    OutSlotInfos.RemoveAll([&](const FSlotInfoData& SlotInfo)
+    {
+        return (Type == ESaveTypeFilter::Manual && SlotInfo.SlotName.Contains(AUTO_SAVE_SLOT_NAME)) ||
+               (Type == ESaveTypeFilter::Auto && SlotInfo.SlotName.Contains(SAVE_SLOT_NAME));
+    });
+
+    return OutSlotInfos.Num() > 0;
+}
+
+bool USlotsUtility::TryGetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, const ESaveTypeFilter Type)
+{
+	TArray<FSlotInfoData> SaveInfos;
+
+	if (!TryGetSlotInfosOfType(SaveInfos, Type)) return false;
+
+	OutSlotData = SaveInfos[0];
 	return true;
 }
 
-bool USlotsUtility::GetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, const bool bIgnoreAutoSaves)
+bool USlotsUtility::TryGetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, const ESaveTypeFilter Type)
 {
-	TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
-	
-	if (bIgnoreAutoSaves)
-	{
-		SaveGames.RemoveAll([](const UDefaultSaveGame* SaveGame)
-		{
-			return SaveGame->SlotInfoData.SlotName.Contains(AUTO_SAVE_SLOT_NAME);
-		});
-	}
-	
-	if (SaveGames.Num() <= 0) return false;
+	TArray<FSlotInfoData> SaveInfos;
 
-	OutSlotData = SaveGames[SaveGames.Num() - 1]->SlotInfoData;
+	if (!TryGetSlotInfosOfType(SaveInfos, Type)) return false;
+
+	OutSlotData = SaveInfos[SaveInfos.Num() - 1];
 	return true;
 }
 

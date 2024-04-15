@@ -8,3 +8,4 @@
 #define SAVES_DIRECTORY_FULLPATH FPaths::ProjectSavedDir() + TEXT("SaveGames/" + SAVES_DIRECTORY)
 #define SAVE_SLOT_NAME "save_"
 #define AUTO_SAVE_SLOT_NAME "auto_"
+#define SAVE_INFOS_NAME "save_infos"

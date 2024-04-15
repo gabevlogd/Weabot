@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Generic/SaveSystem/SaveManager.h"
+#include "Generic/SaveSystem/Data/Enums/SaveTypeFilter.h"
 #include "Generic/SaveSystem/Data/Structs/SlotInfoData.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SlotsUtility.generated.h"
@@ -26,7 +27,7 @@ public:
 	static bool DoesAnySlotFileExist();
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
-	static bool GetSlotFilesNames(TArray<FString>& OutSaveFiles, bool bWithExtension = true);
+	static bool TryGetSlotFileNames(TArray<FString>& OutSaveFiles, bool bWithExtension = true);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static int32 GetTotalSlots();
@@ -38,10 +39,13 @@ public:
 	static int32 GetTotalManualSaveSlots();
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
-	static bool GetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, bool bIgnoreAutoSaves = false);
+	static bool TryGetSlotInfosOfType(TArray<FSlotInfoData>& OutSlotInfos, ESaveTypeFilter Type = ESaveTypeFilter::All);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
-	static bool GetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, bool bIgnoreAutoSaves = false);
+	static bool TryGetMostRecentSlotInfoData(FSlotInfoData& OutSlotData, ESaveTypeFilter Type = ESaveTypeFilter::All);
+
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static bool TryGetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, ESaveTypeFilter Type = ESaveTypeFilter::All);
 
 	static bool IsSlotNameValid(const FString& SlotName);
 };

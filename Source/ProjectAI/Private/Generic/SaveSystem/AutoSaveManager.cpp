@@ -16,7 +16,7 @@ void UAutoSaveManager::Init(USaveManager* SaveManager)
 	AutoSaveData = &SaveManager->AutoSaveData;
 
 	AutoSaveTimerHandle = FTimerHandle();
-	const FTimerDelegate TimerDelegate = FTimerDelegate::CreateStatic(&UAutoSaveManager::SaveAsAutoSave);
+	const FTimerDelegate TimerDelegate = FTimerDelegate::CreateStatic(&UAutoSaveManager::AutoSave);
 
 	if (FTimerManager* TimerManager = GetWorldTimerManager())
 	{
@@ -32,31 +32,30 @@ void UAutoSaveManager::Init(USaveManager* SaveManager)
 	}
 }
 
-void UAutoSaveManager::SaveAsAutoSave()
+void UAutoSaveManager::AutoSave()
 {
 	if (bIsPaused) return; // Safe check, should not happen since the timer is paused
 
 	FString AutoSaveSlotName;
 	CreateAutoSaveSlotFile(AutoSaveSlotName);
-	CurrentSaveManager->SaveOnSelectedSlot();
 }
 
-bool UAutoSaveManager::CreateAutoSaveSlotFile(FString& SlotName)
+void UAutoSaveManager::CreateAutoSaveSlotFile(FString& SlotName)
 {
-	const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots();
-
-	SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
-	if (CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)
+	if (const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots(); CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)
 	{
 		FSlotInfoData SlotData;
-		GetMostAncientAutoSaveSlotInfoData(SlotData);
+		if (!USlotsUtility::TryGetMostAncientSlotInfoData(SlotData, ESaveTypeFilter::Auto)) return;
 		SlotName = SlotData.SlotName;
-
-		const FString Message = FString::Printf(TEXT("Auto Save limit reached. Overwriting the most ancient auto save slot. %s"), *SlotName);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, Message);
+		CurrentSaveManager->Save(SlotName);
+		// const FString Message = FString::Printf(TEXT("Auto Save limit reached. Overwriting the most ancient auto save slot. %s"), *SlotName);
+		// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, Message);
 	}
-
-	return CurrentSaveManager->CreateSaveSlotFile(SlotName);
+	else
+	{
+		SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
+		CurrentSaveManager->CreateAndSaveSlot(SlotName);
+	}
 }
 
 void UAutoSaveManager::PauseAutoSave()
@@ -74,21 +73,6 @@ void UAutoSaveManager::UnPauseAutoSave()
 bool UAutoSaveManager::IsAutoSavePaused()
 {
 	return bIsPaused;
-}
-
-bool UAutoSaveManager::GetMostAncientAutoSaveSlotInfoData(FSlotInfoData& OutSlotData)
-{
-	TArray<UDefaultSaveGame*> SaveGames = CurrentSaveManager->GetAllSaveGames();
-
-	SaveGames.RemoveAll([](const UDefaultSaveGame* SaveGame)
-	{
-		return SaveGame->SlotInfoData.SlotName.Contains(SAVE_SLOT_NAME);
-	});
-
-	if (SaveGames.Num() <= 0) return false;
-
-	OutSlotData = SaveGames[SaveGames.Num() - 1]->SlotInfoData;
-	return true;
 }
 
 FTimerManager* UAutoSaveManager::GetWorldTimerManager()

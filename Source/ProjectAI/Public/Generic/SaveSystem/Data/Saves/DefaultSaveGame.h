@@ -8,26 +8,25 @@
 #include "DefaultSaveGame.generated.h"
 
 
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class PROJECTAI_API UDefaultSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
-	FSlotInfoData SlotInfoData;
+	FName SlotInfoName;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	TMap<FName, FTransform> ActorTransforms;
 
 	UDefaultSaveGame()
 	{
-		SlotInfoData = FSlotInfoData();
+		SlotInfoName = "";
 		ActorTransforms = TMap<FName, FTransform>();
 	}
 
-	void CreateSlotInfoData(const FString& SlotName)
+	void SetSlotName(const FName& NewSlotInfoName)
 	{
-		SlotInfoData = FSlotInfoData();
-		SlotInfoData.SlotName = SlotName;
+		SlotInfoName = NewSlotInfoName;
 	}
 };

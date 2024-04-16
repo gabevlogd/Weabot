@@ -14,7 +14,7 @@ class PROJECTAI_API UTransformSaver : public USaver
 
 public:
 	UTransformSaver();
-	virtual void OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData) override;
+	virtual void OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem) override;
 
 protected:
 	virtual void OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData) override;

@@ -9,7 +9,7 @@ UTransformSaver::UTransformSaver()
 {
 }
 
-void UTransformSaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData)
+void UTransformSaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem)
 {
 	if (!USSUtility::GetSaveManager()) return;
 

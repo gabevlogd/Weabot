@@ -14,40 +14,40 @@ USaver::USaver()
 
 FName USaver::GetUniqueSaveID() const
 {
-	const FString SlotName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotInfoData.SlotName;
-	const FString OwnerName = GetOwner()->GetName();
+	const FName SlotName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotInfoName;
+	const FName OwnerName = GetOwner()->GetFName();
 	const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-	const FString UniqueID = SlotName + "_" + OwnerName + "::" + LevelName;
+	const FString UniqueID = SlotName.ToString() + "_" + OwnerName.ToString() + "::" + LevelName;
 	const int32 Hash = GetTypeHash(UniqueID);
 	const FString Hex = FString::Printf(TEXT("%08X"), Hash);
 	
 	return FName(*Hex);
 }
 
-void USaver::PrepareSave(UDefaultSaveGame* SaveGameData)
+void USaver::PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem)
 {
 	UE_LOG(LogTemp, Warning, TEXT("USaver::PrepareSave"));
-	OnPrepSave.Broadcast(SaveGameData);
-	OnPrepareSave(SaveGameData);
+	OnPrepSave.Broadcast(SaveGame, SlotInfoItem);
+	OnPrepareSave(SaveGame, SlotInfoItem);
 }
 
-void USaver::PrepareLoad(UDefaultSaveGame* SaveGameData)
+void USaver::PrepareLoad(UDefaultSaveGame* SaveGame)
 {
-	OnPrepLoad.Broadcast(SaveGameData);
-	OnPrepareLoad(SaveGameData);
+	OnPrepLoad.Broadcast(SaveGame);
+	OnPrepareLoad(SaveGame);
 }
 
-void USaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData)
-{
-}
-
-void USaver::OnPrepareLoad_Implementation(UDefaultSaveGame* SaveGameData)
+void USaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameInstance, USlotInfoItem* SlotInfoItem)
 {
 }
 
-void USaver::OnSaveCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGameData)
+void USaver::OnPrepareLoad_Implementation(UDefaultSaveGame* SaveGame)
 {
-	OnSaveGameCompleted.Broadcast(SlotName, UserIndex, bSuccess, SaveGameData);
+}
+
+void USaver::OnSaveCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame)
+{
+	OnSaveGameCompleted.Broadcast(SlotName, UserIndex, bSuccess, SaveGame);
 }
 
 void USaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData)

@@ -39,7 +39,7 @@ bool USlotsUtility::TryGetSlotFileNames(TArray<FString>& OutSaveFiles, const boo
 
 	if (!FileManager.DirectoryExists(*SaveDirectory)) return false;
 
-	FileManager.FindFiles(OutSaveFiles, *SaveDirectory, TEXT(SAVE_EXTENSION));
+	FileManager.FindFiles(OutSaveFiles, *SaveDirectory, SAVE_EXTENSION);
 
 	if (!bWithExtension)
 	{

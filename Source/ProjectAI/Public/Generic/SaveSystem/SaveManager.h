@@ -5,15 +5,17 @@
 #include "CoreMinimal.h"
 #include "Constants/SaveConstants.h"
 #include "Data/Saves/DefaultSaveGame.h"
-#include "Data/Saves/SaveInfos.h"
+#include "Data/Saves/SlotInfoItem.h"
+#include "Data/Saves/SlotInfos.h"
 #include "Data/Structs/AutoSaveData.h"
 #include "GameFramework/SaveGame.h"
 #include "UObject/Object.h"
 #include "SaveManager.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
 	FOnPrepareSave,
-	UDefaultSaveGame*, SaveGameData);
+	UDefaultSaveGame*, SaveGameData,
+	USlotInfoItem*, SlotInfoItem);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnPrepareLoad,
@@ -41,6 +43,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	TSubclassOf<UDefaultSaveGame> SaveGameClass;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
+	TSubclassOf<USlotInfoItem> SlotInfoItemClass;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	bool bIsAutoSaveEnabled;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	FAutoSaveData AutoSaveData;
@@ -58,22 +62,24 @@ private:
 	UPROPERTY()
 	UDefaultSaveGame* CurrentSaveGameInstance;
 	UPROPERTY()
-	USaveInfos* CurrentSaveInfos;
+	USlotInfos* CurrentSlotInfos;
+	UPROPERTY()
+	USlotInfoItem* CurrentSlotInfoItem;
 
 public:
 	USaveManager();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void Init(const TSubclassOf<USaveGame> SGClass, FAutoSaveData ASaveData, bool bCanEverUseAutoSave);
+	void Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<USlotInfoItem> SIClass, FAutoSaveData AutoSaveInitData, const bool bCanEverUseAutoSave);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	UDefaultSaveGame* GetSaveGameInstance() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	bool DeleteSaveGameFile(const FString& SlotName);
+	bool DeleteSlot(const FString& SlotName) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void DeleteAllSaveGameFiles();
+	void DeleteAllSlots();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void ManualSave();
@@ -90,8 +96,10 @@ public:
 private:
 	void OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
 	void OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
-	void UpdateSaveGameSlotInfoData() const;
-	void UpdateSaveInfos() const;
-	void LoadSaveInfos();
+	void UpdateCurrentSaveGameSlotInfoData() const;
+	void AddSlotInfo(const FSlotInfoData& SlotInfoData) const;
+	void RemoveSlotInfo(const FName& SlotName) const;
+	void ClearSlotInfos() const;
+	void LoadSlotInfos();
 	void CreateSaveGameInstance();
 };

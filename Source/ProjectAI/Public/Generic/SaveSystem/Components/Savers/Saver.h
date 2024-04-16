@@ -32,19 +32,19 @@ public:
 	
 protected:
 	UFUNCTION()
-	void PrepareSave(UDefaultSaveGame* SaveGameData);
+	void PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem);
 	
 	UFUNCTION()
-	void PrepareLoad(UDefaultSaveGame* SaveGameData);
+	void PrepareLoad(UDefaultSaveGame* SaveGame);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnPrepareSave(UDefaultSaveGame* SaveGameData);
+	void OnPrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnPrepareLoad(UDefaultSaveGame* SaveGameData);
+	void OnPrepareLoad(UDefaultSaveGame* SaveGame);
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnSaveCompletedEvent(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGameData);
+	void OnSaveCompletedEvent(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
 	void OnLoadCompletedEvent(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData);

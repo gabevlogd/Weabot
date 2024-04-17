@@ -19,7 +19,7 @@ struct FSlotInfoData
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FDateTime LastSaveDate;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FDateTime TimePlayed;
+	double TimePlayed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USlotInfoItem* SlotInfoItem;
 
@@ -28,7 +28,7 @@ struct FSlotInfoData
 		SlotInfoItem = nullptr;
 		CreationDate = FDateTime::Now();
 		LastSaveDate = FDateTime::Now();
-		TimePlayed = FDateTime::MinValue();
+		TimePlayed = 0;
 	}
 
 	explicit FSlotInfoData(const FString& Name)
@@ -36,6 +36,7 @@ struct FSlotInfoData
 		SlotInfoItem = nullptr;
 		SlotName = Name;
 		FSlotInfoData();
+		TimePlayed = 0;
 	}
 
 	bool operator==(const FSlotInfoData& Other) const

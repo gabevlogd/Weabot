@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Generic/SaveSystem/GenericSaveGame.h"
+#include "Generic/SaveSystem/Data/Saves/DefaultSaveGame.h"
 #include "Generic/SaveSystem/SaveManager.h"
 #include "Saver.generated.h"
 
@@ -23,35 +23,32 @@ public:
 	FOnSaveGame OnSaveGameCompleted;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
 	FOnLoadGame OnLoadGameCompleted;
-
-private:
-	FName UniqueGUID;
 	
 public:
 	USaver();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	FName GetUniqueNameID() const;
+	FName GetUniqueSaveID() const;
 	
 protected:
 	UFUNCTION()
-	void PrepareSave(UGenericSaveGame* SaveGameData);
+	void PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem);
 	
 	UFUNCTION()
-	void PrepareLoad(UGenericSaveGame* SaveGameData);
+	void PrepareLoad(UDefaultSaveGame* SaveGame);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnPrepareSave(UGenericSaveGame* SaveGameData);
+	void OnPrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnPrepareLoad(UGenericSaveGame* SaveGameData);
+	void OnPrepareLoad(UDefaultSaveGame* SaveGame);
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnSaveCompletedEvent(const FString& SlotName, const int32 UserIndex, bool bSuccess, UGenericSaveGame* SaveGameData);
+	void OnSaveCompletedEvent(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnLoadCompletedEvent(const FString& SlotName, const int32 UserIndex, UGenericSaveGame* LoadedData);
-	
+	void OnLoadCompletedEvent(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData);
+
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 };

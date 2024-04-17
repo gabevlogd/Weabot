@@ -14,10 +14,10 @@ USaver::USaver()
 
 FName USaver::GetUniqueSaveID() const
 {
-	const FName SlotName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotInfoName;
+	// const FName SlotName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotInfoName;
 	const FName OwnerName = GetOwner()->GetFName();
 	const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-	const FString UniqueID = SlotName.ToString() + "_" + OwnerName.ToString() + "::" + LevelName;
+	const FString UniqueID = OwnerName.ToString() + "::" + LevelName;
 	const int32 Hash = GetTypeHash(UniqueID);
 	const FString Hex = FString::Printf(TEXT("%08X"), Hash);
 	

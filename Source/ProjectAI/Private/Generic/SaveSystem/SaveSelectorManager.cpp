@@ -1,7 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
 
-#include "..\..\..\Public\Generic\SaveSystem\SlotSelectorManager.h"
+#include "Generic/SaveSystem/SlotSelectorManager.h"
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
 
 

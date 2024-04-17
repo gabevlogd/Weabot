@@ -17,7 +17,6 @@ private:
 	static FString CurrentSlotName;
 	
 public:
-	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void Init(USaveManager* SaveManager);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")

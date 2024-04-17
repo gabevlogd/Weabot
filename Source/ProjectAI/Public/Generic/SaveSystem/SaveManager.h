@@ -99,9 +99,9 @@ public:
 	UFUNCTION()
 	void Load(const FString& SlotName);
 	UFUNCTION()
-	void OnSaveCompleted(const FString& SlotName, int32 UserIndex, bool bSuccess);
+	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
 	UFUNCTION()
-	void OnLoadCompleted(const FString& SlotName, int32 UserIndex, USaveGame* SaveGame);
+	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
 private:
 	void UpdateCurrentSaveGameSlotInfoData();
 	void AddSlotInfo(const FSlotInfoData& SlotInfoData);

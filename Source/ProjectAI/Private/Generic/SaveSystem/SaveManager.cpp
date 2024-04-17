@@ -136,15 +136,16 @@ void USaveManager::Load(const FString& SlotName)
 	UGameplayStatics::AsyncLoadGameFromSlot(SAVES_DIRECTORY + SlotName, 0, AsyncLoadDelegate);
 }
 
-void USaveManager::OnSaveCompleted(const FString& SlotName, int32 UserIndex, bool bSuccess)
+void USaveManager::OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Save Game %s"), bSuccess ? TEXT("Success") : TEXT("Failed"));
 	bIsSaving = false;
 	UpdateCurrentSaveGameSlotInfoData();
-	OnSaveGame.Broadcast(SlotName, UserIndex, bSuccess, CurrentSaveGameInstance);
+	const FName SlotInfoName = CurrentSaveGameInstance->SlotInfoName;
+	OnSaveGame.Broadcast(SlotInfoName.ToString(), UserIndex, bSuccess, CurrentSaveGameInstance);
 }
 
-void USaveManager::OnLoadCompleted(const FString& SlotName, int32 UserIndex, USaveGame* SaveGame)
+void USaveManager::OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Load Game %s"), SaveGame ? TEXT("Success") : TEXT("Failed"));
 	bIsLoading = false;
@@ -165,13 +166,13 @@ void USaveManager::OnLoadCompleted(const FString& SlotName, int32 UserIndex, USa
 			CurrentSlotInfoItem = Item;
 	}
 	
-	OnLoadGame.Broadcast(SlotName, UserIndex, CurrentSaveGameInstance);
+	OnLoadGame.Broadcast(SlotInfoName.ToString(), UserIndex, CurrentSaveGameInstance);
 }
 
 void USaveManager::UpdateCurrentSaveGameSlotInfoData()
 {
-	const FName SlotName = CurrentSaveGameInstance->SlotInfoName;
-	FSlotInfoData& SlotInfoData = CurrentSlotInfos->SlotInfos[SlotName];
+	const FName SlotInfoName = CurrentSaveGameInstance->SlotInfoName;
+	FSlotInfoData& SlotInfoData = CurrentSlotInfos->SlotInfos[SlotInfoName];
 	SlotInfoData.LastSaveDate = FDateTime::Now();
 
 	if (GEngine && GEngine->GameViewport)

@@ -1,4 +1,4 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -22,10 +22,10 @@ private:
 
 public:
 	virtual void Init(UTaskData* InitData, UQuestBase* Quest) override;
+	virtual void LoadSaveData(const FTaskSaveData& TaskSaveData) override;
 	virtual void AchieveTask(const bool bFullyAchieve = false) override;
 	virtual FTaskSaveData CreateTaskSaveData() const override;
 	virtual void ResetTask() override;
-	void SetCurrentCount(const int32 NewCount);
 	
 	UFUNCTION(BlueprintPure, Category = "Quest System")
 	int32 GetCurrentCount() const;

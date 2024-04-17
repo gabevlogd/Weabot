@@ -1,4 +1,4 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -15,6 +15,8 @@ class PROJECTAI_API UQuestLogData : public UPrimaryDataAsset
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "QuestLogData")
+	UQuestData* FirstTrackedQuest;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "QuestLogData")
 	TMap<UQuestData*, FQuestEntryData> QuestEntries;
 };

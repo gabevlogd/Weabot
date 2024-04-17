@@ -1,4 +1,4 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -31,6 +31,9 @@ public:
 public:
 	virtual void Init(UTaskData* InitData, UQuestBase* Quest);
 
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	virtual void LoadSaveData(const FTaskSaveData& TaskSaveData);
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void AchieveTask(bool bFullyAchieve = false);
 	

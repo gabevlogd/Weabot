@@ -1,16 +1,14 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 
 #include "Gameplay/QuestSystem/Components/QuestManager.h"
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
-#include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
-#include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
 
-UQuestManager::UQuestManager()
+UQuestManager::UQuestManager(): QuestLogData(nullptr), TrackedQuest(nullptr)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
@@ -33,54 +31,8 @@ void UQuestManager::Init()
 
 		AddQuest(QuestEntry.Key, QuestEntry.Value);
 	}
-}
 
-void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
-{
-	TrackedQuest = GetQuestByName(QuestLogSaveData.TrackedQuestName);
-
-	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
-	{
-		UQuestBase* Quest = GetQuestByName(QuestsData.Key);
-		if (!Quest) continue; // If the quest is not found, skip it
-
-		if (UQuestSequencial* SequencialQuest = Cast<UQuestSequencial>(Quest))
-		{
-			SequencialQuest->SetCurrentTaskIndex(QuestsData.Value.CurrentTaskIndex);
-		}
-		
-		for (const TTuple<FName, FTaskSaveData> TaskSaveData : QuestsData.Value.Tasks)
-		{
-			UTaskBase* Task = Quest->GetTaskByName(TaskSaveData.Key);
-			if (!Task) continue; // If the task is not found, skip it
-
-			if (TaskSaveData.Value.bIsAchieved)
-				Task->AchieveTask(true);
-			// Do not set manually bIsAchieved, as each task has its own logic
-
-			if (UCountTask* CountTask = Cast<UCountTask>(Task))
-			{
-				CountTask->SetCurrentCount(TaskSaveData.Value.CurrentAchieveCount);
-			}
-
-			switch (QuestsData.Value.QuestStatus)
-			{
-			case EQuestStatus::Active:
-				AddToActiveQuests(Quest->QuestData);
-				break;
-
-			case EQuestStatus::Inactive:
-				AddToInactiveQuests(Quest->QuestData);
-				break;
-
-			case EQuestStatus::Completed:
-				AddToCompletedQuests(Quest->QuestData);
-				break;
-
-			default: ;
-			}
-		}
-	}
+	TrackQuest(QuestLogData->FirstTrackedQuest);
 }
 
 FQuestLogSaveData UQuestManager::CreateSaveData() const
@@ -92,8 +44,42 @@ FQuestLogSaveData UQuestManager::CreateSaveData() const
 		FQuestSaveData QuestSaveData = QuestTuple.Value->CreateQuestSaveData();
 		QuestLogSaveData.Quests.Add(QuestTuple.Key->GetFName(), QuestSaveData);
 	}
-	QuestLogSaveData.TrackedQuestName = TrackedQuest ? TrackedQuest->QuestData->GetFName() : NAME_None;
+	
+	QuestLogSaveData.TrackedQuestFName = TrackedQuest ? TrackedQuest->QuestData->GetFName() : NAME_None;
 	return QuestLogSaveData;
+}
+
+void UQuestManager::LoadSaveData(FQuestLogSaveData QuestLogSaveData)
+{
+	ResetQuestLog();
+	for (const TTuple<FName, FQuestSaveData> QuestsData : QuestLogSaveData.Quests)
+	{
+		UQuestBase* Quest = GetQuestByFName(QuestsData.Key);
+		if (!Quest) continue; // If the quest is not found, skip it
+
+		Quest->LoadSaveData(QuestsData.Value);
+		
+		switch (QuestsData.Value.QuestStatus)
+		{
+			case EQuestStatus::Active:
+				AddToActiveQuests(Quest->QuestData);
+				break;
+		
+			case EQuestStatus::Inactive:
+				AddToInactiveQuests(Quest->QuestData);
+				break;
+		
+			case EQuestStatus::Completed:
+				AddToCompletedQuests(Quest->QuestData);
+				break;
+		
+			default: ;
+		}
+	}
+	
+	TrackedQuest = nullptr;
+	if (QuestLogSaveData.TrackedQuestFName != NAME_None)
+		TrackQuestByFName(QuestLogSaveData.TrackedQuestFName);
 }
 
 void UQuestManager::TrackQuest(const UQuestData* QuestDataKey)
@@ -205,17 +191,6 @@ UQuestBase* UQuestManager::GetQuest(const UQuestData* QuestDataKey) const
 	return AllQuests.FindRef(QuestDataKey);
 }
 
-UQuestBase* UQuestManager::GetQuestByName(const FName QuestName) const
-{
-	for (const auto& QuestTuple : AllQuests)
-	{
-		if (QuestTuple.Key->GetFName() == QuestName)
-			return QuestTuple.Value;
-	}
-
-	return nullptr;
-}
-
 TArray<UQuestBase*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const
 {
 	TArray<UQuestBase*> FilteredQuests;
@@ -227,6 +202,35 @@ TArray<UQuestBase*> UQuestManager::GetQuestsByFilter(const UQuestFilterData* Que
 	}
 
 	return FilteredQuests;
+}
+
+void UQuestManager::ResetQuestLog()
+{
+	ActiveQuests.Empty();
+	InactiveQuests.Empty();
+	CompletedQuests.Empty();
+	TrackedQuest = nullptr;
+	Init();
+}
+
+UQuestBase* UQuestManager::GetQuestByFName(const FName QuestFName) const
+{
+	for (const auto& QuestTuple : AllQuests)
+	{
+		if (QuestTuple.Key->GetFName() == QuestFName)
+			return QuestTuple.Value;
+	}
+
+	return nullptr;
+}
+
+void UQuestManager::TrackQuestByFName(const FName QuestFName)
+{
+	UQuestBase* Quest = GetQuestByFName(QuestFName);
+	if (!Quest) return;
+
+	TrackedQuest = Quest;
+	OnQuestTracked.Broadcast(TrackedQuest);
 }
 
 #if WITH_EDITOR
@@ -262,7 +266,7 @@ void UQuestManager::AddQuest(UQuestData* QuestData, const FQuestEntryData QuestE
 		return;
 	}
 
-	UQuestBase* Quest = UQSFactory::CreateQuestByType(QuestData, QuestEntryData.QuestType);
+	UQuestBase* Quest = UQSFactory::CreateQuestByType(QuestData, QuestEntryData);
 	if (!Quest)
 	{
 		UE_LOG(LogTemp, Error, TEXT("QS: Quest is null. Cannot add the quest."));

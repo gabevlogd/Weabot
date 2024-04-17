@@ -1,4 +1,4 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -50,11 +50,11 @@ public:
 	void Init();
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
-
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	FQuestLogSaveData CreateSaveData() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
+	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void TrackQuest(const UQuestData* QuestDataKey);
 	
@@ -87,12 +87,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	UQuestBase* GetQuest(const UQuestData* QuestDataKey) const;
-
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	UQuestBase* GetQuestByName(const FName QuestName) const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	TArray<UQuestBase*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
+	
+	void ResetQuestLog();
+	UQuestBase* GetQuestByFName(const FName QuestFName) const;
+	void TrackQuestByFName(const FName QuestFName);
 	
 #if WITH_EDITOR
 	UFUNCTION(BlueprintCallable, Category = "Quest System")

@@ -1,4 +1,4 @@
-// Copyright The Prototypers, Inc. All Rights Reserved.
+// Copyright Denis Faraci, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "Gameplay/QuestSystem/Data/DataAssets/TaskData.h"
 #include "TaskAchiever.generated.h"
-
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API UTaskAchiever : public UActorComponent

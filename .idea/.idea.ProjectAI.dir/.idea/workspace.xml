@@ -9,12 +9,10 @@
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/BP_DebugActivable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/BP_DebugActivable.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestEntryData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestEntryData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestSaveData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestSaveData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/TaskSaveData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/TaskSaveData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/AutoSaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/AutoSaveManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +200,7 @@
       <workItem from="1713355833435" duration="20200000" />
       <workItem from="1713390193394" duration="361000" />
       <workItem from="1713393358098" duration="249000" />
+      <workItem from="1713394421630" duration="875000" />
     </task>
     <servers />
   </component>

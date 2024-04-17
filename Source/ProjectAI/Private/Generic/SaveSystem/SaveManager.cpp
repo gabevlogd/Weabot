@@ -172,9 +172,16 @@ void USaveManager::OnLoadCompleted(const FString& SlotFullPathName, int32 UserIn
 void USaveManager::UpdateCurrentSaveGameSlotInfoData()
 {
 	const FName SlotInfoName = CurrentSaveGameInstance->SlotInfoName;
+	
+	if(!CurrentSlotInfos->SlotInfos.Contains(SlotInfoName))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Slot Info Data not found. Slot Name: %s"), *SlotInfoName.ToString());
+		return;
+	}
+	
 	FSlotInfoData& SlotInfoData = CurrentSlotInfos->SlotInfos[SlotInfoName];
 	SlotInfoData.LastSaveDate = FDateTime::Now();
-
+	
 	if (GEngine && GEngine->GameViewport)
 	{
 		if (const UWorld* World = GEngine->GameViewport->GetWorld())

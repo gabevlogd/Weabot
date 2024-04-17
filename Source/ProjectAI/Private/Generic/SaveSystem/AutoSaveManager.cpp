@@ -49,8 +49,6 @@ void UAutoSaveManager::CreateAutoSaveSlotFile(FString& SlotName)
 		if (!USlotsUtility::TryGetMostAncientSlotInfoData(SlotData, ESaveTypeFilter::Auto)) return;
 		SlotName = SlotData.SlotName;
 		CurrentSaveManager->Save(SlotName);
-		// const FString Message = FString::Printf(TEXT("Auto Save limit reached. Overwriting the most ancient auto save slot. %s"), *SlotName);
-		// GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, Message);
 	}
 	else
 	{

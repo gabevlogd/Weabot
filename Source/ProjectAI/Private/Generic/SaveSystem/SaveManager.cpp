@@ -191,8 +191,7 @@ void USaveManager::UpdateCurrentSaveGameSlotInfoData()
 				if (const APlayerController* PlayerController = World->GetFirstPlayerController())
 				{
 					const float TimeSinceCreation = PlayerController->GetGameTimeSinceCreation();
-					const FTimespan TimeToAdd = FTimespan::FromSeconds(TimeSinceCreation);
-					SlotInfoData.TimePlayed += TimeToAdd;
+					SlotInfoData.TimePlayed += TimeSinceCreation;
 				}
 			}
 		}

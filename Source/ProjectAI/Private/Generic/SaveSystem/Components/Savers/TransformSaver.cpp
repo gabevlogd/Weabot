@@ -1,4 +1,4 @@
-// Copyright Denis Faraci, Inc. All Rights Reserved.
+// Copyright The Prototypers, Inc. All Rights Reserved.
 
 
 #include "Generic/SaveSystem/Components/Savers/TransformSaver.h"

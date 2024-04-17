@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Constants/SaveConstants.h"
 #include "Data/Saves/DefaultSaveGame.h"
 #include "Data/Saves/SlotInfoItem.h"
 #include "Data/Saves/SlotInfos.h"
@@ -65,6 +64,8 @@ private:
 	USlotInfos* CurrentSlotInfos;
 	UPROPERTY()
 	USlotInfoItem* CurrentSlotInfoItem;
+	bool bIsLoading;
+	bool bIsSaving;
 
 public:
 	USaveManager();
@@ -76,7 +77,7 @@ public:
 	UDefaultSaveGame* GetSaveGameInstance() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	bool DeleteSlot(const FString& SlotName) const;
+	bool DeleteSlot(const FString& SlotName);
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void DeleteAllSlots();
@@ -90,15 +91,21 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	TArray<FSlotInfoData> GetSaveInfos() const;
 
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
+
+	UFUNCTION()
 	void Save(const FString& SlotName);
+	UFUNCTION()
 	void Load(const FString& SlotName);
-	
+	UFUNCTION()
+	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
+	UFUNCTION()
+	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
 private:
-	void OnSaveGameCompleted(const FString& SlotName, const int32 UserIndex, const bool bSuccess) const;
-	void OnLoadGameCompleted(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedData);
-	void UpdateCurrentSaveGameSlotInfoData() const;
-	void AddSlotInfo(const FSlotInfoData& SlotInfoData) const;
-	void RemoveSlotInfo(const FName& SlotName) const;
+	void UpdateCurrentSaveGameSlotInfoData();
+	void AddSlotInfo(const FSlotInfoData& SlotInfoData);
+	void RemoveSlotInfo(const FName& SlotName);
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();
 	void CreateSaveGameInstance();

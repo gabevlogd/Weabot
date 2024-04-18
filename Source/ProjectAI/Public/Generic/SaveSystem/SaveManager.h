@@ -66,6 +66,8 @@ private:
 	USlotInfoItem* CurrentSlotInfoItem;
 	bool bIsLoading;
 	bool bIsSaving;
+	FName PreviousSlotNameKey;
+	bool bSaveAsNewGame;
 
 public:
 	USaveManager();
@@ -83,6 +85,9 @@ public:
 	void DeleteAllSlots();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
+	void StartNewSaveGame();
+	
+	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void ManualSave();
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
@@ -96,9 +101,9 @@ public:
 private:
 	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
 	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
-	void UpdateSlotInfo();
-	void RemoveSlotInfo(const FName& SlotName);
+	void UpdateSlotInfo(const FName NewSaveSlotNameKey);
+	void RemoveSlotInfo(const FName& SlotNameKey);
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();
-	void CreateSaveGameInstance();
+	void CreateSaveInstances();
 };

@@ -114,6 +114,27 @@ bool USlotsUtility::TryGetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, co
 	return true;
 }
 
+float USlotsUtility::GetMostRecentSlotInfoPlayedTime()
+{
+	FSlotInfoData SlotInfoData;
+	if (!TryGetMostRecentSlotInfoData(SlotInfoData)) return 0.0f;
+	return SlotInfoData.TimePlayed;
+}
+
+bool USlotsUtility::TryGetTimeSinceCreation(float& OutTimeSinceCreation)
+{
+	if (!GEngine) return false;
+	if (!GEngine->GameViewport) return false;
+	const UWorld* World = GEngine->GameViewport->GetWorld();
+	if (!World) return false;
+	if (UGameplayStatics::IsGamePaused(World)) return false; // If the game is paused, the time since creation is not updated
+	const APlayerController* PlayerController = World->GetFirstPlayerController();
+	if (!PlayerController) return false;
+
+	OutTimeSinceCreation = PlayerController->GetGameTimeSinceCreation();
+	return true;
+}
+
 bool USlotsUtility::IsSlotNameValid(const FString& SlotName)
 {
 	return

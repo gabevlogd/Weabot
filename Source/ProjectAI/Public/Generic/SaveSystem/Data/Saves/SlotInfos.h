@@ -15,10 +15,5 @@ class PROJECTAI_API USlotInfos : public USaveGame
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<FName, FSlotInfoData> SlotInfos;
-
-	USlotInfos()
-	{
-		SlotInfos = TMap<FName, FSlotInfoData>();
-	}
+	TMap<FName, FSlotInfoData> SlotInfos = TMap<FName, FSlotInfoData>();
 };

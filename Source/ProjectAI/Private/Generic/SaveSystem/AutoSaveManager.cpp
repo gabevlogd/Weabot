@@ -21,7 +21,7 @@ void UAutoSaveManager::Init(USaveManager* SaveManager)
 
 	if (FTimerManager* TimerManager = GetWorldTimerManager())
 	{
-		TimerManager->SetTimer(AutoSaveTimerHandle, TimerDelegate, 5 /*AutoSaveData->AutoSaveIntervalSeconds*/, true);
+		TimerManager->SetTimer(AutoSaveTimerHandle, TimerDelegate, AutoSaveData->AutoSaveIntervalSeconds, true);
 		if (AutoSaveData->bInitPauseState)
 			PauseAutoSave();
 		else

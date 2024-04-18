@@ -47,5 +47,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static bool TryGetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, ESaveTypeFilter Type = ESaveTypeFilter::All);
 
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static float GetMostRecentSlotInfoPlayedTime();
+
+	UFUNCTION(BlueprintPure, Category = "Save System")
+	static bool TryGetTimeSinceCreation(float& OutTimeSinceCreation);
+	
 	static bool IsSlotNameValid(const FString& SlotName);
 };

@@ -26,5 +26,8 @@ public:
 	static UDefaultSaveGame* GetSaveGame();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void StartNewSaveGame();
+	
+	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void ManualSave();
 };

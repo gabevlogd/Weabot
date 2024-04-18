@@ -21,6 +21,11 @@ UDefaultSaveGame* USSUtility::GetSaveGame()
 	return CurrentSaveManager->GetSaveGameInstance();
 }
 
+void USSUtility::StartNewSaveGame()
+{
+	CurrentSaveManager->StartNewSaveGame();
+}
+
 void USSUtility::ManualSave()
 {
 	CurrentSaveManager->ManualSave();

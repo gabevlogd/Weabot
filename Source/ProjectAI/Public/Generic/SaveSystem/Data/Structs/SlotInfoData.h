@@ -23,6 +23,7 @@ struct FSlotInfoData
 
 	FSlotInfoData()
 	{
+		SlotInfoName = "";
 		SlotInfoItem = nullptr;
 		LastSaveDate = FDateTime::Now();
 		TimePlayed = 0;
@@ -30,10 +31,10 @@ struct FSlotInfoData
 
 	explicit FSlotInfoData(const FString& SlotName)
 	{
-		SlotInfoItem = nullptr;
 		SlotInfoName = SlotName;
-		FSlotInfoData();
-		TimePlayed = 0;
+		SlotInfoItem = nullptr;
+		LastSaveDate = FDateTime::Now();
+		TimePlayed = 0.f;
 	}
 
 	bool operator==(const FSlotInfoData& Other) const

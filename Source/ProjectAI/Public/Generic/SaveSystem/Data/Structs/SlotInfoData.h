@@ -13,9 +13,7 @@ struct FSlotInfoData
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FString SlotName;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FDateTime CreationDate;
+	FString SlotInfoName;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FDateTime LastSaveDate;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -26,22 +24,21 @@ struct FSlotInfoData
 	FSlotInfoData()
 	{
 		SlotInfoItem = nullptr;
-		CreationDate = FDateTime::Now();
 		LastSaveDate = FDateTime::Now();
 		TimePlayed = 0;
 	}
 
-	explicit FSlotInfoData(const FString& Name)
+	explicit FSlotInfoData(const FString& SlotName)
 	{
 		SlotInfoItem = nullptr;
-		SlotName = Name;
+		SlotInfoName = SlotName;
 		FSlotInfoData();
 		TimePlayed = 0;
 	}
 
 	bool operator==(const FSlotInfoData& Other) const
 	{
-		return SlotName == Other.SlotName;
+		return SlotInfoName == Other.SlotInfoName;
 	}
 
 	bool operator<(const FSlotInfoData& Other) const

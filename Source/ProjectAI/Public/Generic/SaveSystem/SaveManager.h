@@ -85,26 +85,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void ManualSave();
 
-	UFUNCTION(BlueprintCallable, Category = "Save System")
-	bool CreateAndSaveSlot(const FString& SlotName);
-
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	TArray<FSlotInfoData> GetSaveInfos() const;
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
-
-	UFUNCTION()
+	
 	void Save(const FString& SlotName);
-	UFUNCTION()
 	void Load(const FString& SlotName);
-	UFUNCTION()
-	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
-	UFUNCTION()
-	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
 private:
-	void UpdateCurrentSaveGameSlotInfoData();
-	void AddSlotInfo(const FSlotInfoData& SlotInfoData);
+	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
+	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
+	void UpdateSlotInfo();
 	void RemoveSlotInfo(const FName& SlotName);
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();

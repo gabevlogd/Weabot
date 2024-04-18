@@ -21,7 +21,7 @@ void UAutoSaveManager::Init(USaveManager* SaveManager)
 
 	if (FTimerManager* TimerManager = GetWorldTimerManager())
 	{
-		TimerManager->SetTimer(AutoSaveTimerHandle, TimerDelegate, AutoSaveData->AutoSaveIntervalSeconds, true);
+		TimerManager->SetTimer(AutoSaveTimerHandle, TimerDelegate, 5 /*AutoSaveData->AutoSaveIntervalSeconds*/, true);
 		if (AutoSaveData->bInitPauseState)
 			PauseAutoSave();
 		else
@@ -37,24 +37,16 @@ void UAutoSaveManager::AutoSave()
 {
 	if (bIsPaused) return; // Safe check, should not happen since the timer is paused
 
-	FString AutoSaveSlotName;
-	CreateAutoSaveSlotFile(AutoSaveSlotName);
-}
+	const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots(); 
+	FString AutoSaveSlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
+	if (CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)
+	{
+		FSlotInfoData OutSlotData;
+		USlotsUtility::TryGetMostAncientSlotInfoData(OutSlotData, ESaveTypeFilter::Auto);
+		AutoSaveSlotName = OutSlotData.SlotInfoName;
+	}
 
-void UAutoSaveManager::CreateAutoSaveSlotFile(FString& SlotName)
-{
-	if (const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots(); CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)
-	{
-		FSlotInfoData SlotData;
-		if (!USlotsUtility::TryGetMostAncientSlotInfoData(SlotData, ESaveTypeFilter::Auto)) return;
-		SlotName = SlotData.SlotName;
-		CurrentSaveManager->Save(SlotName);
-	}
-	else
-	{
-		SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
-		CurrentSaveManager->CreateAndSaveSlot(SlotName);
-	}
+	CurrentSaveManager->Save(AutoSaveSlotName);
 }
 
 void UAutoSaveManager::PauseAutoSave()

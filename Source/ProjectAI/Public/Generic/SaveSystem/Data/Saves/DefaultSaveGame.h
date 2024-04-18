@@ -15,18 +15,18 @@ class PROJECTAI_API UDefaultSaveGame : public USaveGame
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
-	FName SlotInfoName;
+	FName SlotNameKey;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	TMap<FName, FTransform> ActorTransforms;
 
 	UDefaultSaveGame()
 	{
-		SlotInfoName = "";
+		SlotNameKey = "";
 		ActorTransforms = TMap<FName, FTransform>();
 	}
 
-	void SetSlotName(const FName& NewSlotInfoName)
+	void SetSlotNameKey(const FName& Key)
 	{
-		SlotInfoName = NewSlotInfoName;
+		SlotNameKey = Key;
 	}
 };

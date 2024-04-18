@@ -30,7 +30,7 @@ bool USlotSelectorManager::TrySelectMostRecentSaveGame()
 {
 	if (FSlotInfoData SlotData; USlotsUtility::TryGetMostRecentSlotInfoData(SlotData))
 	{
-		TrySelectSaveGameSlot(SlotData.SlotName);
+		TrySelectSaveGameSlot(SlotData.SlotInfoName);
 		return true;
 	}
 
@@ -41,7 +41,7 @@ bool USlotSelectorManager::TrySelectMostAncientSaveGame()
 {
 	if (FSlotInfoData SlotData; USlotsUtility::TryGetMostAncientSlotInfoData(SlotData))
 	{
-		TrySelectSaveGameSlot(SlotData.SlotName);
+		TrySelectSaveGameSlot(SlotData.SlotInfoName);
 		return true;
 	}
 

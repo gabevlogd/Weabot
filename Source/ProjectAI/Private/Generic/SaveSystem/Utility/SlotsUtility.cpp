@@ -87,8 +87,8 @@ bool USlotsUtility::TryGetSlotInfosOfType(TArray<FSlotInfoData>& OutSlotInfos, E
 
     OutSlotInfos.RemoveAll([&](const FSlotInfoData& SlotInfo)
     {
-        return (Type == ESaveTypeFilter::Manual && SlotInfo.SlotName.Contains(AUTO_SAVE_SLOT_NAME)) ||
-               (Type == ESaveTypeFilter::Auto && SlotInfo.SlotName.Contains(SAVE_SLOT_NAME));
+        return (Type == ESaveTypeFilter::Manual && SlotInfo.SlotInfoName.Contains(AUTO_SAVE_SLOT_NAME)) ||
+               (Type == ESaveTypeFilter::Auto && SlotInfo.SlotInfoName.Contains(SAVE_SLOT_NAME));
     });
 
     return OutSlotInfos.Num() > 0;

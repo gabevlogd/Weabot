@@ -14,7 +14,7 @@ USaver::USaver()
 
 FName USaver::GetUniqueSaveID() const
 {
-	// const FName SlotName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotInfoName;
+	// const FName SlotInfoName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotNameKey;
 	const FName OwnerName = GetOwner()->GetFName();
 	const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 	const FString UniqueID = OwnerName.ToString() + "::" + LevelName;

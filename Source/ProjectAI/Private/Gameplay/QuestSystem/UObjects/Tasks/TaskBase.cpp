@@ -10,6 +10,13 @@ void UTaskBase::Init(UTaskData* InitData, UQuestBase* Quest)
 	RelatedQuest = Quest;
 }
 
+void UTaskBase::LoadSaveData(const FTaskSaveData& TaskSaveData)
+{
+	bIsAchieved = TaskSaveData.bIsAchieved;
+	if (bIsAchieved)
+		AchieveTask(true);
+}
+
 void UTaskBase::AchieveTask(bool bFullyAchieve)
 {
 }

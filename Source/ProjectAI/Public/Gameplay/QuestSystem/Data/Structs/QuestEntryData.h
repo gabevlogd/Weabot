@@ -17,4 +17,6 @@ struct FQuestEntryData
 	EQuestType QuestType = EQuestType::Parallel;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "QuestEntryData")
 	EQuestStatus InitialQuestStatus = EQuestStatus::Active;
+
+	FQuestEntryData() = default;
 };

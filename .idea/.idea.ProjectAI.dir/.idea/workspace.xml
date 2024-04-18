@@ -7,47 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Data/DataAssets/CountTaskData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Data/DataAssets/TaskData.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Tasks/CountTask.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Tasks/SingleTask.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Tasks/TaskBase.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Enums/TaskType.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Tasks/CountTask.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Tasks/SingleTask.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/00000000000.xd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/Buttons/WBP_QuestSelectorButton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/Buttons/WBP_QuestSelectorButton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/WBP_QuestLog.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/WBP_QuestLog.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/WBP_Task.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/QuestSystem/WBP_Task.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_PlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_PlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/HUD/BP_HUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/HUD/BP_HUD.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/BP_DebugActivable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/BP_DebugActivable.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Data/QuestLog.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Data/QuestLog.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Data/Quests/QuestOne.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/Data/Quests/QuestOne.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestParallel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestParallel.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/UObjects/Tasks/Task.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSFactory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSFactory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSUtility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSUtility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/DataAssets/CountTaskData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/DataAssets/CountTaskData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/DataAssets/TaskData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/DataAssets/TaskData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/TaskSaveData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Data/Structs/TaskSaveData.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Tasks/Task.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSFactory.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSFactory.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSUtility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Utility/QSUtility.h" afterDir="false" />
-    </list>
+    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,11 +18,15 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://C:/Program Files (x86)/Windows Kits/10/Include/10.0.22000.0/shared/guiddef.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Editors/UE_5.3/Engine/Source/Developer/DerivedDataCache/DerivedDataCache.Build.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Editors/UE_5.3/Engine/Source/Developer/TargetPlatform/TargetPlatform.Build.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Editors/UE_5.3/Engine/Source/Runtime/Engine/Classes/Components/SkeletalMeshComponent.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SaveManager.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="Blueprints" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -78,14 +42,15 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Uproject.ProjectAI.executor&quot;: &quot;Debug&quot;,
+    &quot;ToolWindowGitHub Copilot Chat.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;Uproject.ProjectAI.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/code__1a&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;SpellingScopeSettingsId&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;RiderUnrealFileTemplatesSettings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -206,6 +171,30 @@
       <workItem from="1711536998882" duration="3573000" />
       <workItem from="1711546039641" duration="1654000" />
       <workItem from="1711547728308" duration="9355000" />
+      <workItem from="1711809417869" duration="2913000" />
+      <workItem from="1711816730310" duration="6101000" />
+      <workItem from="1711822958317" duration="434000" />
+      <workItem from="1711823429034" duration="271000" />
+      <workItem from="1711823730963" duration="327000" />
+      <workItem from="1711824125405" duration="297000" />
+      <workItem from="1711824442199" duration="4630000" />
+      <workItem from="1711986139668" duration="4184000" />
+      <workItem from="1712713109387" duration="13973000" />
+      <workItem from="1712727209046" duration="2350000" />
+      <workItem from="1712752121826" duration="19766000" />
+      <workItem from="1712925924042" duration="12970000" />
+      <workItem from="1712988910765" duration="5377000" />
+      <workItem from="1712997720332" duration="11070000" />
+      <workItem from="1713084162140" duration="11226000" />
+      <workItem from="1713097853384" duration="13213000" />
+      <workItem from="1713111986016" duration="368000" />
+      <workItem from="1713176012937" duration="15175000" />
+      <workItem from="1713207020074" duration="298000" />
+      <workItem from="1713261238064" duration="21511000" />
+      <workItem from="1713355833435" duration="20200000" />
+      <workItem from="1713390193394" duration="361000" />
+      <workItem from="1713393358098" duration="249000" />
+      <workItem from="1713394421630" duration="3136000" />
     </task>
     <servers />
   </component>
@@ -213,6 +202,17 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

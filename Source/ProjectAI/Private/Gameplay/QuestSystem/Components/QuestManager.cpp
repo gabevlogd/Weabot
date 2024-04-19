@@ -17,7 +17,7 @@ void UQuestManager::Init()
 {
 	if (!QuestLogData || QuestLogData->QuestEntries.IsEmpty())
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestLogData is null or empty. Cannot initialize the QuestLog."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestLogData is null or empty. Cannot initialize the QuestLog."));
 		return;
 	}
 
@@ -25,7 +25,7 @@ void UQuestManager::Init()
 	{
 		if (!QuestEntry.Key)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("QS: A QuestData in the QuestLogData is null. Skipping..."));
+			UE_LOG(LogQuestSystem, Warning, TEXT("A QuestData in the QuestLogData is null. Skipping..."));
 			continue;
 		}
 
@@ -33,6 +33,7 @@ void UQuestManager::Init()
 	}
 
 	TrackQuest(QuestLogData->FirstTrackedQuest);
+	UE_LOG(LogQuestSystem, Display, TEXT("QuestLog initialized."));
 }
 
 FQuestLogSaveData UQuestManager::CreateSaveData() const
@@ -238,14 +239,14 @@ void UQuestManager::LogAllQuests() const
 {
 	for( const auto& QuestTuple : AllQuests)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Quest: %s"), *QuestTuple.Key->QuestName);
+		UE_LOG(LogQuestSystem, Display, TEXT("Quest: %s"), *QuestTuple.Key->QuestName);
 
 		for( const auto& TaskTuple : QuestTuple.Value->AllTasks)
 		{
 			const UTaskData* TaskData = TaskTuple.Key;
 
-			UE_LOG(LogTemp, Warning, TEXT("Task: %s"), *TaskData->Description);
-			UE_LOG(LogTemp, Warning, TEXT("Task is achieved: %s"), TaskTuple.Value->bIsAchieved ? TEXT("true") : TEXT("false") );
+			UE_LOG(LogQuestSystem, Display, TEXT("Task: %s"), *TaskData->Description);
+			UE_LOG(LogQuestSystem, Display, TEXT("Task is achieved: %s"), TaskTuple.Value->bIsAchieved ? TEXT("true") : TEXT("false") );
 		}
 	}
 }
@@ -262,14 +263,14 @@ void UQuestManager::AddQuest(UQuestData* QuestData, const FQuestEntryData QuestE
 {
 	if (!QuestData)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestData is null. Cannot add the quest."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestData is null. Cannot add the quest."));
 		return;
 	}
 
 	UQuestBase* Quest = UQSFactory::CreateQuestByType(QuestData, QuestEntryData);
 	if (!Quest)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: Quest is null. Cannot add the quest."));
+		UE_LOG(LogQuestSystem, Error, TEXT("Quest is null. Cannot add the quest."));
 		return;
 	}
 

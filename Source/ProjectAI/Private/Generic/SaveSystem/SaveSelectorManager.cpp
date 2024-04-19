@@ -50,12 +50,10 @@ bool USlotSelectorManager::TrySelectMostAncientSaveGame()
 
 void USlotSelectorManager::SaveOnSelectedSlot()
 {
-	if (USlotsUtility::IsSlotNameValid(CurrentSlotName))
-		CurrentSaveManager->Save(CurrentSlotName);
+	CurrentSaveManager->Save(CurrentSlotName);
 }
 
 void USlotSelectorManager::LoadFromSelectedSlot()
 {
-	if (USlotsUtility::IsSlotNameValid(CurrentSlotName))
-		CurrentSaveManager->Load(CurrentSlotName);
+	CurrentSaveManager->Load(CurrentSlotName);
 }

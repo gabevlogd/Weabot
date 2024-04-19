@@ -29,7 +29,7 @@ void UAutoSaveManager::Init(USaveManager* SaveManager)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("World Timer Manager is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("Auto Save Failed to Initialize: World Timer Manager is not valid."));
 	}
 }
 
@@ -70,16 +70,14 @@ FTimerManager* UAutoSaveManager::GetWorldTimerManager()
 {
 	if (!GEngine)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Engine is not valid."));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Engine is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("AutoSave Timer GEngine is not valid."));
 		return nullptr;
 	}
 
 	const UWorld* World = GEngine->GetWorldFromContextObject(CurrentSaveManager, EGetWorldErrorMode::LogAndReturnNull);
 	if (!World)
 	{
-		UE_LOG(LogTemp, Error, TEXT("World is not valid."));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("World is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("AutoSave Timer World is not valid."));
 		return nullptr;
 	}
 

@@ -11,6 +11,8 @@
 #include "UObject/Object.h"
 #include "SaveManager.generated.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogSaveSystem, Log, All);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
 	FOnPrepareSave,
 	UDefaultSaveGame*, SaveGameData,

@@ -16,12 +16,6 @@ void USlotsUtility::Init(USaveManager* SaveManager)
 	if (!SaveManager) return;
 
 	CurrentSaveManager = SaveManager;
-
-	// if (!DoesAnySlotFileExist())
-	// {
-	// 	CreateIndexedSaveGameFile();
-	// 	return;
-	// }
 }
 
 bool USlotsUtility::DoesSlotFileExist(const FString& SlotName)

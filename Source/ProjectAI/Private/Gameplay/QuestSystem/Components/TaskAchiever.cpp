@@ -14,7 +14,7 @@ void UTaskAchiever::AchieveTask()
 {
 	if (!TaskToAchieve)
 	{
-		UE_LOG(LogTemp, Error, TEXT("TaskToAchieve is null. Cannot achieve the task."));
+		UE_LOG(LogQuestSystem, Error, TEXT("TaskToAchieve is null. Cannot achieve the task."));
 		return;
 	}
 	

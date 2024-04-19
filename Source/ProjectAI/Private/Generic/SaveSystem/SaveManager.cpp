@@ -18,11 +18,18 @@ USaveManager::USaveManager(): bIsAutoSaveEnabled(false), CurrentSaveGameInstance
 {
 }
 
-void USaveManager::Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<USlotInfoItem> SIClass, const FAutoSaveData AutoSaveInitData, const bool bCanEverUseAutoSave)
+void USaveManager::Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<USlotInfoItem> SIClass,
+                        const FAutoSaveData AutoSaveInitData, const bool bCanEverUseAutoSave)
 {
 	if (!SGClass)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Save Game Class is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("Save Game Class is not valid."));
+		return;
+	}
+
+	if (!SIClass)
+	{
+		UE_LOG(LogSaveSystem, Error, TEXT("Save Info Class is not valid."));
 		return;
 	}
 
@@ -30,6 +37,9 @@ void USaveManager::Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<
 	SlotInfoItemClass = SIClass;
 	AutoSaveData = AutoSaveInitData;
 	bIsAutoSaveEnabled = bCanEverUseAutoSave;
+	
+	CreateSaveInstances();
+	LoadSlotInfos(); // Load slot infos before initializing other utilities
 
 	USSUtility::Init(this);
 	USlotsUtility::Init(this);
@@ -37,8 +47,7 @@ void USaveManager::Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<
 	if (bIsAutoSaveEnabled)
 		UAutoSaveManager::Init(this);
 
-	CreateSaveInstances();
-	LoadSlotInfos();
+	UE_LOG(LogSaveSystem, Display, TEXT("Save System Initialized"));
 }
 
 UDefaultSaveGame* USaveManager::GetSaveGameInstance() const
@@ -111,12 +120,11 @@ void USaveManager::Save(const FString& SlotName)
 		return;
 
 	bIsSaving = true;
-
 	PreviousSlotNameKey = CurrentSaveGameInstance->SlotNameKey;
 	CurrentSaveGameInstance->SetSlotNameKey(FName(*SlotName));
 	// Notify the game that it's going to save, so all the saver objects can push their data to the save game object
 	OnPrepareSave.Broadcast(CurrentSaveGameInstance, CurrentSlotInfoItem);
-	FAsyncSaveGameToSlotDelegate AsyncSaveDelegate = FAsyncSaveGameToSlotDelegate();
+	FAsyncSaveGameToSlotDelegate AsyncSaveDelegate;
 	AsyncSaveDelegate.BindUObject(this, &USaveManager::OnSaveCompleted);
 	UGameplayStatics::AsyncSaveGameToSlot(CurrentSaveGameInstance, SAVES_DIRECTORY + SlotName, 0, AsyncSaveDelegate);
 }
@@ -130,38 +138,52 @@ void USaveManager::Load(const FString& SlotName)
 
 	bIsLoading = true;
 	OnPrepareLoad.Broadcast(CurrentSaveGameInstance);
-	FAsyncLoadGameFromSlotDelegate AsyncLoadDelegate = FAsyncLoadGameFromSlotDelegate();
+	FAsyncLoadGameFromSlotDelegate AsyncLoadDelegate;
 	AsyncLoadDelegate.BindUObject(this, &USaveManager::OnLoadCompleted);
 	UGameplayStatics::AsyncLoadGameFromSlot(SAVES_DIRECTORY + SlotName, 0, AsyncLoadDelegate);
 }
 
 void USaveManager::OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Save Game %s"), bSuccess ? TEXT("Success") : TEXT("Failed"));
-	
-	if (bSuccess) 
+	if (bSuccess)
+	{
+		UE_LOG(LogSaveSystem, Display, TEXT("Game saved successfully."));
+	}
+	else
+	{
+		UE_LOG(LogSaveSystem, Error, TEXT("Failed to save game."));
+	}
+
+	if (bSuccess)
 	{
 		const FString NewSaveSlotName = CurrentSaveGameInstance->SlotNameKey.ToString();
 		UpdateSlotInfo(FName(*NewSaveSlotName));
 		USlotSelectorManager::TrySelectSaveGameSlot(NewSaveSlotName);
 		OnSaveGame.Broadcast(NewSaveSlotName, UserIndex, bSuccess, CurrentSaveGameInstance);
 	}
-	
+
 	bIsSaving = false;
 	bSaveAsNewGame = false;
 }
 
 void USaveManager::OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Load Game %s"), SaveGame ? TEXT("Success") : TEXT("Failed"));
+	if (SaveGame)
+	{
+		UE_LOG(LogSaveSystem, Display, TEXT("Game loaded successfully."));
+	}
+	else
+	{
+		UE_LOG(LogSaveSystem, Error, TEXT("Failed to load game."));
+	}
+	
 	bIsLoading = false;
-
 	if (!SaveGame) return;
 
 	CurrentSaveGameInstance = Cast<UDefaultSaveGame>(SaveGame);
 	if (!CurrentSaveGameInstance)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Loaded Save Game is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("Failed Cast: Loaded game is not of type %s"), *SaveGameClass->GetName());
 		return;
 	}
 
@@ -178,11 +200,11 @@ void USaveManager::OnLoadCompleted(const FString& SlotFullPathName, int32 UserIn
 void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey)
 {
 	if (!CurrentSlotInfos) return;
-	
+
 	float CurrentPlayedTime = 0.f;
 	if (!bSaveAsNewGame && CurrentSlotInfos->SlotInfos.Contains(PreviousSlotNameKey))
 		CurrentPlayedTime = CurrentSlotInfos->SlotInfos[PreviousSlotNameKey].TimePlayed;
-	
+
 	if (!CurrentSlotInfos->SlotInfos.Contains(NewSaveSlotNameKey))
 	{
 		FSlotInfoData NewSlotInfo = FSlotInfoData(NewSaveSlotNameKey.ToString());
@@ -190,12 +212,12 @@ void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey)
 		NewSlotInfo.SlotInfoItem = CurrentSlotInfoItem;
 		CurrentSlotInfos->SlotInfos.Add(NewSaveSlotNameKey, NewSlotInfo);
 	}
-	
+
 	CurrentSlotInfos->SlotInfos[NewSaveSlotNameKey].LastSaveDate = FDateTime::Now();
-	
+
 	if (float TimeSinceCreation; USlotsUtility::TryGetTimeSinceCreation(TimeSinceCreation))
 		CurrentSlotInfos->SlotInfos[NewSaveSlotNameKey].TimePlayed += TimeSinceCreation;
-	
+
 	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, SLOT_INFOS_PATH_NAME, 0);
 	UGameplayStatics::SaveGameToSlot(CurrentSlotInfoItem, META_DIRECTORY + NewSaveSlotNameKey.ToString(), 0);
 }

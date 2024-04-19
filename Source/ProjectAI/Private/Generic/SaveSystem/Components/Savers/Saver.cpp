@@ -26,7 +26,6 @@ FName USaver::GetUniqueSaveID() const
 
 void USaver::PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem)
 {
-	UE_LOG(LogTemp, Warning, TEXT("USaver::PrepareSave"));
 	OnPrepSave.Broadcast(SaveGame, SlotInfoItem);
 	OnPrepareSave(SaveGame, SlotInfoItem);
 }

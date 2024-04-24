@@ -218,7 +218,7 @@ void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey)
 	if (float TimeSinceCreation; USlotsUtility::TryGetTimeSinceCreation(TimeSinceCreation))
 		CurrentSlotInfos->SlotInfos[NewSaveSlotNameKey].TimePlayed += TimeSinceCreation;
 
-	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, SLOT_INFOS_PATH_NAME, 0);
+	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, META_INFOS_PATH, 0);
 	UGameplayStatics::SaveGameToSlot(CurrentSlotInfoItem, META_DIRECTORY + NewSaveSlotNameKey.ToString(), 0);
 }
 
@@ -226,13 +226,13 @@ void USaveManager::RemoveSlotInfo(const FName& SlotNameKey)
 {
 	CurrentSlotInfos->SlotInfos.Remove(SlotNameKey);
 	UGameplayStatics::DeleteGameInSlot(META_DIRECTORY + SlotNameKey.ToString(), 0);
-	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, SLOT_INFOS_PATH_NAME, 0);
+	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, META_INFOS_PATH, 0);
 }
 
 void USaveManager::ClearSlotInfos() const
 {
 	CurrentSlotInfos->SlotInfos.Empty();
-	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, SLOT_INFOS_PATH_NAME, 0);
+	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, META_INFOS_PATH, 0);
 
 	const FString FullPath = META_DIRECTORY_FULLPATH;
 	IFileManager& FileManager = IFileManager::Get();
@@ -241,7 +241,7 @@ void USaveManager::ClearSlotInfos() const
 
 void USaveManager::LoadSlotInfos()
 {
-	if (USlotInfos* Infos = Cast<USlotInfos>(UGameplayStatics::LoadGameFromSlot(SLOT_INFOS_PATH_NAME, 0)))
+	if (USlotInfos* Infos = Cast<USlotInfos>(UGameplayStatics::LoadGameFromSlot(META_INFOS_PATH, 0)))
 	{
 		CurrentSlotInfos = Infos;
 

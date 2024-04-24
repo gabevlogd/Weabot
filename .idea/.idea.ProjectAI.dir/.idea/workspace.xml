@@ -8,23 +8,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/InventorySystem/Components/InventorySystem.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/InventorySystem/UObjects/ItemBase.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/InventorySystem/Utility/ISFactory.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/InventorySystem/Components/InventorySystem.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/InventorySystem/Data/DataAssets/ItemData.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/InventorySystem/Utility/ISFactory.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Design/LV_PtTutorial_6a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Design/LV_PtTutorial_6a.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/QuestManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/TaskAchiever.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Components/TaskAchiever.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSUtility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/QuestSystem/Utility/QSUtility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/AutoSaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/AutoSaveManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/Saver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/Saver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/TransformSaver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/TransformSaver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveSelectorManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveSelectorManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Utility/SlotsUtility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Utility/SlotsUtility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/QuestSystem/Components/QuestManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SaveManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SaveManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/InventorySystem/Data/ISItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/InventorySystem/UObjects/ItemBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Constants/SaveConstants.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Constants/SaveConstants.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,6 +213,7 @@
       <workItem from="1713394421630" duration="4509000" />
       <workItem from="1713438063729" duration="21520000" />
       <workItem from="1713540614119" duration="5990000" />
+      <workItem from="1713894126321" duration="9840000" />
     </task>
     <servers />
   </component>

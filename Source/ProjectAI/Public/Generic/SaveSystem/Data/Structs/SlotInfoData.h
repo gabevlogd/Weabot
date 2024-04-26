@@ -6,7 +6,6 @@
 #include "Generic/SaveSystem/Data/Saves/SlotInfoItem.h"
 #include "SlotInfoData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FSlotInfoData
 {

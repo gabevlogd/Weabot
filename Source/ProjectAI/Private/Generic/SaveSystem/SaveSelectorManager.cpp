@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Generic/SaveSystem/SlotSelectorManager.h"
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
-
 
 USaveManager* USlotSelectorManager::CurrentSaveManager = nullptr;
 FString USlotSelectorManager::CurrentSlotName = "";

@@ -7,7 +7,6 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SSUtility.generated.h"
 
-
 UCLASS()
 class PROJECTAI_API USSUtility : public UBlueprintFunctionLibrary
 {

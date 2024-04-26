@@ -6,7 +6,6 @@
 #include "QuestBase.h"
 #include "QuestSequencial.generated.h"
 
-
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UQuestSequencial : public UQuestBase
 {

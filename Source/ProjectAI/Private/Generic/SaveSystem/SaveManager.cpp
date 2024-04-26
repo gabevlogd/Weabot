@@ -1,6 +1,5 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Generic/SaveSystem/SaveManager.h"
 #include "Generic/SaveSystem/AutoSaveManager.h"
 #include "Generic/SaveSystem/SlotSelectorManager.h"
@@ -10,12 +9,15 @@
 #include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
 
-
-USaveManager::USaveManager(): bIsAutoSaveEnabled(false), CurrentSaveGameInstance(nullptr), CurrentSlotInfos(nullptr),
-                              CurrentSlotInfoItem(nullptr),
-                              bIsLoading(false),
-                              bIsSaving(false)
+USaveManager::USaveManager()
 {
+	bIsAutoSaveEnabled = false;
+	CurrentSaveGameInstance = nullptr;
+	CurrentSlotInfos = nullptr;
+	CurrentSlotInfoItem = nullptr;
+	bIsLoading = false;
+	bIsSaving = false;
+	bSaveAsNewGame = false;
 }
 
 void USaveManager::Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<USlotInfoItem> SIClass,

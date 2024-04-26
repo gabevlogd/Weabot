@@ -1,6 +1,5 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Tasks/SingleTask.h"
 
 void USingleTask::AchieveTask(bool bFullyAchieve)

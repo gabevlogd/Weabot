@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/Components/TaskAchiever.h"
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
-
 
 UTaskAchiever::UTaskAchiever(): TaskToAchieve(nullptr)
 {

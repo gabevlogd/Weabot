@@ -8,7 +8,6 @@
 #include "Generic/SaveSystem/SaveManager.h"
 #include "Saver.generated.h"
 
-
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API USaver : public UActorComponent
 {

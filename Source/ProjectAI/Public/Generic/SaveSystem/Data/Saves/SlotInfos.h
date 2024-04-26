@@ -7,7 +7,6 @@
 #include "Generic/SaveSystem/Data/Structs/SlotInfoData.h"
 #include "SlotInfos.generated.h"
 
-
 UCLASS()
 class PROJECTAI_API USlotInfos : public USaveGame
 {

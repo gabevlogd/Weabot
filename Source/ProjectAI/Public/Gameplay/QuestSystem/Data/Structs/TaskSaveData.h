@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "TaskSaveData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FTaskSaveData
 {

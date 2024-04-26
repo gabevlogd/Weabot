@@ -7,12 +7,11 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "ISFactory.generated.h"
 
-
 UCLASS()
 class PROJECTAI_API UISFactory : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
 public:
-	static UItemBase* CreateItem(UItemData* Data);
+	static UItemBase* CreateItem(UItemData* Data, UInventorySystem* InventorySystem, UObject* Object = nullptr);
 };

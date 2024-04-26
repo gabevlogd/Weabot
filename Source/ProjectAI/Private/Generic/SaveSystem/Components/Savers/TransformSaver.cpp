@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Generic/SaveSystem/Components/Savers/TransformSaver.h"
 #include "Generic/SaveSystem/Utility/SSUtility.h"
-
 
 UTransformSaver::UTransformSaver()
 {

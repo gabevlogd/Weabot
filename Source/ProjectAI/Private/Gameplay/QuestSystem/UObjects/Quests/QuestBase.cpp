@@ -1,10 +1,8 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
-
 
 void UQuestBase::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 {

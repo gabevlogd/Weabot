@@ -7,7 +7,6 @@
 #include "Generic/SaveSystem/Data/Structs/SlotInfoData.h"
 #include "DefaultSaveGame.generated.h"
 
-
 UCLASS(BlueprintType, Blueprintable)
 class PROJECTAI_API UDefaultSaveGame : public USaveGame
 {

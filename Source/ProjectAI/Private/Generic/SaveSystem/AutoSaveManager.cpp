@@ -5,7 +5,6 @@
 #include "Generic/SaveSystem/Constants/SaveConstants.h"
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
 
-
 USaveManager* UAutoSaveManager::CurrentSaveManager = nullptr;
 FAutoSaveData* UAutoSaveManager::AutoSaveData = nullptr;
 FTimerHandle UAutoSaveManager::AutoSaveTimerHandle;

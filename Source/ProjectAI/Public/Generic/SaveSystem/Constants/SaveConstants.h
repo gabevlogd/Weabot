@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #define SAVE_EXTENSION TEXT(".sav")
 #define SAVES_DIRECTORY TEXT("saves/")
 #define SAVES_DIRECTORY_FULLPATH FPaths::Combine(FPaths::ProjectSavedDir(), "SaveGames/", SAVES_DIRECTORY)

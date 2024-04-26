@@ -1,78 +1,84 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/InventorySystem/Components/InventorySystem.h"
+#include "Gameplay/InventorySystem/Data/DataAssets/ItemData.h"
 #include "Gameplay/InventorySystem/Utility/ISFactory.h"
-
 
 UInventorySystem::UInventorySystem()
 {
 	PrimaryComponentTick.bCanEverTick = false;
-	CurrentSize = 0;
 }
 
-bool UInventorySystem::AddItem(UItemData* ItemData)
+bool UInventorySystem::AddItem(UItemData* ItemData, UObject* ItemObject)
 {
-	if (IsFull())
-		UE_LOG(LogInventorySystem, Display, TEXT("Cannot add item, inventory is full."));
-
-	UItemBase* FoundItem = nullptr;
-	if (Find(ItemData, FoundItem) && FoundItem->GetQuantity() < ItemData->MaxStackSize)
+	if (IsFull()) // This works because the items are added one by one
 	{
-		FoundItem->Increment();
+		UE_LOG(LogInventorySystem, Display, TEXT("Cannot add item, inventory is full."));
+		return false;
+	}
+
+	UE_LOG(LogInventorySystem, Display, TEXT("Adding Item %s to inventory %s"), *ItemData->ItemName, *GetName())
+	if (UItemBase* FoundItem = FindByItemID(ItemData))
+	{
+		FoundItem->IncreaseQuantity(); // Increase quantity of the item, if it already exists in the inventory
+		OnItemAdded.Broadcast(FoundItem);
 		return true;
 	}
 
-	UItemBase* Item = UISFactory::CreateItem(ItemData);
-	if (const auto Result = Items.Add(Item); Result.IsValidId())
-	{
-		UE_LOG(LogInventorySystem, Error, TEXT("Failed to add item, the item is already in the TSet Items."));
-		return false;
-	}
-		
-	CurrentSize++;
+	UItemBase* CreatedItem = UISFactory::CreateItem(ItemData, this, ItemObject);
+	Items.Add(CreatedItem);
+	OnItemAdded.Broadcast(CreatedItem);
 	return true;
 }
 
-void UInventorySystem::RemoveItem(UItemData* ItemData)
+bool UInventorySystem::TryRemoveItem(UItemData* ItemData)
 {
-	UItemBase* FoundItem = nullptr;
-	if (Find(ItemData, FoundItem))
+	if (UItemBase* FoundItem = FindByItemID(ItemData))
 	{
-		CurrentSize--;
+		OnItemRemoved.Broadcast(FoundItem);
 		Items.Remove(FoundItem);
+		FoundItem->OnRemove();
+		return true;
 	}
+
+	return false;
 }
 
 void UInventorySystem::RemoveAllItems()
 {
-	CurrentSize = 0;
 	Items.Empty();
+	OnInventoryCleared.Broadcast();
 }
 
-bool UInventorySystem::HasItem(UItemData* ItemData)
+bool UInventorySystem::HasItem(const UItemData* ItemData)
 {
 	for (const UItemBase* Item : Items)
 	{
-		if (Item->GetItemData().GetItemID() == ItemData->GetItemID())
+		if (Item->GetItemData()->GetItemID() == ItemData->GetItemID())
 			return true;
 	}
 
 	return false;
 }
 
-bool UInventorySystem::Find(UItemData* ItemData, UItemBase*& OutItem)
+UItemBase* UInventorySystem::FindByItemID(const UItemData* ItemData)
 {
 	for (UItemBase* Item : Items)
 	{
-		if (Item->GetItemData().GetItemID() == ItemData->GetItemID())
-		{
-			OutItem = Item;
-			return true;
-		}
+		if (Item->GetItemData()->GetItemID() == ItemData->GetItemID())
+			return Item;
 	}
 
-	return false;
+	return nullptr;
+}
+
+int32 UInventorySystem::GetOccupiedSlots() const
+{
+	int32 CurrSlots = 0;
+	for (const UItemBase* Item : Items)
+		CurrSlots += Item->GetNeededSlots();
+
+	return CurrSlots;
 }
 
 bool UInventorySystem::IsEmpty() const
@@ -82,5 +88,5 @@ bool UInventorySystem::IsEmpty() const
 
 bool UInventorySystem::IsFull() const
 {
-	return CurrentSize >= MaxSize;
+	return GetOccupiedSlots() >= InventorySlotsSize;
 }

@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
 #include "Gameplay/QuestSystem/Components/QuestManager.h"
-
 
 UQuestManager* UQSUtility::CurrentQuestManager = nullptr;
 

@@ -17,6 +17,10 @@ public:
 	TSubclassOf<UItemBase> ItemClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item")
 	FString ItemName;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item", meta=(MultiLine="true"))
+	FText ItemDescription;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item")
+	FSlateBrush ItemIcon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory System|Item", meta=(ClampMin="1", UIMin="1"))
 	int32 MaxStackSize = 1;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item")

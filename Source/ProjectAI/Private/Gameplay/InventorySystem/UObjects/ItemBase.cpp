@@ -20,14 +20,34 @@ const UItemData* UItemBase::GetItemData() const
 	return ItemData;
 }
 
-int32 UItemBase::GetNeededSlots() const
+TArray<FItemSlotData> UItemBase::GetNeededSlots() const
 {
-	int32 NeededSlots = 0;
-	const int32 ItemMaxStack = ItemData->MaxStackSize;
-	
-	NeededSlots += CurrentQuantity / ItemMaxStack;
-	if (CurrentQuantity % ItemMaxStack > 0) NeededSlots++;
-	return NeededSlots;
+	const int32 ItemMaxStack = GetMaxStackSize();
+	const int32 NeededSlots = GetNeededSlotsCount();
+
+	TArray<FItemSlotData> Slots;
+	for (int32 i = 0; i < NeededSlots; i++)
+	{
+		FItemSlotData Slot;
+		Slot.SlotQuantity = FMath::Min(CurrentQuantity - (i * ItemMaxStack), ItemMaxStack);
+		Slots.Add(Slot);
+	}
+
+	return Slots;
+}
+
+int32 UItemBase::GetNeededSlotsCount() const
+{
+	const int32 ItemMaxStack = GetMaxStackSize();
+	int32 NeededSlotsCount = CurrentQuantity / ItemMaxStack;
+	if (CurrentQuantity % ItemMaxStack > 0) NeededSlotsCount++;
+
+	return NeededSlotsCount;
+}
+
+int32 UItemBase::GetMaxStackSize() const
+{
+	return ItemData->MaxStackSize;
 }
 
 int32 UItemBase::GetCurrentQuantity() const

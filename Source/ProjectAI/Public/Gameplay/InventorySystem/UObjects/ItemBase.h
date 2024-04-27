@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Gameplay/InventorySystem/Data/Structs/ItemSlotData.h"
 #include "UObject/Object.h"
 #include "ItemBase.generated.h"
 
@@ -31,8 +32,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
 	const UItemData* GetItemData() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory System|Item")
-	int32 GetNeededSlots() const;
+	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
+	TArray<FItemSlotData> GetNeededSlots() const;
+
+	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
+	int32 GetNeededSlotsCount() const;
+	
+	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
+	int32 GetMaxStackSize() const;
 	
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
 	int32 GetCurrentQuantity() const;

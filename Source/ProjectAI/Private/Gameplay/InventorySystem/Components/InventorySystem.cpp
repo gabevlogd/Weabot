@@ -76,7 +76,7 @@ int32 UInventorySystem::GetOccupiedSlots() const
 {
 	int32 CurrSlots = 0;
 	for (const UItemBase* Item : Items)
-		CurrSlots += Item->GetNeededSlots();
+		CurrSlots += Item->GetNeededSlots().Num();
 
 	return CurrSlots;
 }

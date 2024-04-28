@@ -1,8 +1,6 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
-
 
 void UTaskBase::Init(UTaskData* InitData, UQuestBase* Quest)
 {

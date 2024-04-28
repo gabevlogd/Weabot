@@ -7,7 +7,6 @@
 #include "Gameplay/QuestSystem/Data/Enums/TaskType.h"
 #include "TaskData.generated.h"
 
-
 UCLASS(BlueprintType)
 class PROJECTAI_API UTaskData : public UPrimaryDataAsset
 {

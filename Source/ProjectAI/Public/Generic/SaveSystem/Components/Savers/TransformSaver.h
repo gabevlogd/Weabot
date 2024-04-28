@@ -6,7 +6,6 @@
 #include "Saver.h"
 #include "TransformSaver.generated.h"
 
-
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API UTransformSaver : public USaver
 {

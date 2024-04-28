@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/Utility/QSUtility.h"
 #include "Gameplay/QuestSystem/Components/QuestManager.h"
-
 
 UQuestManager* UQSUtility::CurrentQuestManager = nullptr;
 
@@ -23,7 +21,7 @@ void UQSUtility::AchieveTask(const UTaskData* TaskDataKey)
 	
 	if(!QuestManager)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestManager is null. Cannot achieve the task."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestManager is null. Cannot achieve the task."));
 		return;
 	}
 
@@ -36,7 +34,7 @@ void UQSUtility::ActivateQuest(const UQuestData* QuestDataKey)
 	
 	if(!QuestManager)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestManager is null. Cannot activate the quest."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestManager is null. Cannot activate the quest."));
 		return;
 	}
 
@@ -49,7 +47,7 @@ void UQSUtility::DeactivateQuest(const UQuestData* QuestDataKey)
 	
 	if(!QuestManager)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestManager is null. Cannot deactivate the quest."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestManager is null. Cannot deactivate the quest."));
 		return;
 	}
 
@@ -62,7 +60,7 @@ void UQSUtility::CompleteQuestNow(const UQuestData* QuestDataKey)
 	
 	if(!QuestManager)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestManager is null. Cannot complete the quest."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestManager is null. Cannot complete the quest."));
 		return;
 	}
 
@@ -75,7 +73,7 @@ void UQSUtility::TrackQuest(const UQuestData* QuestDataKey)
 	
 	if(!QuestManager)
 	{
-		UE_LOG(LogTemp, Error, TEXT("QS: QuestManager is null. Cannot track the quest."));
+		UE_LOG(LogQuestSystem, Error, TEXT("QuestManager is null. Cannot track the quest."));
 		return;
 	}
 

@@ -6,7 +6,6 @@
 #include "QuestSaveData.h"
 #include "QuestLogSaveData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FQuestLogSaveData
 {

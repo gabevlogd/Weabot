@@ -7,7 +7,6 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SSUtility.generated.h"
 
-
 UCLASS()
 class PROJECTAI_API USSUtility : public UBlueprintFunctionLibrary
 {
@@ -25,6 +24,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static UDefaultSaveGame* GetSaveGame();
 
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void StartNewSaveGame();
+	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void ManualSave();
 };

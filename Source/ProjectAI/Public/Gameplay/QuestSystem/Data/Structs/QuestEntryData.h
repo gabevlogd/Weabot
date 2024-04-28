@@ -7,7 +7,6 @@
 #include "Gameplay/QuestSystem/Data/Enums/QuestStatus.h"
 #include "QuestEntryData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FQuestEntryData
 {

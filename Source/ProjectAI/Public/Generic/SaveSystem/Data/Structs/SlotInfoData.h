@@ -6,41 +6,39 @@
 #include "Generic/SaveSystem/Data/Saves/SlotInfoItem.h"
 #include "SlotInfoData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FSlotInfoData
 {
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FString SlotName;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FDateTime CreationDate;
+	FString SlotInfoName;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	FDateTime LastSaveDate;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	FDateTime TimePlayed;
+	double TimePlayed;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USlotInfoItem* SlotInfoItem;
 
 	FSlotInfoData()
 	{
+		SlotInfoName = "";
 		SlotInfoItem = nullptr;
-		CreationDate = FDateTime::Now();
 		LastSaveDate = FDateTime::Now();
-		TimePlayed = FDateTime::MinValue();
+		TimePlayed = 0;
 	}
 
-	explicit FSlotInfoData(const FString& Name)
+	explicit FSlotInfoData(const FString& SlotName)
 	{
+		SlotInfoName = SlotName;
 		SlotInfoItem = nullptr;
-		SlotName = Name;
-		FSlotInfoData();
+		LastSaveDate = FDateTime::Now();
+		TimePlayed = 0.f;
 	}
 
 	bool operator==(const FSlotInfoData& Other) const
 	{
-		return SlotName == Other.SlotName;
+		return SlotInfoName == Other.SlotInfoName;
 	}
 
 	bool operator<(const FSlotInfoData& Other) const

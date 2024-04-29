@@ -20,15 +20,16 @@ const UItemData* UItemBase::GetItemData() const
 	return ItemData;
 }
 
-TArray<FItemSlotData> UItemBase::GetNeededSlots() const
+TArray<FItemSlotData> UItemBase::GetRequiredSlots() const
 {
 	const int32 ItemMaxStack = GetMaxStackSize();
-	const int32 NeededSlots = GetNeededSlotsCount();
+	const int32 NeededSlots = GetMinRequiredSlots();
 
 	TArray<FItemSlotData> Slots;
 	for (int32 i = 0; i < NeededSlots; i++)
 	{
 		FItemSlotData Slot;
+		Slot.StackSize = ItemMaxStack;
 		Slot.SlotQuantity = FMath::Min(CurrentQuantity - (i * ItemMaxStack), ItemMaxStack);
 		Slots.Add(Slot);
 	}
@@ -36,7 +37,7 @@ TArray<FItemSlotData> UItemBase::GetNeededSlots() const
 	return Slots;
 }
 
-int32 UItemBase::GetNeededSlotsCount() const
+int32 UItemBase::GetMinRequiredSlots() const
 {
 	const int32 ItemMaxStack = GetMaxStackSize();
 	int32 NeededSlotsCount = CurrentQuantity / ItemMaxStack;
@@ -74,13 +75,20 @@ void UItemBase::Use()
 	if (ItemData->bIsConsumable)
 		Consume();
 
+	OnItemUsed.Broadcast();
+	RelatedInventory->OnAnyItemUsed.Broadcast(this);
 	OnUse();
 }
 
-void UItemBase::Remove() const
+void UItemBase::Remove()
 {
-	if (RelatedInventory->TryRemoveItem(ItemData)) // OnRemove() is called in TryRemoveItem()
+	if (RelatedInventory->RemoveItem(ItemData))
+	{
+		// OnRemove is called in the InventorySystem->RemoveItem
+		// otherwise ONLY when calling Remove() from the ItemBase, it will trigger the OnRemove event
 		UE_LOG(LogInventorySystem, Display, TEXT("ItemBase::Remove(), Item %s has been removed from the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName());
+		OnItemRemoved.Broadcast();
+	}
 }
 
 void UItemBase::Consume()
@@ -89,14 +97,16 @@ void UItemBase::Consume()
 
 	DecreaseQuantity();
 	OnConsume();
-
+	RelatedInventory->OnAnyItemConsumed.Broadcast(this);
+	RelatedInventory->OnInventoryModified.Broadcast();
+	
 	if (CurrentQuantity <= 0)
 		Remove();
 }
 
 void UItemBase::OnInit_Implementation()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, FString::Printf(TEXT("Item %s has been initialized in the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName()));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,FString::Printf(TEXT("Item %s has been initialized in the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName()));
 }
 
 void UItemBase::OnRemove_Implementation()

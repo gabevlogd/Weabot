@@ -15,17 +15,26 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
-	FOnItemConsumed,
+	FOnAnyItemConsumed,
 	UItemBase*, Item
 	);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
-	FOnItemRemoved,
+	FOnAnyItemUsed,
+	UItemBase*, Item
+	);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnAnyItemRemoved,
 	UItemBase*, Item
 	);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(
 	FOnInventoryCleared
+	);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(
+	FOnInventoryModified
 	);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -35,18 +44,22 @@ class PROJECTAI_API UInventorySystem : public UActorComponent
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System", meta = (ClampMin = "1", UIMin = "1"))
-	int32 InventorySlotsSize = 10;
+	int32 InventorySlotsSize = 16;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory System")
 	TSet<UItemBase*> Items;
 
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
 	FOnItemAdded OnItemAdded;
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
-	FOnItemConsumed OnItemConsumed;
-	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
-	FOnItemRemoved OnItemRemoved;
-	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
 	FOnInventoryCleared OnInventoryCleared;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
+	FOnInventoryModified OnInventoryModified;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
+	FOnAnyItemUsed OnAnyItemUsed;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
+	FOnAnyItemConsumed OnAnyItemConsumed;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
+	FOnAnyItemRemoved OnAnyItemRemoved;
 	
 public:
 	UInventorySystem();
@@ -55,23 +68,29 @@ public:
 	bool AddItem(UItemData* ItemData, UObject* ItemObject = nullptr);
 	
 	UFUNCTION(BlueprintCallable, Category = "Inventory System")
-	bool TryRemoveItem(UItemData* ItemData);
+	bool RemoveItem(UItemData* ItemData);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory System")
 	void RemoveAllItems();
 
-	UFUNCTION(BlueprintPure, Category = "Inventory System")
-	bool HasItem(const UItemData* ItemData);
-
 	UFUNCTION(BlueprintCallable, Category = "Inventory System")
-	UItemBase* FindByItemID(const UItemData* ItemData);
+	UItemBase* Find(const UItemData* ItemData) const;
 
 	UFUNCTION(BlueprintPure, Category = "Inventory System")
-	int32 GetOccupiedSlots() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Inventory System")
+	int32 GetTotalMinRequiredSlotsCount() const;
+	
+	UFUNCTION(BlueprintPure, Category = "Inventory System")
 	bool IsEmpty() const;
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory System")
+	UFUNCTION(BlueprintPure, Category = "Inventory System")
 	bool IsFull() const;
+
+	UFUNCTION(BlueprintPure, Category = "Inventory System")
+	bool IsSatisfyingAllRequiredSlots() const;
+	
+	UFUNCTION(BlueprintPure, Category = "Inventory System")
+	bool HasItem(const UItemData* ItemData) const;
+	
+	UFUNCTION(BlueprintPure, Category = "Inventory System")
+	bool CanContainItem(const UItemData* ItemData) const;
 };

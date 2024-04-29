@@ -7,7 +7,6 @@
 #include "Gameplay/QuestSystem/Data/Enums/QuestStatus.h"
 #include "QuestEntryData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FQuestEntryData
 {
@@ -17,4 +16,6 @@ struct FQuestEntryData
 	EQuestType QuestType = EQuestType::Parallel;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "QuestEntryData")
 	EQuestStatus InitialQuestStatus = EQuestStatus::Active;
+
+	FQuestEntryData() = default;
 };

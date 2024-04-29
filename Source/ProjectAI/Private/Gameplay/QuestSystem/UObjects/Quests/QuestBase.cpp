@@ -1,20 +1,31 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 
-
-void UQuestBase::Init(UQuestData* InitData, const EQuestType Type)
+void UQuestBase::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 {
 	QuestData = InitData;
-	QuestType = Type;
+	QuestType = EntryData.QuestType;
+	QuestEntryData = EntryData;
 	
 	for (UTaskData* TaskData : InitData->TasksData)
 	{
 		UTaskBase* Task = UQSFactory::CreateTaskByType(this, TaskData, TaskData->GetTaskType());
 		AllTasks.Add(TaskData, Task);
+	}
+}
+
+void UQuestBase::LoadSaveData(FQuestSaveData QuestSaveData)
+{
+	ResetQuest();
+	for (auto TaskSaveData : QuestSaveData.Tasks)
+	{
+		UTaskBase* Task = GetTaskByFName(TaskSaveData.Key);
+		if (!Task) continue; // If the task is not found, skip it
+		
+		Task->LoadSaveData(TaskSaveData.Value);
 	}
 }
 
@@ -43,7 +54,7 @@ UTaskBase* UQuestBase::GetTask(const UTaskData* TaskDataKey) const
 	return AllTasks.FindRef(TaskDataKey);
 }
 
-UTaskBase* UQuestBase::GetTaskByName(const FName TaskName) const
+UTaskBase* UQuestBase::GetTaskByFName(const FName TaskName) const
 {
 	for (const auto& Task : AllTasks)
 	{
@@ -84,6 +95,7 @@ FQuestSaveData UQuestBase::CreateQuestSaveData() const
 
 void UQuestBase::ResetQuest()
 {
+	SetQuestStatus(QuestEntryData.InitialQuestStatus);
 	for(const auto& Task : AllTasks)
 		Task.Value->ResetTask();
 

@@ -6,7 +6,6 @@
 #include "QuestBase.h"
 #include "QuestSequencial.generated.h"
 
-
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UQuestSequencial : public UQuestBase
 {
@@ -20,11 +19,11 @@ private:
 	int32 CurrentTaskIndex = 0;
 	
 public:
-	virtual void Init(UQuestData* InitData, const EQuestType Type) override;
+	virtual void Init(UQuestData* InitData, const FQuestEntryData& EntryData) override;
+	virtual void LoadSaveData(FQuestSaveData QuestSaveData) override;
 	virtual void AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve) override;
 	virtual void ResetQuest() override;
 	virtual FQuestSaveData CreateQuestSaveData() const override;
-	void SetCurrentTaskIndex(const int32 Index);
 	
 	UFUNCTION(BlueprintPure, Category = "Quest System")
 	int32 GetCurrentTaskIndex() const;

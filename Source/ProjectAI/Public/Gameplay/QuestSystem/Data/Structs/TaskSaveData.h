@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "TaskSaveData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FTaskSaveData
 {
@@ -15,4 +14,6 @@ struct FTaskSaveData
 	bool bIsAchieved;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TaskSaveData")
 	int32 CurrentAchieveCount;
+
+	FTaskSaveData() = default;
 };

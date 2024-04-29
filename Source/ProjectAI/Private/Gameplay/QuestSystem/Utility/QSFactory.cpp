@@ -1,31 +1,31 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
+
+#include "Gameplay/QuestSystem/Data/Structs/QuestEntryData.h"
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestParallel.h"
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/SingleTask.h"
 
-
-UQuestBase* UQSFactory::CreateQuestByType(UQuestData* QuestData, const EQuestType QuestType)
+UQuestBase* UQSFactory::CreateQuestByType(UQuestData* QuestData, const FQuestEntryData& QuestEntryData)
 {
 	UQuestParallel* QuestParallel = nullptr;
 	UQuestSequencial* QuestSequencial = nullptr;
 	
-	switch (QuestType)
+	switch (QuestEntryData.QuestType)
 	{
 		case EQuestType::None:
 			return nullptr;
 		
 		case EQuestType::Parallel:
 			QuestParallel = NewObject<UQuestParallel>();
-			QuestParallel->Init(QuestData, QuestType);
+			QuestParallel->Init(QuestData, QuestEntryData);
 			return QuestParallel;
 		
 		case EQuestType::Sequential:
 			QuestSequencial = NewObject<UQuestSequencial>();
-			QuestSequencial->Init(QuestData, QuestType);
+			QuestSequencial->Init(QuestData, QuestEntryData);
 			return QuestSequencial;
 	}
 	

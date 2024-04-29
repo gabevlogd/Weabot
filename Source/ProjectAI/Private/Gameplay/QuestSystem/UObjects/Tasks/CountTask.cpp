@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/Data/DataAssets/CountTaskData.h"
-
 
 void UCountTask::Init(UTaskData* InitData, UQuestBase* Quest)
 {
@@ -12,6 +10,12 @@ void UCountTask::Init(UTaskData* InitData, UQuestBase* Quest)
 	CurrentCount = 0;
 	if (const UCountTaskData* CountTaskData = Cast<UCountTaskData>(InitData))
 		CountToAchieve = CountTaskData->CountToAchieve;
+}
+
+void UCountTask::LoadSaveData(const FTaskSaveData& TaskSaveData)
+{
+	Super::LoadSaveData(TaskSaveData);
+	CurrentCount = TaskSaveData.CurrentAchieveCount;
 }
 
 void UCountTask::AchieveTask(const bool bFullyAchieve)
@@ -43,11 +47,6 @@ void UCountTask::ResetTask()
 {
 	Super::ResetTask();
 	CurrentCount = 0;
-}
-
-void UCountTask::SetCurrentCount(const int32 NewCount)
-{
-	CurrentCount = NewCount;
 }
 
 int32 UCountTask::GetCurrentCount() const

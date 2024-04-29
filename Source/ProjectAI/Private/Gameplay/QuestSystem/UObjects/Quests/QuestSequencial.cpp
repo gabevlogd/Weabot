@@ -1,14 +1,18 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
 
-
-void UQuestSequencial::Init(UQuestData* InitData, const EQuestType Type)
+void UQuestSequencial::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 {
-	Super::Init(InitData, Type);
+	Super::Init(InitData, EntryData);
 	TasksByIndex = InitData->TasksData;
+}
+
+void UQuestSequencial::LoadSaveData(FQuestSaveData QuestSaveData)
+{
+	Super::LoadSaveData(QuestSaveData);
+	CurrentTaskIndex = QuestSaveData.CurrentTaskIndex;
 }
 
 void UQuestSequencial::AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve)
@@ -47,11 +51,6 @@ FQuestSaveData UQuestSequencial::CreateQuestSaveData() const
 	FQuestSaveData QuestSaveData = Super::CreateQuestSaveData();
 	QuestSaveData.CurrentTaskIndex = CurrentTaskIndex;
 	return QuestSaveData;
-}
-
-void UQuestSequencial::SetCurrentTaskIndex(const int32 Index)
-{
-	CurrentTaskIndex = Index;
 }
 
 int32 UQuestSequencial::GetCurrentTaskIndex() const

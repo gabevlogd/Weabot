@@ -10,9 +10,17 @@
 #include "Gameplay/QuestSystem/Data/Structs/QuestLogSaveData.h"
 #include "QuestManager.generated.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogQuestSystem, Log, All);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyQuestCompleted);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyTaskAchieved);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnAnyQuestCompleted,
+	const UQuestBase*, Quest);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
+	FOnAnyTaskAchieved,
+	const UQuestBase*, Quest,
+	const UTaskBase*, Task);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnQuestTracked,
 	const UQuestBase*, Quest);
@@ -42,7 +50,7 @@ public:
 	FOnAnyTaskAchieved OnAnyTaskAchieved;
 	UPROPERTY(BlueprintAssignable, Category = "Quest System")
 	FOnQuestTracked OnQuestTracked;
-	
+
 public:
 	UQuestManager();
 
@@ -50,20 +58,20 @@ public:
 	void Init();
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
-
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	FQuestLogSaveData CreateSaveData() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
+
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void TrackQuest(const UQuestData* QuestDataKey);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveTaskInActiveQuests(const UTaskData* TaskDataKey);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTaskData* TaskDataKey);
-	
+
 	UFUNCTION(BlueprintCallable, CallInEditor, Category = "Quest System")
 	void AddToActiveQuests(const UQuestData* QuestDataKey);
 
@@ -75,7 +83,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool IsInCompletedQuestsList(const UQuestData* QuestDataKey) const;
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	bool IsInActiveQuestsList(const UQuestData* QuestDataKey) const;
 
@@ -89,16 +97,17 @@ public:
 	UQuestBase* GetQuest(const UQuestData* QuestDataKey) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	UQuestBase* GetQuestByName(const FName QuestName) const;
-	
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	TArray<UQuestBase*> GetQuestsByFilter(const UQuestFilterData* QuestFilterData) const;
-	
+
+	void ResetQuestLog();
+	UQuestBase* GetQuestByFName(const FName QuestFName) const;
+	void TrackQuestByFName(const FName QuestFName);
+
 #if WITH_EDITOR
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void LogAllQuests() const;
 #endif
-	
+
 protected:
 	virtual void BeginPlay() override;
 	void AddQuest(UQuestData* QuestData, const FQuestEntryData QuestEntryData);

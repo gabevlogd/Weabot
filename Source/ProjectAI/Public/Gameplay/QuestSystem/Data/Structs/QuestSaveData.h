@@ -7,7 +7,6 @@
 #include "Gameplay/QuestSystem/Data/Enums/QuestType.h"
 #include "QuestSaveData.generated.h"
 
-
 USTRUCT(BlueprintType)
 struct FQuestSaveData
 {
@@ -19,4 +18,6 @@ struct FQuestSaveData
 	TMap<FName, FTaskSaveData> Tasks;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "QuestSaveData")
 	int32 CurrentTaskIndex;
+
+	FQuestSaveData() = default;
 };

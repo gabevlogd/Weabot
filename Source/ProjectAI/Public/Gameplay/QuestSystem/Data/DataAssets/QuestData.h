@@ -8,7 +8,6 @@
 #include "Engine/DataAsset.h"
 #include "QuestData.generated.h"
 
-
 UCLASS(BlueprintType)
 class PROJECTAI_API UQuestData : public UPrimaryDataAsset
 {

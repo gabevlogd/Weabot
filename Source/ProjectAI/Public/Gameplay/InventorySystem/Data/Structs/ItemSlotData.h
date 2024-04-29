@@ -12,5 +12,12 @@ struct PROJECTAI_API FItemSlotData
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory System|Item")
+	int32 StackSize;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory System|Item")
 	int32 SlotQuantity;
+
+	bool IsMaxStacked() const
+	{
+		return SlotQuantity >= StackSize;
+	}
 };

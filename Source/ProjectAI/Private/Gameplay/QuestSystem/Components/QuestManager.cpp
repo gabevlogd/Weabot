@@ -108,12 +108,12 @@ void UQuestManager::AchieveTaskInQuest(const UQuestData* QuestDataKey, const UTa
 	if (!Task || Task->bIsAchieved) return;
 
 	Quest->AchieveQuestTask(TaskDataKey);
-	OnAnyTaskAchieved.Broadcast();
+	OnAnyTaskAchieved.Broadcast(Quest, Task);
 
 	if (Quest->bIsQuestCompleted)
 	{
 		AddToCompletedQuests(Quest->QuestData);
-		OnAnyQuestCompleted.Broadcast();
+		OnAnyQuestCompleted.Broadcast(Quest);
 	}
 }
 

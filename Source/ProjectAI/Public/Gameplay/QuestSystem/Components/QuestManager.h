@@ -12,9 +12,14 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogQuestSystem, Log, All);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyQuestCompleted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnAnyQuestCompleted,
+	const UQuestBase*, Quest);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAnyTaskAchieved);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
+	FOnAnyTaskAchieved,
+	const UQuestBase*, Quest,
+	const UTaskBase*, Task);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	FOnQuestTracked,

@@ -11,33 +11,36 @@ UInventorySystem::UInventorySystem()
 
 bool UInventorySystem::AddItem(UItemData* ItemData, UObject* ItemObject)
 {
-	if (IsFull()) // This works because the items are added one by one
+	if (!CanContainItem(ItemData))
 	{
 		UE_LOG(LogInventorySystem, Display, TEXT("Cannot add item, inventory is full."));
 		return false;
 	}
 
 	UE_LOG(LogInventorySystem, Display, TEXT("Adding Item %s to inventory %s"), *ItemData->ItemName, *GetName())
-	if (UItemBase* FoundItem = FindByItemID(ItemData))
+	if (UItemBase* FoundItem = Find(ItemData))
 	{
 		FoundItem->IncreaseQuantity(); // Increase quantity of the item, if it already exists in the inventory
 		OnItemAdded.Broadcast(FoundItem);
+		OnInventoryModified.Broadcast();
 		return true;
 	}
 
 	UItemBase* CreatedItem = UISFactory::CreateItem(ItemData, this, ItemObject);
 	Items.Add(CreatedItem);
 	OnItemAdded.Broadcast(CreatedItem);
+	OnInventoryModified.Broadcast();
 	return true;
 }
 
-bool UInventorySystem::TryRemoveItem(UItemData* ItemData)
+bool UInventorySystem::RemoveItem(UItemData* ItemData)
 {
-	if (UItemBase* FoundItem = FindByItemID(ItemData))
+	if (UItemBase* FoundItem = Find(ItemData))
 	{
-		OnItemRemoved.Broadcast(FoundItem);
 		Items.Remove(FoundItem);
 		FoundItem->OnRemove();
+		OnAnyItemRemoved.Broadcast(FoundItem);
+		OnInventoryModified.Broadcast();
 		return true;
 	}
 
@@ -47,21 +50,11 @@ bool UInventorySystem::TryRemoveItem(UItemData* ItemData)
 void UInventorySystem::RemoveAllItems()
 {
 	Items.Empty();
+	OnInventoryModified.Broadcast();
 	OnInventoryCleared.Broadcast();
 }
 
-bool UInventorySystem::HasItem(const UItemData* ItemData)
-{
-	for (const UItemBase* Item : Items)
-	{
-		if (Item->GetItemData()->GetItemID() == ItemData->GetItemID())
-			return true;
-	}
-
-	return false;
-}
-
-UItemBase* UInventorySystem::FindByItemID(const UItemData* ItemData)
+UItemBase* UInventorySystem::Find(const UItemData* ItemData) const
 {
 	for (UItemBase* Item : Items)
 	{
@@ -72,11 +65,11 @@ UItemBase* UInventorySystem::FindByItemID(const UItemData* ItemData)
 	return nullptr;
 }
 
-int32 UInventorySystem::GetOccupiedSlots() const
+int32 UInventorySystem::GetTotalMinRequiredSlotsCount() const
 {
 	int32 CurrSlots = 0;
 	for (const UItemBase* Item : Items)
-		CurrSlots += Item->GetNeededSlots().Num();
+		CurrSlots += Item->GetMinRequiredSlots();
 
 	return CurrSlots;
 }
@@ -88,5 +81,48 @@ bool UInventorySystem::IsEmpty() const
 
 bool UInventorySystem::IsFull() const
 {
-	return GetOccupiedSlots() >= InventorySlotsSize;
+	if (IsSatisfyingAllRequiredSlots()) return false;
+
+	for (const UItemBase* Item : Items)
+	{
+		for (const FItemSlotData& Slot : Item->GetRequiredSlots()) // For each slot the item occupies
+		{
+			if (!Slot.IsMaxStacked())
+				return false;
+		}
+	}
+
+	return true;
+}
+
+bool UInventorySystem::IsSatisfyingAllRequiredSlots() const
+{
+	return GetTotalMinRequiredSlotsCount() < InventorySlotsSize;
+}
+
+bool UInventorySystem::HasItem(const UItemData* ItemData) const
+{
+	for (const UItemBase* Item : Items)
+	{
+		if (Item->GetItemData()->GetItemID() == ItemData->GetItemID())
+			return true;
+	}
+
+	return false;
+}
+
+bool UInventorySystem::CanContainItem(const UItemData* ItemData) const
+{
+	if (IsFull()) return false;
+
+	if (const UItemBase* FoundItem = Find(ItemData))
+	{
+		for (const FItemSlotData& Slot : FoundItem->GetRequiredSlots())
+		{
+			if (!Slot.IsMaxStacked())
+				return true;
+		}
+	}
+
+	return IsSatisfyingAllRequiredSlots();
 }

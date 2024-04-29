@@ -10,11 +10,31 @@
 class UInventorySystem;
 class UItemData;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(
+	FOnItemUsed
+	);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(
+	FOnItemConsumed
+	);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(
+	FOnItemRemoved
+	);
+
 UCLASS(Blueprintable, BlueprintType)
 class PROJECTAI_API UItemBase : public UObject
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System|Item")
+	FOnItemUsed OnItemUsed;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System|Item")
+	FOnItemConsumed OnItemConsumed;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System|Item")
+	FOnItemRemoved OnItemRemoved;
+	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory System|Item")
 	UItemData* ItemData;
@@ -33,17 +53,17 @@ public:
 	const UItemData* GetItemData() const;
 
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
-	TArray<FItemSlotData> GetNeededSlots() const;
+	TArray<FItemSlotData> GetRequiredSlots() const;
 
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
-	int32 GetNeededSlotsCount() const;
+	int32 GetMinRequiredSlots() const;
 	
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
 	int32 GetMaxStackSize() const;
 	
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
 	int32 GetCurrentQuantity() const;
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Inventory System|Item")
 	void IncreaseQuantity();
 
@@ -54,7 +74,7 @@ public:
 	void Use();
 	
 	UFUNCTION(BlueprintCallable, Category = "Inventory System|Item")
-	void Remove() const;
+	void Remove();
 	
 	UFUNCTION(BlueprintCallable, Category = "Inventory System|Item")
 	void Consume();

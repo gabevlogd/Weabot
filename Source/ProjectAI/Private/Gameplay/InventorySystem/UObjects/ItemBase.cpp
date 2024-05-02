@@ -117,7 +117,6 @@ void UItemBase::Consume()
 
 void UItemBase::OnInit_Implementation()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green,FString::Printf(TEXT("Item %s has been initialized in the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName()));
 }
 
 void UItemBase::OnRemove_Implementation()

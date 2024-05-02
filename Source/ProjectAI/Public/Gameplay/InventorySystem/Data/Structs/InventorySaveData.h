@@ -11,6 +11,7 @@ USTRUCT(BlueprintType)
 struct FInventorySaveData
 {
 	GENERATED_BODY()
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<FName, FItemSaveData> SavedItems;
 };

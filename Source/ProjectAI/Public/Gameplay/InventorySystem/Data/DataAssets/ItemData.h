@@ -30,7 +30,7 @@ public:
 
 	FORCEINLINE FName GetItemID() const
 	{
-		const int32 Hash = GetTypeHash(GetFName()) + GetTypeHash(ItemName) + GetTypeHash(Metadata);
+		const int32 Hash = GetTypeHash(GetFName()) + GetTypeHash(ItemName);
 		const FString Hex = FString::Printf(TEXT("%08X"), Hash);
 		return FName(*Hex);
 	}

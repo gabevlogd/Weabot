@@ -36,6 +36,10 @@ void UInventorySystem::LoadSaveData(const FInventorySaveData InventorySaveData)
 			if(UItemBase* AddedItem = AddItem(ItemData))
 				AddedItem->LoadSaveData(ItemSaveData);
 		}
+		else
+		{
+			UE_LOG(LogInventorySystem, Warning, TEXT("Item with ID %s not found in the inventory registry %s"), *ItemID.ToString(), *GetName());
+		}
 	}
 }
 
@@ -170,12 +174,12 @@ bool UInventorySystem::IsInRegistry(const UItemData* ItemData) const
 
 UItemData* UInventorySystem::GetItemByID(const FName ItemID) const
 {
-	for (const UItemBase* Item : Items)
+	for (UItemData* ItemData : InventoryRegistry->RegisteredItems)
 	{
-		if (Item->GetItemData()->GetItemID() == ItemID)
-			return Item->GetItemData();
+		if (ItemData->GetItemID() == ItemID)
+			return ItemData;
 	}
-
+	
 	return nullptr;
 }
 

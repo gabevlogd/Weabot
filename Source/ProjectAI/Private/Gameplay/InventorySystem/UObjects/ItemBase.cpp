@@ -5,17 +5,28 @@
 #include "Gameplay/InventorySystem/Data/DataAssets/ItemData.h"
 #include "Kismet/GameplayStatics.h"
 
-void UItemBase::Init(UItemData* Data, UInventorySystem* InventorySystem, UObject* Object)
+void UItemBase::Init(UItemData* Data, UInventorySystem* InventorySystem)
 {
 	RelatedInventory = InventorySystem;
 	ItemData = Data;
 	CurrentQuantity = 1;
-	ItemObject = Object;
 	UE_LOG(LogInventorySystem, Display, TEXT("ItemBase::Init(), Item %s has been initialized in the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName());
 	OnInit();
 }
 
-const UItemData* UItemBase::GetItemData() const
+FItemSaveData UItemBase::CreateSaveData() const
+{
+	FItemSaveData ItemSaveData;
+	ItemSaveData.Quantity = CurrentQuantity;
+	return ItemSaveData;
+}
+
+void UItemBase::LoadSaveData(const FItemSaveData ItemSaveData)
+{
+	CurrentQuantity = ItemSaveData.Quantity;
+}
+
+UItemData* UItemBase::GetItemData() const
 {
 	return ItemData;
 }

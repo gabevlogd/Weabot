@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "TaskSaveData.generated.h"
 
-USTRUCT(BlueprintType)
+USTRUCT(Blueprintable, BlueprintType)
 struct FTaskSaveData
 {
 	GENERATED_BODY()

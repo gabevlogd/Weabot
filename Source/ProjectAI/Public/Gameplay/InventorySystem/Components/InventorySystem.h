@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Gameplay/InventorySystem/Data/DataAssets/InventoryRegistry.h"
+#include "Gameplay/InventorySystem/Data/Structs/InventorySaveData.h"
 #include "Gameplay/InventorySystem/UObjects/ItemBase.h"
 #include "InventorySystem.generated.h"
 
@@ -43,6 +45,8 @@ class PROJECTAI_API UInventorySystem : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System")
+	UInventoryRegistry* InventoryRegistry;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System", meta = (ClampMin = "1", UIMin = "1"))
 	int32 InventorySlotsSize = 16;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory System")
@@ -65,7 +69,13 @@ public:
 	UInventorySystem();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory System")
-	bool AddItem(UItemData* ItemData, UObject* ItemObject = nullptr);
+	virtual FInventorySaveData CreateSaveData() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory System")
+	virtual void LoadSaveData(const FInventorySaveData InventorySaveData);
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory System")
+	UItemBase* AddItem(UItemData* ItemData);
 	
 	UFUNCTION(BlueprintCallable, Category = "Inventory System")
 	bool RemoveItem(UItemData* ItemData);
@@ -93,4 +103,15 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Inventory System")
 	bool CanContainItem(const UItemData* ItemData) const;
+
+	UFUNCTION(BlueprintPure, Category = "Inventory System")
+	bool IsInRegistry(const UItemData* ItemData) const;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory System")
+	UItemData* GetItemByID(const FName ItemID) const;
+
+	bool Check() const;
+	
+protected:
+	virtual void BeginPlay() override;
 };

@@ -38,6 +38,9 @@ public:
 	virtual void Init(UQuestData* InitData, const FQuestEntryData& EntryData);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
+	virtual FQuestSaveData CreateQuestSaveData() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void LoadSaveData(FQuestSaveData QuestSaveData);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
@@ -62,9 +65,6 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Quest System")
 	EQuestType GetQuestType() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	virtual FQuestSaveData CreateQuestSaveData() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void ResetQuest();

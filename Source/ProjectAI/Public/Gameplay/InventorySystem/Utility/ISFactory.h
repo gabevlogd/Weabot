@@ -13,5 +13,5 @@ class PROJECTAI_API UISFactory : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static UItemBase* CreateItem(UItemData* Data, UInventorySystem* InventorySystem, UObject* Object = nullptr);
+	static UItemBase* CreateItem(UItemData* Data, UInventorySystem* InventorySystem);
 };

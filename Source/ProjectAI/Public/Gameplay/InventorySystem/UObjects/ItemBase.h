@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Gameplay/InventorySystem/Data/Structs/ItemSaveData.h"
 #include "Gameplay/InventorySystem/Data/Structs/ItemSlotData.h"
 #include "UObject/Object.h"
 #include "ItemBase.generated.h"
@@ -47,10 +48,16 @@ private:
 	int32 CurrentQuantity;
 
 public:
-	void Init(UItemData* Data, UInventorySystem* InventorySystem, UObject* Object = nullptr);
+	void Init(UItemData* Data, UInventorySystem* InventorySystem);
 
+	UFUNCTION(BlueprintCallable, Category = "Inventory System|Item")
+	virtual FItemSaveData CreateSaveData() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory System|Item")
+	virtual void LoadSaveData(const FItemSaveData ItemSaveData);
+	
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
-	const UItemData* GetItemData() const;
+	UItemData* GetItemData() const;
 
 	UFUNCTION(BlueprintPure, Category = "Inventory System|Item")
 	TArray<FItemSlotData> GetRequiredSlots() const;

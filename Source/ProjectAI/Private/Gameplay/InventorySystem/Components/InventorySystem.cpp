@@ -33,8 +33,9 @@ void UInventorySystem::LoadSaveData(const FInventorySaveData InventorySaveData)
 		
 		if(UItemData* ItemData = GetItemByID(ItemID))
 		{
-			if(UItemBase* AddedItem = AddItem(ItemData))
-				AddedItem->LoadSaveData(ItemSaveData);
+			UItemBase* CreatedItem = UISFactory::CreateItem(ItemData, this);
+			CreatedItem->LoadSaveData(ItemSaveData);
+			Items.Add(CreatedItem);
 		}
 		else
 		{

@@ -17,6 +17,19 @@ void UQuestBase::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 	}
 }
 
+FQuestSaveData UQuestBase::CreateQuestSaveData() const
+{
+	FQuestSaveData QuestSaveData = FQuestSaveData();
+	
+	for (const auto& Task : AllTasks)
+	{
+		QuestSaveData.QuestStatus = QuestStatus;
+		QuestSaveData.Tasks.Add(Task.Key->GetFName(), Task.Value->CreateTaskSaveData());
+	}
+
+	return QuestSaveData;
+}
+
 void UQuestBase::LoadSaveData(FQuestSaveData QuestSaveData)
 {
 	ResetQuest();
@@ -78,19 +91,6 @@ EQuestStatus UQuestBase::GetQuestStatus() const
 EQuestType UQuestBase::GetQuestType() const
 {
 	return QuestType;
-}
-
-FQuestSaveData UQuestBase::CreateQuestSaveData() const
-{
-	FQuestSaveData QuestSaveData = FQuestSaveData();
-	
-	for (const auto& Task : AllTasks)
-	{
-		QuestSaveData.QuestStatus = QuestStatus;
-		QuestSaveData.Tasks.Add(Task.Key->GetFName(), Task.Value->CreateTaskSaveData());
-	}
-
-	return QuestSaveData;
 }
 
 void UQuestBase::ResetQuest()

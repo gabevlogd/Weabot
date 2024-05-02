@@ -58,10 +58,10 @@ public:
 	void Init();
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	FQuestLogSaveData CreateSaveData() const;
+	virtual FQuestLogSaveData CreateSaveData() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
+	virtual void LoadSaveData(FQuestLogSaveData QuestLogSaveData);
 
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	void TrackQuest(const UQuestData* QuestDataKey);

@@ -39,7 +39,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(
 	FOnInventoryModified
 	);
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTAI_API UInventorySystem : public UActorComponent
 {
 	GENERATED_BODY()

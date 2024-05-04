@@ -5,7 +5,6 @@
 #include "Generic/SaveSystem/Constants/SaveConstants.h"
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
 
-
 USaveManager* UAutoSaveManager::CurrentSaveManager = nullptr;
 FAutoSaveData* UAutoSaveManager::AutoSaveData = nullptr;
 FTimerHandle UAutoSaveManager::AutoSaveTimerHandle;
@@ -29,7 +28,7 @@ void UAutoSaveManager::Init(USaveManager* SaveManager)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("World Timer Manager is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("Auto Save Failed to Initialize: World Timer Manager is not valid."));
 	}
 }
 
@@ -37,24 +36,16 @@ void UAutoSaveManager::AutoSave()
 {
 	if (bIsPaused) return; // Safe check, should not happen since the timer is paused
 
-	FString AutoSaveSlotName;
-	CreateAutoSaveSlotFile(AutoSaveSlotName);
-}
+	const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots(); 
+	FString AutoSaveSlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
+	if (CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)
+	{
+		FSlotInfoData OutSlotData;
+		USlotsUtility::TryGetMostAncientSlotInfoData(OutSlotData, ESaveTypeFilter::Auto);
+		AutoSaveSlotName = OutSlotData.SlotInfoName;
+	}
 
-void UAutoSaveManager::CreateAutoSaveSlotFile(FString& SlotName)
-{
-	if (const int32 CurrentAutoSavesNumber = USlotsUtility::GetTotalAutoSaveSlots(); CurrentAutoSavesNumber >= AutoSaveData->MaxAutoSaves)
-	{
-		FSlotInfoData SlotData;
-		if (!USlotsUtility::TryGetMostAncientSlotInfoData(SlotData, ESaveTypeFilter::Auto)) return;
-		SlotName = SlotData.SlotName;
-		CurrentSaveManager->Save(SlotName);
-	}
-	else
-	{
-		SlotName = AUTO_SAVE_SLOT_NAME + FString::FromInt(CurrentAutoSavesNumber);
-		CurrentSaveManager->CreateAndSaveSlot(SlotName);
-	}
+	CurrentSaveManager->Save(AutoSaveSlotName);
 }
 
 void UAutoSaveManager::PauseAutoSave()
@@ -78,16 +69,14 @@ FTimerManager* UAutoSaveManager::GetWorldTimerManager()
 {
 	if (!GEngine)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Engine is not valid."));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Engine is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("AutoSave Timer GEngine is not valid."));
 		return nullptr;
 	}
 
 	const UWorld* World = GEngine->GetWorldFromContextObject(CurrentSaveManager, EGetWorldErrorMode::LogAndReturnNull);
 	if (!World)
 	{
-		UE_LOG(LogTemp, Error, TEXT("World is not valid."));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("World is not valid."));
+		UE_LOG(LogSaveSystem, Error, TEXT("AutoSave Timer World is not valid."));
 		return nullptr;
 	}
 

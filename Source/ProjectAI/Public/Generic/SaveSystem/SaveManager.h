@@ -11,6 +11,8 @@
 #include "UObject/Object.h"
 #include "SaveManager.generated.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogSaveSystem, Log, All);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
 	FOnPrepareSave,
 	UDefaultSaveGame*, SaveGameData,
@@ -66,6 +68,8 @@ private:
 	USlotInfoItem* CurrentSlotInfoItem;
 	bool bIsLoading;
 	bool bIsSaving;
+	FName PreviousSlotNameKey;
+	bool bSaveAsNewGame;
 
 public:
 	USaveManager();
@@ -83,30 +87,25 @@ public:
 	void DeleteAllSlots();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void ManualSave();
-
+	void StartNewSaveGame();
+	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	bool CreateAndSaveSlot(const FString& SlotName);
+	void ManualSave();
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	TArray<FSlotInfoData> GetSaveInfos() const;
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
-
-	UFUNCTION()
+	
 	void Save(const FString& SlotName);
-	UFUNCTION()
 	void Load(const FString& SlotName);
-	UFUNCTION()
-	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
-	UFUNCTION()
-	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
 private:
-	void UpdateCurrentSaveGameSlotInfoData();
-	void AddSlotInfo(const FSlotInfoData& SlotInfoData);
-	void RemoveSlotInfo(const FName& SlotName);
+	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
+	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
+	void UpdateSlotInfo(const FName NewSaveSlotNameKey);
+	void RemoveSlotInfo(const FName& SlotNameKey);
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();
-	void CreateSaveGameInstance();
+	void CreateSaveInstances();
 };

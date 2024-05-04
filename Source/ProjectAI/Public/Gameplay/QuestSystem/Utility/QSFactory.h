@@ -7,7 +7,6 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "QSFactory.generated.h"
 
-
 UCLASS()
 class PROJECTAI_API UQSFactory : public UBlueprintFunctionLibrary
 {

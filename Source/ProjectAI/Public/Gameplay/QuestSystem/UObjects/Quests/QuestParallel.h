@@ -8,7 +8,6 @@
 #include "UObject/Object.h"
 #include "QuestParallel.generated.h"
 
-
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UQuestParallel : public UQuestBase
 {

@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Generic/SaveSystem/SlotSelectorManager.h"
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
-
 
 USaveManager* USlotSelectorManager::CurrentSaveManager = nullptr;
 FString USlotSelectorManager::CurrentSlotName = "";
@@ -30,7 +28,7 @@ bool USlotSelectorManager::TrySelectMostRecentSaveGame()
 {
 	if (FSlotInfoData SlotData; USlotsUtility::TryGetMostRecentSlotInfoData(SlotData))
 	{
-		TrySelectSaveGameSlot(SlotData.SlotName);
+		TrySelectSaveGameSlot(SlotData.SlotInfoName);
 		return true;
 	}
 
@@ -41,7 +39,7 @@ bool USlotSelectorManager::TrySelectMostAncientSaveGame()
 {
 	if (FSlotInfoData SlotData; USlotsUtility::TryGetMostAncientSlotInfoData(SlotData))
 	{
-		TrySelectSaveGameSlot(SlotData.SlotName);
+		TrySelectSaveGameSlot(SlotData.SlotInfoName);
 		return true;
 	}
 
@@ -50,12 +48,10 @@ bool USlotSelectorManager::TrySelectMostAncientSaveGame()
 
 void USlotSelectorManager::SaveOnSelectedSlot()
 {
-	if (USlotsUtility::IsSlotNameValid(CurrentSlotName))
-		CurrentSaveManager->Save(CurrentSlotName);
+	CurrentSaveManager->Save(CurrentSlotName);
 }
 
 void USlotSelectorManager::LoadFromSelectedSlot()
 {
-	if (USlotsUtility::IsSlotNameValid(CurrentSlotName))
-		CurrentSaveManager->Load(CurrentSlotName);
+	CurrentSaveManager->Load(CurrentSlotName);
 }

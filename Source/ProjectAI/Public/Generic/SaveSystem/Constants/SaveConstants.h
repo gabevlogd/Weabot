@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 #define SAVE_EXTENSION TEXT(".sav")
 #define SAVES_DIRECTORY TEXT("saves/")
 #define SAVES_DIRECTORY_FULLPATH FPaths::Combine(FPaths::ProjectSavedDir(), "SaveGames/", SAVES_DIRECTORY)
@@ -10,6 +9,6 @@
 #define AUTO_SAVE_SLOT_NAME TEXT("auto_")
 
 // Meta Files
-#define META_DIRECTORY TEXT("metasaves/")
+#define META_DIRECTORY FPaths::Combine(SAVES_DIRECTORY, TEXT(".meta/"))
 #define META_DIRECTORY_FULLPATH FPaths::Combine(FPaths::ProjectSavedDir(), META_DIRECTORY)
-#define SLOT_INFOS_PATH_NAME FPaths::Combine(META_DIRECTORY, TEXT("infos"))
+#define META_INFOS_PATH FPaths::Combine(META_DIRECTORY, TEXT("infos"))

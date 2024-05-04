@@ -6,7 +6,6 @@
 #include "Engine/DataAsset.h"
 #include "QuestFilterData.generated.h"
 
-
 UCLASS(BlueprintType)
 class PROJECTAI_API UQuestFilterData : public UPrimaryDataAsset
 {

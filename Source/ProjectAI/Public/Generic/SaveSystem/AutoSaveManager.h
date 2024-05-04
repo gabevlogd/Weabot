@@ -33,6 +33,5 @@ public:
 	
 private:
 	static void AutoSave();
-	static void CreateAutoSaveSlotFile(FString& SlotName);
 	static FTimerManager* GetWorldTimerManager();
 };

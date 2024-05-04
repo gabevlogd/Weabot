@@ -1,6 +1,5 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/Utility/QSFactory.h"
 
 #include "Gameplay/QuestSystem/Data/Structs/QuestEntryData.h"
@@ -8,7 +7,6 @@
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/SingleTask.h"
-
 
 UQuestBase* UQSFactory::CreateQuestByType(UQuestData* QuestData, const FQuestEntryData& QuestEntryData)
 {

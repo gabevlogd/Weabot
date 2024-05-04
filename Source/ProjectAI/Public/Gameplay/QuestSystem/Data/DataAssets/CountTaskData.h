@@ -6,7 +6,6 @@
 #include "TaskData.h"
 #include "CountTaskData.generated.h"
 
-
 UCLASS(BlueprintType)
 class PROJECTAI_API UCountTaskData : public UTaskData
 {

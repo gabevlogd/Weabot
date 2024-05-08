@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestSequencial.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
-
 
 void UQuestSequencial::Init(UQuestData* InitData, const FQuestEntryData& EntryData)
 {

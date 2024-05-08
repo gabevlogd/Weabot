@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestParallel.h"
 #include "Gameplay/QuestSystem/UObjects/Tasks/TaskBase.h"
-
 
 void UQuestParallel::AchieveQuestTask(const UTaskData* TaskDataKey, const bool bFullyAchieve)
 {

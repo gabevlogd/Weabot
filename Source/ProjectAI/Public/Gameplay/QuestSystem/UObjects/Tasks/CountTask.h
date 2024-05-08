@@ -7,7 +7,6 @@
 #include "Gameplay/QuestSystem/UObjects/Quests/QuestBase.h"
 #include "CountTask.generated.h"
 
-
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API UCountTask : public UTaskBase
 {

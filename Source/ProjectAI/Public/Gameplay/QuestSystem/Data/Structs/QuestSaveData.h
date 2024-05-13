@@ -7,8 +7,7 @@
 #include "Gameplay/QuestSystem/Data/Enums/QuestType.h"
 #include "QuestSaveData.generated.h"
 
-
-USTRUCT(BlueprintType)
+USTRUCT(Blueprintable, BlueprintType)
 struct FQuestSaveData
 {
 	GENERATED_BODY()

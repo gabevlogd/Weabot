@@ -1,9 +1,7 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Gameplay/QuestSystem/UObjects/Tasks/CountTask.h"
 #include "Gameplay/QuestSystem/Data/DataAssets/CountTaskData.h"
-
 
 void UCountTask::Init(UTaskData* InitData, UQuestBase* Quest)
 {

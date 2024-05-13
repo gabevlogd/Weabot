@@ -1,13 +1,11 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
 
 #include "Generic/SaveSystem/Constants/SaveConstants.h"
 #include "Generic/SaveSystem/Data/Saves/DefaultSaveGame.h"
 #include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
-
 
 USaveManager* USlotsUtility::CurrentSaveManager = nullptr;
 
@@ -16,12 +14,6 @@ void USlotsUtility::Init(USaveManager* SaveManager)
 	if (!SaveManager) return;
 
 	CurrentSaveManager = SaveManager;
-
-	// if (!DoesAnySlotFileExist())
-	// {
-	// 	CreateIndexedSaveGameFile();
-	// 	return;
-	// }
 }
 
 bool USlotsUtility::DoesSlotFileExist(const FString& SlotName)
@@ -87,8 +79,8 @@ bool USlotsUtility::TryGetSlotInfosOfType(TArray<FSlotInfoData>& OutSlotInfos, E
 
     OutSlotInfos.RemoveAll([&](const FSlotInfoData& SlotInfo)
     {
-        return (Type == ESaveTypeFilter::Manual && SlotInfo.SlotName.Contains(AUTO_SAVE_SLOT_NAME)) ||
-               (Type == ESaveTypeFilter::Auto && SlotInfo.SlotName.Contains(SAVE_SLOT_NAME));
+        return (Type == ESaveTypeFilter::Manual && SlotInfo.SlotInfoName.Contains(AUTO_SAVE_SLOT_NAME)) ||
+               (Type == ESaveTypeFilter::Auto && SlotInfo.SlotInfoName.Contains(SAVE_SLOT_NAME));
     });
 
     return OutSlotInfos.Num() > 0;
@@ -111,6 +103,27 @@ bool USlotsUtility::TryGetMostAncientSlotInfoData(FSlotInfoData& OutSlotData, co
 	if (!TryGetSlotInfosOfType(SaveInfos, Type)) return false;
 
 	OutSlotData = SaveInfos[SaveInfos.Num() - 1];
+	return true;
+}
+
+float USlotsUtility::GetMostRecentSlotInfoPlayedTime()
+{
+	FSlotInfoData SlotInfoData;
+	if (!TryGetMostRecentSlotInfoData(SlotInfoData)) return 0.0f;
+	return SlotInfoData.TimePlayed;
+}
+
+bool USlotsUtility::TryGetTimeSinceCreation(float& OutTimeSinceCreation)
+{
+	if (!GEngine) return false;
+	if (!GEngine->GameViewport) return false;
+	const UWorld* World = GEngine->GameViewport->GetWorld();
+	if (!World) return false;
+	if (UGameplayStatics::IsGamePaused(World)) return false; // If the game is paused, the time since creation is not updated
+	const APlayerController* PlayerController = World->GetFirstPlayerController();
+	if (!PlayerController) return false;
+
+	OutTimeSinceCreation = PlayerController->GetGameTimeSinceCreation();
 	return true;
 }
 

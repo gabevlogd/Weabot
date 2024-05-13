@@ -1,11 +1,9 @@
 // Copyright The Prototypers, Inc. All Rights Reserved.
 
-
 #include "Generic/SaveSystem/Components/Savers/Saver.h"
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
 #include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
-
 
 USaver::USaver()
 {
@@ -14,7 +12,7 @@ USaver::USaver()
 
 FName USaver::GetUniqueSaveID() const
 {
-	// const FName SlotName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotInfoName;
+	// const FName SlotInfoName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotNameKey;
 	const FName OwnerName = GetOwner()->GetFName();
 	const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
 	const FString UniqueID = OwnerName.ToString() + "::" + LevelName;
@@ -26,7 +24,6 @@ FName USaver::GetUniqueSaveID() const
 
 void USaver::PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem)
 {
-	UE_LOG(LogTemp, Warning, TEXT("USaver::PrepareSave"));
 	OnPrepSave.Broadcast(SaveGame, SlotInfoItem);
 	OnPrepareSave(SaveGame, SlotInfoItem);
 }

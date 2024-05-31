@@ -7,7 +7,7 @@
 #include "Gameplay/InventorySystem/UObjects/ItemBase.h"
 #include "ItemData.generated.h"
 
-UCLASS(NotBlueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType)
 class PROJECTAI_API UItemData : public UPrimaryDataAsset
 {
 	GENERATED_BODY()

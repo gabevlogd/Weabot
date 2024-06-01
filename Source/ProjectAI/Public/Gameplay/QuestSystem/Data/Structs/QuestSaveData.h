@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "TaskSaveData.h"
-#include "Gameplay/QuestSystem/Data/Enums/QuestType.h"
+#include "Gameplay/QuestSystem/Data/Enums/QuestStatus.h"
 #include "QuestSaveData.generated.h"
 
 USTRUCT(Blueprintable, BlueprintType)

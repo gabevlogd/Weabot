@@ -157,6 +157,12 @@ bool UInventorySystem::CanContainItem(const UItemData* ItemData) const
 
 	if (const UItemBase* FoundItem = Find(ItemData))
 	{
+		if (FoundItem->GetItemData()->bIsUnique)
+		{
+			UE_LOG(LogInventorySystem, Warning, TEXT("Cannot add Item, %s is unique and already exists in the inventory %s"), *ItemData->ItemName, *GetName());
+			return false;
+		}
+		
 		for (const FItemSlotData& Slot : FoundItem->GetRequiredSlots())
 		{
 			if (!Slot.IsMaxStacked())

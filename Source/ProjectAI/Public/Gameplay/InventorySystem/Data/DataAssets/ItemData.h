@@ -24,6 +24,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory System|Item", meta=(ClampMin="1", UIMin="1"))
 	int32 MaxStackSize = 1;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item")
+	bool bIsUnique;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item")
 	bool bIsConsumable;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Item")
 	UObject* Metadata;

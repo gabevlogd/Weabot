@@ -7,12 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/InventorySystem/Components/InventorySystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/InventorySystem/Components/InventorySystem.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -273,6 +268,17 @@
       <workItem from="1714366681188" duration="13994000" />
       <workItem from="1714646388031" duration="8588000" />
       <workItem from="1714658302722" duration="1311000" />
+      <workItem from="1716114411361" duration="10000" />
+      <workItem from="1716114436984" duration="1000" />
+      <workItem from="1716375712307" duration="1896000" />
+      <workItem from="1717099386285" duration="1879000" />
+      <workItem from="1717101981640" duration="6026000" />
+      <workItem from="1717181277378" duration="1037000" />
+      <workItem from="1717203753081" duration="3316000" />
+      <workItem from="1717207514074" duration="9325000" />
+      <workItem from="1717219649134" duration="440000" />
+      <workItem from="1717298778725" duration="1313000" />
+      <workItem from="1717300380078" duration="642000" />
     </task>
     <servers />
   </component>

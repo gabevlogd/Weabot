@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "QuestSaveData.h"
-#include "Gameplay/QuestSystem/Data/Enums/QuestStatus.h"
+#include "..\Enums\QuestStatus.h"
+#include "Gameplay/QuestSystem/Data/Enums/QuestType.h"
 #include "QuestEntryData.generated.h"
 
 USTRUCT(BlueprintType)

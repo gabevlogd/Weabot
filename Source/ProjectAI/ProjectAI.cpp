@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright The Prototypers, Inc. All Rights Reserved.
 
 #include "ProjectAI.h"
 #include "Modules/ModuleManager.h"

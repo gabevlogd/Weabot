@@ -16,15 +16,23 @@ USaveManager* USSUtility::GetSaveManager()
 
 UDefaultSaveGame* USSUtility::GetSaveGame()
 {
+	if (!Check()) return nullptr;
 	return CurrentSaveManager->GetSaveGameInstance();
 }
 
 void USSUtility::StartNewSaveGame()
 {
+	if (!Check()) return;
 	CurrentSaveManager->StartNewSaveGame();
 }
 
 void USSUtility::ManualSave()
 {
+	if (!CurrentSaveManager) return;
 	CurrentSaveManager->ManualSave();
+}
+
+bool USSUtility::Check()
+{
+	return CurrentSaveManager != nullptr;
 }

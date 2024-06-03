@@ -20,4 +20,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	FTransform GetOwnerTransform() const;
+
+	virtual void BeginPlay() override;
+	
+private:
+	void SetActorLoadedTransform(UDefaultSaveGame* LoadedData) const;
 };

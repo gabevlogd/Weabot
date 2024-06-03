@@ -29,4 +29,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void ManualSave();
+
+private:
+	static bool Check();
 };

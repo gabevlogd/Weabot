@@ -6,7 +6,6 @@
 
 UInventorySystem::UInventorySystem()
 {
-	InventoryRegistry = nullptr;
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
@@ -46,11 +45,7 @@ void UInventorySystem::LoadSaveData(const FInventorySaveData InventorySaveData)
 
 UItemBase* UInventorySystem::AddItem(UItemData* ItemData)
 {
-	if (!CanContainItem(ItemData))
-	{
-		UE_LOG(LogInventorySystem, Display, TEXT("Cannot add item, inventory is full."));
-		return nullptr;
-	}
+	if (!CanContainItem(ItemData)) return nullptr;
 
 	UE_LOG(LogInventorySystem, Display, TEXT("Adding Item %s to inventory %s"), *ItemData->ItemName, *GetName())
 	if (UItemBase* FoundItem = Find(ItemData))
@@ -150,14 +145,24 @@ bool UInventorySystem::CanContainItem(const UItemData* ItemData) const
 {
 	if (!IsInRegistry(ItemData))
 	{
-		UE_LOG(LogInventorySystem, Warning, TEXT("Item %s is not registered in the inventory registry %s"), *ItemData->ItemName, *GetName());
+		UE_LOG(LogInventorySystem, Warning, TEXT("Cannot add Item, %s is not registered in the inventory registry %s"), *ItemData->ItemName, *GetName());
 		return false;
 	}
 	
-	if (IsFull()) return false;
+	if (IsFull())
+	{
+		UE_LOG(LogInventorySystem, Warning, TEXT("Cannot add Item, inventory %s is full."), *GetName());
+		return false;
+	}
 
 	if (const UItemBase* FoundItem = Find(ItemData))
 	{
+		if (FoundItem->GetItemData()->bIsUnique)
+		{
+			UE_LOG(LogInventorySystem, Warning, TEXT("Cannot add Item, %s is unique and already exists in the inventory %s"), *ItemData->ItemName, *GetName());
+			return false;
+		}
+		
 		for (const FItemSlotData& Slot : FoundItem->GetRequiredSlots())
 		{
 			if (!Slot.IsMaxStacked())
@@ -170,13 +175,22 @@ bool UInventorySystem::CanContainItem(const UItemData* ItemData) const
 
 bool UInventorySystem::IsInRegistry(const UItemData* ItemData) const
 {
+	if (!Check()) return false;
 	return InventoryRegistry->RegisteredItems.Contains(ItemData);
 }
 
 UItemData* UInventorySystem::GetItemByID(const FName ItemID) const
 {
+	if (!Check()) return nullptr;
+	
 	for (UItemData* ItemData : InventoryRegistry->RegisteredItems)
 	{
+		if (ItemData == nullptr)
+		{
+			UE_LOG(LogInventorySystem, Warning, TEXT("An ItemData in the inventory registry %s is null."), *GetName());
+			continue;
+		}
+		
 		if (ItemData->GetItemID() == ItemID)
 			return ItemData;
 	}

@@ -10,14 +10,30 @@ UTransformSaver::UTransformSaver()
 void UTransformSaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem)
 {
 	if (!USSUtility::GetSaveManager()) return;
-
 	USSUtility::GetSaveManager()->GetSaveGameInstance()->ActorTransforms.Add(GetUniqueSaveID(), GetOwnerTransform());
 }
 
 void UTransformSaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData)
 {
 	Super::OnLoadCompletedEvent_Implementation(SlotName, UserIndex, LoadedData);
+	SetActorLoadedTransform(LoadedData);
+}
 
+FTransform UTransformSaver::GetOwnerTransform() const
+{
+	return GetOwner()->GetActorTransform();
+}
+
+void UTransformSaver::BeginPlay()
+{
+	Super::BeginPlay();
+	SetActorLoadedTransform(USSUtility::GetSaveGame());
+}
+
+void UTransformSaver::SetActorLoadedTransform(UDefaultSaveGame* LoadedData) const
+{
+	if (!LoadedData) return;
+	
 	// Check if LoadedData and ActorTransforms are valid
 	if (const FName OwnerUniqueID = GetUniqueSaveID(); LoadedData && LoadedData->ActorTransforms.Contains(OwnerUniqueID))
 	{
@@ -31,10 +47,5 @@ void UTransformSaver::OnLoadCompletedEvent_Implementation(const FString& SlotNam
 	{
 		UE_LOG(LogSaveSystem, Warning, TEXT("Owner Unique ID not found in the loaded data"));
 	}
-}
-
-FTransform UTransformSaver::GetOwnerTransform() const
-{
-	return GetOwner()->GetActorTransform();
 }
 

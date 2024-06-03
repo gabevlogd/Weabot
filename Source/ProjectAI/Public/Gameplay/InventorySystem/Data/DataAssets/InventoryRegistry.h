@@ -14,5 +14,5 @@ class PROJECTAI_API UInventoryRegistry : public UPrimaryDataAsset
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Inventory System|Registry")
-	TSet<UItemData*> RegisteredItems;
+	TArray<UItemData*> RegisteredItems;
 };

@@ -69,6 +69,7 @@ int32 UItemBase::GetCurrentQuantity() const
 
 void UItemBase::IncreaseQuantity()
 {
+	OnItemAdded.Broadcast(CurrentQuantity);
 	CurrentQuantity++;
 }
 
@@ -98,7 +99,6 @@ void UItemBase::Remove()
 		// OnRemove is called in the InventorySystem->RemoveItem
 		// otherwise ONLY when calling Remove() from the ItemBase, it will trigger the OnRemove event
 		UE_LOG(LogInventorySystem, Display, TEXT("ItemBase::Remove(), Item %s has been removed from the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName());
-		OnItemRemoved.Broadcast();
 	}
 }
 
@@ -108,6 +108,7 @@ void UItemBase::Consume()
 
 	DecreaseQuantity();
 	OnConsume();
+	OnItemConsumed.Broadcast(CurrentQuantity);
 	RelatedInventory->OnAnyItemConsumed.Broadcast(this);
 	RelatedInventory->OnInventoryModified.Broadcast();
 	

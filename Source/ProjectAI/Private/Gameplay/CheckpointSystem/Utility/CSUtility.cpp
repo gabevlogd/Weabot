@@ -9,14 +9,6 @@ void UCSUtility::Init(UCheckpointsManager* CheckpointsManager)
 	CurrCheckpointsManager = CheckpointsManager;
 }
 
-bool UCSUtility::TrySetCurrentCheckpoint(const ACheckpoint* NewCheckpoint)
-{
-	if (!Check()) return false;
-	
-	CurrCheckpointsManager->SetCurrentCheckpointTransform(NewCheckpoint->GetActorTransform());
-	return true;
-}
-
 bool UCSUtility::TrySetCurrentCheckpointTransform(const FTransform& Transform)
 {
 	if (!Check()) return false;

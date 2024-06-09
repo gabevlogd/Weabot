@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Gameplay/CheckpointSystem/Actors/Checkpoint.h"
 #include "Gameplay/CheckpointSystem/Data/Structs/CheckpointsSaveData.h"
 #include "CheckpointsManager.generated.h"
 

@@ -19,9 +19,6 @@ public:
 	static void Init(UCheckpointsManager* CheckpointsManager);
 
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
-	static bool TrySetCurrentCheckpoint(const ACheckpoint* NewCheckpoint);
-
-	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
 	static bool TrySetCurrentCheckpointTransform(const FTransform& Transform);
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")

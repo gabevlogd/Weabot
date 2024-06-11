@@ -7,7 +7,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="" />
+    <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Data/SaveSystemData/BP_PAISlotInfoItem.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Data/SaveSystemData/BP_PAISlotInfoItem.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/PopupSystem/BP_PopupTrigger.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/PopupSystem/BP_PopupTrigger.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/GameSettings/E_GraphicsSettings.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/GameSettings/WBP_GameSettings.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/GameSettings/WBP_KeySlot.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/Buttons/WBP_SelectSaveGameButton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/Buttons/WBP_SelectSaveGameButton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/WBP_LoadGamesMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/WBP_LoadGamesMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_PAIMainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_PAIMainMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GameModes/GM_PAIGameplay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GameModes/GM_PAIGameplay.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/CheckpointsSystem/BP_PAICheckpoint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/CheckpointsSystem/BP_PAICheckpoint.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/QuestSystem/BP_TriggerTaskAchiever.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/QuestSystem/BP_TriggerTaskAchiever.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/CheckpointSystem/Actors/Checkpoint.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/CheckpointSystem/Utility/CSUtility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Gameplay/CheckpointSystem/Utility/CSUtility.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/CheckpointSystem/Actors/Checkpoint.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/CheckpointSystem/Components/CheckpointsManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/CheckpointSystem/Components/CheckpointsManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/CheckpointSystem/Utility/CSUtility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Gameplay/CheckpointSystem/Utility/CSUtility.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -279,6 +300,9 @@
       <workItem from="1717219649134" duration="440000" />
       <workItem from="1717298778725" duration="1313000" />
       <workItem from="1717300380078" duration="642000" />
+      <workItem from="1717397980263" duration="606000" />
+      <workItem from="1717578973034" duration="2105000" />
+      <workItem from="1717827337865" duration="2146000" />
     </task>
     <servers />
   </component>

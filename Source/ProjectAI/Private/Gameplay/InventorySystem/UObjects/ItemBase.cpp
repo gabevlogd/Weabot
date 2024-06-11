@@ -12,6 +12,7 @@ void UItemBase::Init(UItemData* Data, UInventorySystem* InventorySystem)
 	CurrentQuantity = 1;
 	UE_LOG(LogInventorySystem, Display, TEXT("ItemBase::Init(), Item %s has been initialized in the inventory %s"), *ItemData->ItemName, *RelatedInventory->GetName());
 	OnInit();
+	OnItemAdded.Broadcast(CurrentQuantity); // Event when the item is added to the inventory for the first time
 }
 
 FItemSaveData UItemBase::CreateSaveData() const

@@ -21,8 +21,7 @@ public:
 	FOnCheckpointReached OnCheckpointReached;
 
 private:
-	static FTransform CurrentCheckpointTransform;
-	static bool bHasEverReachedCheckpoint;
+	static TMap<FName, FTransform> CurrentCheckpoints;
 	
 public:
 	UCheckpointsManager();
@@ -34,11 +33,14 @@ public:
 	void LoadSaveData(FCheckpointsSaveData SaveData);
 	
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
-	void SetCurrentCheckpointTransform(const FTransform Transform);
+	void SetMapCheckpoint(const FTransform CheckpointTransform) const;
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")
-	FTransform GetCurrentCheckpointTransform(bool& OutHasEverReachedCheckpoint);
+	bool TryGetMapCheckpoint(FTransform& OutCheckpointTransform) const;
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	FName GetCurrentMapName() const;
 };

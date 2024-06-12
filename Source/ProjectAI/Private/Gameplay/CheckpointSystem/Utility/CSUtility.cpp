@@ -9,20 +9,19 @@ void UCSUtility::Init(UCheckpointsManager* CheckpointsManager)
 	CurrCheckpointsManager = CheckpointsManager;
 }
 
-bool UCSUtility::TrySetCurrentCheckpointTransform(const FTransform& Transform)
+bool UCSUtility::TrySetMapCheckpoint(const FTransform& CheckpointTransform)
 {
 	if (!Check()) return false;
 	
-	CurrCheckpointsManager->SetCurrentCheckpointTransform(Transform);
+	CurrCheckpointsManager->SetMapCheckpoint(CheckpointTransform);
 	return true;
 }
 
-bool UCSUtility::TryGetCurrentCheckpointTransform(FTransform& OutTransform, bool& OutHasEverReachedCheckpoint)
+bool UCSUtility::TryGetMapCheckpoint(FTransform& OutCheckpointTransform)
 {
 	if (!Check()) return false;
-	
-	OutTransform = CurrCheckpointsManager->GetCurrentCheckpointTransform(OutHasEverReachedCheckpoint);
-	return true;
+
+	return CurrCheckpointsManager->TryGetMapCheckpoint(OutCheckpointTransform);
 }
 
 bool UCSUtility::Check()

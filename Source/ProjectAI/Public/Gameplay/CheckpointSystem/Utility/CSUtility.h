@@ -19,10 +19,10 @@ public:
 	static void Init(UCheckpointsManager* CheckpointsManager);
 
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
-	static bool TrySetCurrentCheckpointTransform(const FTransform& Transform);
+	static bool TrySetMapCheckpoint(const FTransform& CheckpointTransform);
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")
-	static bool TryGetCurrentCheckpointTransform(FTransform& OutTransform, bool& OutHasEverReachedCheckpoint);
+	static bool TryGetMapCheckpoint(FTransform& OutCheckpointTransform);
 
 private:
 	static bool Check();

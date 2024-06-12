@@ -9,7 +9,25 @@
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/WeaponSystem/Laser/Particles/NS_Laser.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/WeaponSystem/Laser/Particles/NS_Laser.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/GameplayMenu/WBP_GameplayMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/GameplayMenu/WBP_GameplayMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/Data/BP_Level.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/Data/BP_MainMenuData.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/Data/S_Level.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/BP_WidgetSlotInfoListItemObject.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/Buttons/WBP_SelectSaveGameButton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/LoadGameMenu/WBP_LoadGamesMenu.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_LevelButton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_LevelsSelection.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_PAIMainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_PAIMainMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/_Debug/WBP_Gamewin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/_Debug/WBP_Gamewin.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/IMC_GameplayInputs.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/IMC_GameplayInputs.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Managers/Gameover/Components/AC_GameoverManager.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Managers/Gameover/Components/AC_GameoverManager.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_GameplayPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_GameplayPlayerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/HUD/BP_PAIGameplayHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/HUD/BP_PAIGameplayHUD.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -287,6 +305,7 @@
       <workItem from="1717827337865" duration="2146000" />
       <workItem from="1718112914459" duration="2146000" />
       <workItem from="1718131907156" duration="2000" />
+      <workItem from="1718187606325" duration="10422000" />
     </task>
     <servers />
   </component>

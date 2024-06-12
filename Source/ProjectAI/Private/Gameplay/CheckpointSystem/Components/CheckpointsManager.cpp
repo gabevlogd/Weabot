@@ -3,8 +3,7 @@
 #include "Gameplay/CheckpointSystem/Components/CheckpointsManager.h"
 #include "Gameplay/CheckpointSystem/Utility/CSUtility.h"
 
-FTransform UCheckpointsManager::CurrentCheckpointTransform = FTransform::Identity;
-bool UCheckpointsManager::bHasEverReachedCheckpoint = false;
+TMap<FName, FTransform> UCheckpointsManager::CurrentCheckpoints = TMap<FName, FTransform>();
 
 UCheckpointsManager::UCheckpointsManager()
 {
@@ -14,32 +13,40 @@ UCheckpointsManager::UCheckpointsManager()
 FCheckpointsSaveData UCheckpointsManager::CreateSaveData()
 {
 	FCheckpointsSaveData SaveData;
-	SaveData.CurrentCheckpointTransform = CurrentCheckpointTransform;
-	SaveData.bHasEverReachedCheckpoint = bHasEverReachedCheckpoint;
+	SaveData.CurrentCheckpoints = CurrentCheckpoints;
 	return SaveData;
 }
 
 void UCheckpointsManager::LoadSaveData(const FCheckpointsSaveData SaveData)
 {
-	CurrentCheckpointTransform = SaveData.CurrentCheckpointTransform;
-	bHasEverReachedCheckpoint = SaveData.bHasEverReachedCheckpoint;
+	CurrentCheckpoints = SaveData.CurrentCheckpoints;
 }
 
-void UCheckpointsManager::SetCurrentCheckpointTransform(const FTransform Transform)
+void UCheckpointsManager::SetMapCheckpoint(const FTransform CheckpointTransform) const
 {
-	bHasEverReachedCheckpoint = true;
-	CurrentCheckpointTransform = Transform;
+	const FName MapName = GetCurrentMapName();
+	CurrentCheckpoints.Add(MapName, CheckpointTransform);
 	OnCheckpointReached.Broadcast();
 }
 
-FTransform UCheckpointsManager::GetCurrentCheckpointTransform(bool& OutHasEverReachedCheckpoint)
+bool UCheckpointsManager::TryGetMapCheckpoint(FTransform& OutCheckpointTransform) const
 {
-	OutHasEverReachedCheckpoint = bHasEverReachedCheckpoint;
-	return CurrentCheckpointTransform;
+	if (CurrentCheckpoints.Contains(GetCurrentMapName()))
+	{
+		OutCheckpointTransform = CurrentCheckpoints[GetCurrentMapName()];
+		return true;
+	}
+
+	return false;
 }
 
 void UCheckpointsManager::BeginPlay()
 {
 	Super::BeginPlay();
 	UCSUtility::Init(this);
+}
+
+FName UCheckpointsManager::GetCurrentMapName() const
+{
+	return FName(GetWorld()->GetMapName());
 }

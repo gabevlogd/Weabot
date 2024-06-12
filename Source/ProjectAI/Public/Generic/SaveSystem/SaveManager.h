@@ -75,13 +75,13 @@ public:
 	USaveManager();
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void Init(const TSubclassOf<USaveGame> SGClass, const TSubclassOf<USlotInfoItem> SIClass, FAutoSaveData AutoSaveInitData, const bool bCanEverUseAutoSave);
+	void Init(const TSubclassOf<USaveGame> SaveClass, const TSubclassOf<USlotInfoItem> InfoItemClass, FAutoSaveData AutoSaveInitData, const bool bCanEverUseAutoSave);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	UDefaultSaveGame* GetSaveGameInstance() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	bool DeleteSlot(const FString& SlotName);
+	bool DeleteSlot(const FString& SlotName) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	void DeleteAllSlots();
@@ -97,14 +97,14 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
-	
+
 	void Save(const FString& SlotName);
 	void Load(const FString& SlotName);
 private:
 	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
 	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
-	void UpdateSlotInfo(const FName NewSaveSlotNameKey);
-	void RemoveSlotInfo(const FName& SlotNameKey);
+	void UpdateSlotInfo(const FName NewSaveSlotNameKey) const;
+	void RemoveSlotInfo(const FName& SlotNameKey) const;
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();
 	void CreateSaveInstances();

@@ -81,16 +81,16 @@ void USaveManager::StartNewSaveGame()
 	if (bIsLoading || bIsSaving) return;
 
 	bSaveAsNewGame = true;
-	ManualSave();
+	ManualSave(this);
 }
 
-void USaveManager::ManualSave()
+void USaveManager::ManualSave(UObject* Istigator)
 {
 	if (bIsLoading || bIsSaving) return;
 
 	const int32 SaveSlots = USlotsUtility::GetTotalManualSaveSlots();
 	const FString NextManualSlotName = SAVE_SLOT_NAME + FString::FromInt(SaveSlots);
-	Save(NextManualSlotName);
+	Save(NextManualSlotName, Istigator);
 }
 
 TArray<FSlotInfoData> USaveManager::GetSaveInfos() const
@@ -113,34 +113,42 @@ bool USaveManager::GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const
 	return bIsLoading || bIsSaving;
 }
 
-void USaveManager::Save(const FString& SlotName)
+void USaveManager::Save(const FString& SlotName, UObject* Istigator)
 {
 	if (!USlotsUtility::IsSlotNameValid(SlotName) ||
 		!CurrentSaveGameInstance ||
 		bIsLoading || bIsSaving)
 		return;
-
+	
+	if (!Istigator)
+		Istigator = this;
+	
 	bIsSaving = true;
+	CurrentIstigator = Istigator;
 	PreviousSlotNameKey = CurrentSaveGameInstance->SlotNameKey;
 	const FName SlotFName = FName(*SlotName);
 	CurrentSaveGameInstance->SetSlotNameKey(SlotFName);
 	CurrentSlotInfoItem = Cast<USlotInfoItem>(UGameplayStatics::CreateSaveGameObject(SlotInfoItemClass));
 	// Notify the game that it's going to save, so all the saver objects can push their data to the save game object
-	OnPrepareSave.Broadcast(CurrentSaveGameInstance, CurrentSlotInfoItem);
+	OnPrepareSave.Broadcast(CurrentSaveGameInstance, CurrentSlotInfoItem, Istigator);
 	FAsyncSaveGameToSlotDelegate AsyncSaveDelegate;
 	AsyncSaveDelegate.BindUObject(this, &USaveManager::OnSaveCompleted);
 	UGameplayStatics::AsyncSaveGameToSlot(CurrentSaveGameInstance, SAVES_DIRECTORY + SlotName, 0, AsyncSaveDelegate);
 }
 
-void USaveManager::Load(const FString& SlotName)
+void USaveManager::Load(const FString& SlotName, UObject* Istigator)
 {
 	if (!USlotsUtility::IsSlotNameValid(SlotName) ||
 		!CurrentSaveGameInstance ||
 		bIsLoading || bIsSaving)
 		return;
 
+	if (!Istigator)
+		Istigator = this;
+	
 	bIsLoading = true;
-	OnPrepareLoad.Broadcast(CurrentSaveGameInstance);
+	CurrentIstigator = Istigator;
+	OnPrepareLoad.Broadcast(CurrentSaveGameInstance, Istigator);
 	FAsyncLoadGameFromSlotDelegate AsyncLoadDelegate;
 	AsyncLoadDelegate.BindUObject(this, &USaveManager::OnLoadCompleted);
 	UGameplayStatics::AsyncLoadGameFromSlot(SAVES_DIRECTORY + SlotName, 0, AsyncLoadDelegate);
@@ -162,7 +170,7 @@ void USaveManager::OnSaveCompleted(const FString& SlotFullPathName, int32 UserIn
 		const FString NewSaveSlotName = CurrentSaveGameInstance->SlotNameKey.ToString();
 		UpdateSlotInfo(FName(*NewSaveSlotName));
 		USlotSelectorManager::TrySelectSaveGameSlot(NewSaveSlotName);
-		OnSaveGame.Broadcast(NewSaveSlotName, UserIndex, bSuccess, CurrentSaveGameInstance);
+		OnSaveGame.Broadcast(NewSaveSlotName, UserIndex, bSuccess, CurrentSaveGameInstance, CurrentIstigator);
 	}
 
 	bIsSaving = false;
@@ -191,7 +199,7 @@ void USaveManager::OnLoadCompleted(const FString& SlotFullPathName, int32 UserIn
 	}
 
 	const FName SlotInfoName = CurrentSaveGameInstance->SlotNameKey;
-	OnLoadGame.Broadcast(SlotInfoName.ToString(), UserIndex, CurrentSaveGameInstance);
+	OnLoadGame.Broadcast(SlotInfoName.ToString(), UserIndex, CurrentSaveGameInstance, CurrentIstigator);
 }
 
 void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey) const

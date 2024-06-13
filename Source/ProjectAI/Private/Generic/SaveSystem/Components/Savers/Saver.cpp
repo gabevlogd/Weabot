@@ -22,34 +22,34 @@ FName USaver::GetUniqueSaveID() const
 	return FName(*Hex);
 }
 
-void USaver::PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem)
+void USaver::PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem, UObject* Instigator)
 {
-	OnPrepSave.Broadcast(SaveGame, SlotInfoItem);
-	OnPrepareSave(SaveGame, SlotInfoItem);
+	OnPrepSave.Broadcast(SaveGame, SlotInfoItem, Instigator);
+	OnPrepareSave(SaveGame, SlotInfoItem, Instigator);
 }
 
-void USaver::PrepareLoad(UDefaultSaveGame* SaveGame)
+void USaver::PrepareLoad(UDefaultSaveGame* SaveGame, UObject* Instigator)
 {
-	OnPrepLoad.Broadcast(SaveGame);
-	OnPrepareLoad(SaveGame);
+	OnPrepLoad.Broadcast(SaveGame, Instigator);
+	OnPrepareLoad(SaveGame, Instigator);
 }
 
-void USaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameInstance, USlotInfoItem* SlotInfoItem)
-{
-}
-
-void USaver::OnPrepareLoad_Implementation(UDefaultSaveGame* SaveGame)
+void USaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameInstance, USlotInfoItem* SlotInfoItem, UObject* Instigator)
 {
 }
 
-void USaver::OnSaveCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame)
+void USaver::OnPrepareLoad_Implementation(UDefaultSaveGame* SaveGame, UObject* Instigator)
 {
-	OnSaveGameCompleted.Broadcast(SlotName, UserIndex, bSuccess, SaveGame);
 }
 
-void USaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData)
+void USaver::OnSaveCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame, UObject* Instigator)
 {
-	OnLoadGameCompleted.Broadcast(SlotName, UserIndex, LoadedData);
+	OnSaveGameCompleted.Broadcast(SlotName, UserIndex, bSuccess, SaveGame, Instigator);
+}
+
+void USaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData, UObject* Instigator)
+{
+	OnLoadGameCompleted.Broadcast(SlotName, UserIndex, LoadedData, Instigator);
 }
 
 void USaver::BeginPlay()

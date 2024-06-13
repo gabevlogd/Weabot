@@ -26,10 +26,10 @@ void USSUtility::StartNewSaveGame()
 	CurrentSaveManager->StartNewSaveGame();
 }
 
-void USSUtility::ManualSave()
+void USSUtility::ManualSave(UObject* Instigator)
 {
 	if (!CurrentSaveManager) return;
-	CurrentSaveManager->ManualSave();
+	CurrentSaveManager->ManualSave(Instigator);
 }
 
 bool USSUtility::Check()

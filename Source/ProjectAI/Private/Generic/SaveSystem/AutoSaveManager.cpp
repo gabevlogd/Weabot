@@ -45,7 +45,7 @@ void UAutoSaveManager::AutoSave()
 		AutoSaveSlotName = OutSlotData.SlotInfoName;
 	}
 
-	CurrentSaveManager->Save(AutoSaveSlotName);
+	CurrentSaveManager->Save(AutoSaveSlotName, CurrentSaveManager);
 }
 
 void UAutoSaveManager::PauseAutoSave()

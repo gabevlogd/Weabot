@@ -13,27 +13,31 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogSaveSystem, Log, All);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
 	FOnPrepareSave,
 	UDefaultSaveGame*, SaveGameData,
-	USlotInfoItem*, SlotInfoItem);
+	USlotInfoItem*, SlotInfoItem,
+	UObject*, Istigator);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
 	FOnPrepareLoad,
-	UDefaultSaveGame*, SaveGameData);
+	UDefaultSaveGame*, SaveGameData,
+	UObject*, Istigator);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(
 	FOnSaveGame,
 	const FString&, SlotName,
 	const int32, UserIndex,
 	bool, bSuccess,
-	UDefaultSaveGame*, SaveGameData);
+	UDefaultSaveGame*, SaveGameData,
+	UObject*, Istigator);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(
 	FOnLoadGame,
 	const FString&, SlotName,
 	const int32, UserIndex,
-	UDefaultSaveGame*, SaveGameData);
+	UDefaultSaveGame*, SaveGameData,
+	UObject*, Istigator);
 
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API USaveManager : public UObject
@@ -66,6 +70,8 @@ private:
 	USlotInfos* CurrentSlotInfos;
 	UPROPERTY()
 	USlotInfoItem* CurrentSlotInfoItem;
+	UPROPERTY()
+	UObject* CurrentIstigator;
 	bool bIsLoading;
 	bool bIsSaving;
 	FName PreviousSlotNameKey;
@@ -90,7 +96,7 @@ public:
 	void StartNewSaveGame();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void ManualSave();
+	void ManualSave(UObject* Istigator);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	TArray<FSlotInfoData> GetSaveInfos() const;
@@ -98,8 +104,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
 
-	void Save(const FString& SlotName);
-	void Load(const FString& SlotName);
+	void Save(const FString& SlotName, UObject* Istigator);
+	void Load(const FString& SlotName, UObject* Istigator);
 private:
 	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
 	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);

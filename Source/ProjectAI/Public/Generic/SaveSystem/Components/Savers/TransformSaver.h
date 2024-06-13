@@ -13,10 +13,10 @@ class PROJECTAI_API UTransformSaver : public USaver
 
 public:
 	UTransformSaver();
-	virtual void OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem) override;
+	virtual void OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem, UObject* Instigator) override;
 
 protected:
-	virtual void OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData) override;
+	virtual void OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData, UObject* Instigator) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	FTransform GetOwnerTransform() const;

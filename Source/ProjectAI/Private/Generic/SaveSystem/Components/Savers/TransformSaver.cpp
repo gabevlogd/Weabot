@@ -7,15 +7,15 @@ UTransformSaver::UTransformSaver()
 {
 }
 
-void UTransformSaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem)
+void UTransformSaver::OnPrepareSave_Implementation(UDefaultSaveGame* SaveGameData, USlotInfoItem* SlotInfoItem, UObject* Instigator)
 {
 	if (!USSUtility::GetSaveManager()) return;
 	USSUtility::GetSaveManager()->GetSaveGameInstance()->ActorTransforms.Add(GetUniqueSaveID(), GetOwnerTransform());
 }
 
-void UTransformSaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData)
+void UTransformSaver::OnLoadCompletedEvent_Implementation(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData, UObject* Instigator)
 {
-	Super::OnLoadCompletedEvent_Implementation(SlotName, UserIndex, LoadedData);
+	Super::OnLoadCompletedEvent_Implementation(SlotName, UserIndex, LoadedData, Instigator);
 	SetActorLoadedTransform(LoadedData);
 }
 

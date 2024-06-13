@@ -31,22 +31,22 @@ public:
 	
 protected:
 	UFUNCTION()
-	void PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem);
+	void PrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem, UObject* Instigator);
 	
 	UFUNCTION()
-	void PrepareLoad(UDefaultSaveGame* SaveGame);
+	void PrepareLoad(UDefaultSaveGame* SaveGame, UObject* Instigator);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnPrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem);
+	void OnPrepareSave(UDefaultSaveGame* SaveGame, USlotInfoItem* SlotInfoItem, UObject* Instigator);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnPrepareLoad(UDefaultSaveGame* SaveGame);
+	void OnPrepareLoad(UDefaultSaveGame* SaveGame, UObject* Instigator);
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnSaveCompletedEvent(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame);
+	void OnSaveCompletedEvent(const FString& SlotName, const int32 UserIndex, bool bSuccess, UDefaultSaveGame* SaveGame, UObject* Instigator);
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Save System")
-	void OnLoadCompletedEvent(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData);
+	void OnLoadCompletedEvent(const FString& SlotName, const int32 UserIndex, UDefaultSaveGame* LoadedData, UObject* Instigator);
 
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;

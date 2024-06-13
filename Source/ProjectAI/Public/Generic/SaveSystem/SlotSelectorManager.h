@@ -32,8 +32,8 @@ public:
 	static bool TrySelectMostAncientSaveGame();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void SaveOnSelectedSlot();
+	static void SaveOnSelectedSlot(UObject* Instigator);
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void LoadFromSelectedSlot();
+	static void LoadFromSelectedSlot(UObject* Instigator);
 };

@@ -10,47 +10,33 @@
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Data/SaveSystemData/BP_PAISlotInfoItem.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Data/SaveSystemData/BP_PAISlotInfoItem.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/WorldTriggers/BP_NewLevelTrigger.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/WorldTriggers/BP_NewLevelTrigger.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/WorldTriggers/Base/BP_TriggerBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/WorldTriggers/Base/BP_TriggerBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Player/CaptureSystem/Base/BP_EntityCaptureBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Player/CaptureSystem/Base/BP_EntityCaptureBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_PAIMainMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/MainMenu/WBP_PAIMainMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/PauseMenu/WBP_PauseMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Menus/PauseMenu/WBP_PauseMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/Inputs/WBP_InputActionBasedImage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/Inputs/WBP_InputActionBasedImage.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/InventorySystem/WheelMenu/WBP_WheelMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/InventorySystem/WheelMenu/WBP_WheelMenu.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/LoadGameSystem/WBP_LoadGamesMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/LoadGameSystem/WBP_LoadGamesMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Art/Characters/Android_Capture/Animations/ABP_Android.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Art/Characters/Android_Capture/Animations/ABP_Android.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Art/Characters/Drone/Animations/ABP_Drone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Art/Characters/Drone/Animations/ABP_Drone.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Art/Characters/TransportDrone/Animations/ABP_TransportDrone.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Art/Characters/TransportDrone/Animations/ABP_TransportDrone.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ActivableSocketSystem/BP_ActivableSocket.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/ActivableSocketSystem/BP_ActivableSocket.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/PopupSystem/BP_PopupTrigger.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Gameplay/PopupSystem/BP_PopupTrigger.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Inputs/MappableKeys/Components/AC_EnhancedMappableKeysHandler.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/Inputs/MappableKeys/Components/AC_EnhancedMappableKeysHandler.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/DataLogSystem/Lists/WBP_DataLogList.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/DataLogSystem/Lists/WBP_DataLogList.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/InventorySystem/WBP_SelectedItem.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/InventorySystem/WBP_SelectedItem.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/PopupSystem/WBP_PopupWidget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Features/UI/Widgets/Systems/PopupSystem/WBP_PopupWidget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/GameplayToUI/IA_ToggleGameMenu.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/GameplayToUI/IA_TogglePauseMenu.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/GameplayToUI/IA_ToggleWheelMenu.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/IA_Debug.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/IA_EnterCapture.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/IMC_GameplayInputs.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/IMC_GameplayInputs.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/IA_ClosePopup.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/Actions/IA_ClosePopup.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/IMC_MenuInputs.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/IMC_MenuInputs.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/UIActions/IA_TogglePauseMenu.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Inputs/UIActions/IA_TogglePauseMenu.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Managers/Gameover/Components/AC_GameoverManager.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Managers/Gameover/Components/AC_GameoverManager.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_GameplayPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_GameplayPlayerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/Base/BP_PAIControllerBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/Base/BP_PAIControllerBase.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GameModes/Base/GM_PAIGameModeBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GameModes/Base/GM_PAIGameModeBase.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GameModes/GM_PAIGameplay.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GameModes/GM_PAIGameplay.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/HUD/BP_PAIGameplayHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/HUD/BP_PAIGameplayHUD.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Utility/BFL_LoadLevelUtility.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/Utility/BFL_LoadLevelUtility.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/CheckpointsSystem/BP_PAICheckpoint.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/CheckpointsSystem/BP_PAICheckpoint.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/_Debug/Code/Code_b/GM_DebugGamemode_1a.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_1.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_2.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LoadingScreens/LV_LoadGameLoadingScreen.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LoadingScreens/LV_LoadGameLoadingScreen.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LoadingScreens/LV_LoadingScreen.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LoadingScreens/LV_SettedMapLoadingScreen.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_a/LV_DebugCode_0a.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_a/LV_DebugCode_0a.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/_Debug/Code/Code_b/LV_DebugCode_0b.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/AutoSaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/AutoSaveManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/Saver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/Saver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/TransformSaver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Components/Savers/TransformSaver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveSelectorManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/SaveSelectorManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Utility/SSUtility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/Generic/SaveSystem/Utility/SSUtility.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Components/Savers/Saver.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Components/Savers/Saver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Components/Savers/TransformSaver.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Components/Savers/TransformSaver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SlotSelectorManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/SlotSelectorManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Utility/SSUtility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/Generic/SaveSystem/Utility/SSUtility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectAI.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectAI.uproject" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +135,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ToolWindowGitHub Copilot Chat.ShowToolbar": "false",
     "Uproject.ProjectAI.executor": "Debug",
-    "git-widget-placeholder": "feature/code",
+    "git-widget-placeholder": "feature/code__1a",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -330,6 +316,8 @@
       <workItem from="1718131907156" duration="2000" />
       <workItem from="1718187606325" duration="10422000" />
       <workItem from="1718244842767" duration="4857000" />
+      <workItem from="1718298454995" duration="669000" />
+      <workItem from="1718372105636" duration="3799000" />
     </task>
     <servers />
   </component>

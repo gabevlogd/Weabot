@@ -17,12 +17,12 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(
 	FOnPrepareSave,
 	UDefaultSaveGame*, SaveGameData,
 	USlotInfoItem*, SlotInfoItem,
-	UObject*, Istigator);
+	UObject*, Instigator);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(
 	FOnPrepareLoad,
 	UDefaultSaveGame*, SaveGameData,
-	UObject*, Istigator);
+	UObject*, Instigator);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(
 	FOnSaveGame,
@@ -30,14 +30,18 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(
 	const int32, UserIndex,
 	bool, bSuccess,
 	UDefaultSaveGame*, SaveGameData,
-	UObject*, Istigator);
+	UObject*, Instigator);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(
 	FOnLoadGame,
 	const FString&, SlotName,
 	const int32, UserIndex,
 	UDefaultSaveGame*, SaveGameData,
-	UObject*, Istigator);
+	UObject*, Instigator);
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(
+	FOnNewSaveGame
+	);
 
 UCLASS(NotBlueprintable, BlueprintType)
 class PROJECTAI_API USaveManager : public UObject
@@ -62,6 +66,8 @@ public:
 	FOnSaveGame OnSaveGame;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
 	FOnLoadGame OnLoadGame;
+	UPROPERTY(BlueprintAssignable, Category = "Save System")
+	FOnNewSaveGame OnNewSaveGame;
 
 private:
 	UPROPERTY()
@@ -71,7 +77,7 @@ private:
 	UPROPERTY()
 	USlotInfoItem* CurrentSlotInfoItem;
 	UPROPERTY()
-	UObject* CurrentIstigator;
+	UObject* CurrentInstigator;
 	bool bIsLoading;
 	bool bIsSaving;
 	FName PreviousSlotNameKey;
@@ -96,7 +102,7 @@ public:
 	void StartNewSaveGame();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	void ManualSave(UObject* Istigator);
+	void ManualSave(UObject* Instigator);
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	TArray<FSlotInfoData> GetSaveInfos() const;
@@ -104,8 +110,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
 
-	void Save(const FString& SlotName, UObject* Istigator);
-	void Load(const FString& SlotName, UObject* Istigator);
+	void Save(const FString& SlotName, UObject* Instigator);
+	void Load(const FString& SlotName, UObject* Instigator);
 private:
 	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
 	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
@@ -113,5 +119,6 @@ private:
 	void RemoveSlotInfo(const FName& SlotNameKey) const;
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();
+	void CreateNewSaveInstance();
 	void CreateSaveInstances();
 };

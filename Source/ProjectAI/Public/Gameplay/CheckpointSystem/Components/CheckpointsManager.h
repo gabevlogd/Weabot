@@ -27,20 +27,17 @@ public:
 	UCheckpointsManager();
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")
-	FCheckpointsSaveData CreateSaveData();
+	static FCheckpointsSaveData CreateSaveData();
 	
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
 	void LoadSaveData(FCheckpointsSaveData SaveData);
 	
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
-	void SetMapCheckpoint(const FTransform CheckpointTransform) const;
+	void SetCheckpoint(const FName CheckpointKey, const FTransform CheckpointTransform) const;
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")
-	bool TryGetMapCheckpoint(FTransform& OutCheckpointTransform) const;
+	bool TryGetMapCheckpoint(const FName CheckpointKey, FTransform& OutCheckpointTransform) const;
 
 protected:
 	virtual void BeginPlay() override;
-
-private:
-	FName GetCurrentMapName() const;
 };

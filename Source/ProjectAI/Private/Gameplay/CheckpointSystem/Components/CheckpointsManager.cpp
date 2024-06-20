@@ -2,6 +2,7 @@
 
 #include "Gameplay/CheckpointSystem/Components/CheckpointsManager.h"
 #include "Gameplay/CheckpointSystem/Utility/CSUtility.h"
+#include "Kismet/GameplayStatics.h"
 
 TMap<FName, FTransform> UCheckpointsManager::CurrentCheckpoints = TMap<FName, FTransform>();
 
@@ -22,18 +23,17 @@ void UCheckpointsManager::LoadSaveData(const FCheckpointsSaveData SaveData)
 	CurrentCheckpoints = SaveData.CurrentCheckpoints;
 }
 
-void UCheckpointsManager::SetMapCheckpoint(const FTransform CheckpointTransform) const
+void UCheckpointsManager::SetCheckpoint(const FName CheckpointKey, const FTransform CheckpointTransform) const
 {
-	const FName MapName = GetCurrentMapName();
-	CurrentCheckpoints.Add(MapName, CheckpointTransform);
+	CurrentCheckpoints.Add(CheckpointKey, CheckpointTransform);
 	OnCheckpointReached.Broadcast();
 }
 
-bool UCheckpointsManager::TryGetMapCheckpoint(FTransform& OutCheckpointTransform) const
+bool UCheckpointsManager::TryGetMapCheckpoint(const FName CheckpointKey, FTransform& OutCheckpointTransform) const
 {
-	if (CurrentCheckpoints.Contains(GetCurrentMapName()))
+	if (CurrentCheckpoints.Contains(CheckpointKey))
 	{
-		OutCheckpointTransform = CurrentCheckpoints[GetCurrentMapName()];
+		OutCheckpointTransform = CurrentCheckpoints[CheckpointKey];
 		return true;
 	}
 
@@ -44,9 +44,4 @@ void UCheckpointsManager::BeginPlay()
 {
 	Super::BeginPlay();
 	UCSUtility::Init(this);
-}
-
-FName UCheckpointsManager::GetCurrentMapName() const
-{
-	return FName(GetWorld()->GetMapName());
 }

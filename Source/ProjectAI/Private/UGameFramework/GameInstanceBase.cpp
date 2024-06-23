@@ -6,7 +6,13 @@
 void UGameInstanceBase::Init()
 {
 	Super::Init();
+	SetSlateNavigationConfigs();
+}
 
+void UGameInstanceBase::SetSlateNavigationConfigs() const
+{
 	FNavigationConfig& NavigationConfig = *FSlateApplication::Get().GetNavigationConfig();
-	NavigationConfig.bTabNavigation = false; // Disable tab navigation in widgets
+	NavigationConfig.bTabNavigation = bTabNavigation;
+	NavigationConfig.bAnalogNavigation = bAnalogNavigation;
+	NavigationConfig.bKeyNavigation = bKeyNavigation;
 }

@@ -2,9 +2,9 @@
 
 #include "Gameplay/CheckpointSystem/Components/CheckpointsManager.h"
 #include "Gameplay/CheckpointSystem/Utility/CSUtility.h"
+#include "Kismet/GameplayStatics.h"
 
-FTransform UCheckpointsManager::CurrentCheckpointTransform = FTransform::Identity;
-bool UCheckpointsManager::bHasEverReachedCheckpoint = false;
+TMap<FName, FTransform> UCheckpointsManager::CurrentCheckpoints = TMap<FName, FTransform>();
 
 UCheckpointsManager::UCheckpointsManager()
 {
@@ -14,28 +14,30 @@ UCheckpointsManager::UCheckpointsManager()
 FCheckpointsSaveData UCheckpointsManager::CreateSaveData()
 {
 	FCheckpointsSaveData SaveData;
-	SaveData.CurrentCheckpointTransform = CurrentCheckpointTransform;
-	SaveData.bHasEverReachedCheckpoint = bHasEverReachedCheckpoint;
+	SaveData.CurrentCheckpoints = CurrentCheckpoints;
 	return SaveData;
 }
 
 void UCheckpointsManager::LoadSaveData(const FCheckpointsSaveData SaveData)
 {
-	CurrentCheckpointTransform = SaveData.CurrentCheckpointTransform;
-	bHasEverReachedCheckpoint = SaveData.bHasEverReachedCheckpoint;
+	CurrentCheckpoints = SaveData.CurrentCheckpoints;
 }
 
-void UCheckpointsManager::SetCurrentCheckpointTransform(const FTransform Transform)
+void UCheckpointsManager::SetCheckpoint(const FName CheckpointKey, const FTransform CheckpointTransform) const
 {
-	bHasEverReachedCheckpoint = true;
-	CurrentCheckpointTransform = Transform;
+	CurrentCheckpoints.Add(CheckpointKey, CheckpointTransform);
 	OnCheckpointReached.Broadcast();
 }
 
-FTransform UCheckpointsManager::GetCurrentCheckpointTransform(bool& OutHasEverReachedCheckpoint)
+bool UCheckpointsManager::TryGetMapCheckpoint(const FName CheckpointKey, FTransform& OutCheckpointTransform) const
 {
-	OutHasEverReachedCheckpoint = bHasEverReachedCheckpoint;
-	return CurrentCheckpointTransform;
+	if (CurrentCheckpoints.Contains(CheckpointKey))
+	{
+		OutCheckpointTransform = CurrentCheckpoints[CheckpointKey];
+		return true;
+	}
+
+	return false;
 }
 
 void UCheckpointsManager::BeginPlay()

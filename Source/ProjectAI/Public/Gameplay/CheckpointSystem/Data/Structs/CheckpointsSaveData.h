@@ -9,8 +9,5 @@ struct FCheckpointsSaveData
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FTransform CurrentCheckpointTransform;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bHasEverReachedCheckpoint;
+	TMap<FName, FTransform> CurrentCheckpoints;
 };

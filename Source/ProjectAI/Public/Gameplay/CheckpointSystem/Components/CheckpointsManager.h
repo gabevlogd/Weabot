@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Gameplay/CheckpointSystem/Actors/Checkpoint.h"
 #include "Gameplay/CheckpointSystem/Data/Structs/CheckpointsSaveData.h"
 #include "CheckpointsManager.generated.h"
 
@@ -22,23 +21,22 @@ public:
 	FOnCheckpointReached OnCheckpointReached;
 
 private:
-	static FTransform CurrentCheckpointTransform;
-	static bool bHasEverReachedCheckpoint;
+	static TMap<FName, FTransform> CurrentCheckpoints;
 	
 public:
 	UCheckpointsManager();
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")
-	FCheckpointsSaveData CreateSaveData();
+	static FCheckpointsSaveData CreateSaveData();
 	
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
 	void LoadSaveData(FCheckpointsSaveData SaveData);
 	
 	UFUNCTION(BlueprintCallable, Category = "Checkpoints")
-	void SetCurrentCheckpointTransform(const FTransform Transform);
+	void SetCheckpoint(const FName CheckpointKey, const FTransform CheckpointTransform) const;
 
 	UFUNCTION(BlueprintPure, Category = "Checkpoints")
-	FTransform GetCurrentCheckpointTransform(bool& OutHasEverReachedCheckpoint);
+	bool TryGetMapCheckpoint(const FName CheckpointKey, FTransform& OutCheckpointTransform) const;
 
 protected:
 	virtual void BeginPlay() override;

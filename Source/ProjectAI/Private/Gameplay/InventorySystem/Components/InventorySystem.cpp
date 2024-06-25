@@ -51,14 +51,14 @@ UItemBase* UInventorySystem::AddItem(UItemData* ItemData)
 	if (UItemBase* FoundItem = Find(ItemData))
 	{
 		FoundItem->IncreaseQuantity(); // Increase quantity of the item, if it already exists in the inventory
-		OnItemAdded.Broadcast(FoundItem);
+		OnAnyItemAdded.Broadcast(FoundItem);
 		OnInventoryModified.Broadcast();
 		return FoundItem;
 	}
 
 	UItemBase* CreatedItem = UISFactory::CreateItem(ItemData, this);
 	Items.Add(CreatedItem);
-	OnItemAdded.Broadcast(CreatedItem);
+	OnAnyItemAdded.Broadcast(CreatedItem);
 	OnInventoryModified.Broadcast();
 	return CreatedItem;
 }
@@ -69,6 +69,7 @@ bool UInventorySystem::RemoveItem(UItemData* ItemData)
 	{
 		Items.Remove(FoundItem);
 		FoundItem->OnRemove();
+		FoundItem->OnItemRemoved.Broadcast();
 		OnAnyItemRemoved.Broadcast(FoundItem);
 		OnInventoryModified.Broadcast();
 		return true;

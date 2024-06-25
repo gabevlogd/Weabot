@@ -11,12 +11,18 @@
 class UInventorySystem;
 class UItemData;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnItemAdded,
+	int32, CurrentQuantity
+	);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(
 	FOnItemUsed
 	);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(
-	FOnItemConsumed
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FOnItemConsumed,
+	int32, CurrentQuantity
 	);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(
@@ -29,6 +35,8 @@ class PROJECTAI_API UItemBase : public UObject
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System|Item")
+	FOnItemAdded OnItemAdded;
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System|Item")
 	FOnItemUsed OnItemUsed;
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System|Item")

@@ -28,7 +28,7 @@ public:
 	static void StartNewSaveGame();
 	
 	UFUNCTION(BlueprintCallable, Category = "Save System")
-	static void ManualSave();
+	static void ManualSave(UObject* Instigator);
 
 private:
 	static bool Check();

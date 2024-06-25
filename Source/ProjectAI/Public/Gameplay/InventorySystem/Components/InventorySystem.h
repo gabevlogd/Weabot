@@ -12,7 +12,7 @@
 DEFINE_LOG_CATEGORY_STATIC(LogInventorySystem, Log, All);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
-	FOnItemAdded,
+	FOnAnyItemAdded,
 	UItemBase*, Item
 	);
 
@@ -53,11 +53,11 @@ public:
 	TSet<UItemBase*> Items;
 
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
-	FOnItemAdded OnItemAdded;
-	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
 	FOnInventoryCleared OnInventoryCleared;
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
 	FOnInventoryModified OnInventoryModified;
+	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
+	FOnAnyItemAdded OnAnyItemAdded;
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System")
 	FOnAnyItemUsed OnAnyItemUsed;
 	UPROPERTY(BlueprintAssignable, Category = "Inventory System")

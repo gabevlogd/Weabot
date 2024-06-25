@@ -46,12 +46,12 @@ bool USlotSelectorManager::TrySelectMostAncientSaveGame()
 	return false;
 }
 
-void USlotSelectorManager::SaveOnSelectedSlot()
+void USlotSelectorManager::SaveOnSelectedSlot(UObject* Instigator)
 {
-	CurrentSaveManager->Save(CurrentSlotName);
+	CurrentSaveManager->Save(CurrentSlotName, Instigator);
 }
 
-void USlotSelectorManager::LoadFromSelectedSlot()
+void USlotSelectorManager::LoadFromSelectedSlot(UObject* Instigator)
 {
-	CurrentSaveManager->Load(CurrentSlotName);
+	CurrentSaveManager->Load(CurrentSlotName, Instigator);
 }

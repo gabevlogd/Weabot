@@ -8,16 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23b44bb6-0f3d-4bb3-9e2e-5a1c014d478d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Private/UGameFramework/GameInstanceBase.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ProjectAI/Public/UGameFramework/GameInstanceBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/copilot/chatSessions/xd.lck" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectAI.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_GameplayPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/Controllers/BP_GameplayPlayerController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Game/UGameFramework/GI_PAIGameInstance.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/Interactables/BP_AndroidInteractable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Core/Props/Interactables/BP_AndroidInteractable.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_3.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_3.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_MainGameplayLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Gameplay/LV_MainGameplayLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ProjectAI/Maps/Menus/LV_MainMenu.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,33 +101,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindowGitHub Copilot Chat.ShowToolbar": "false",
-    "Uproject.ProjectAI.executor": "Debug",
-    "git-widget-placeholder": "feature/code",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "UnrealLogSettings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindowGitHub Copilot Chat.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;Uproject.ProjectAI.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/code__1a&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;UnrealLogSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "C++"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;C++&quot;
     ],
-    "rider.external.source.directories": [
-      "C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\Voider\\AppData\\Local\\Symbols\\src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Voider\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Voider\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CidrLocalAttachDebugger.recentlyUsed">
       <recent name="com.jetbrains.rider.cpp.debugger.RiderCppLLDBDriverConfiguration" />
@@ -303,6 +295,9 @@
       <workItem from="1718734828290" duration="1315000" />
       <workItem from="1718838460659" duration="1535000" />
       <workItem from="1718857020725" duration="743000" />
+      <workItem from="1718873766154" duration="556000" />
+      <workItem from="1719101656635" duration="1503000" />
+      <workItem from="1719194777219" duration="1216000" />
     </task>
     <servers />
   </component>

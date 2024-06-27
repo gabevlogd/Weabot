@@ -43,9 +43,5 @@ void UTransformSaver::SetActorLoadedTransform(UDefaultSaveGame* LoadedData) cons
 		else
 			UE_LOG(LogSaveSystem, Warning, TEXT("Owner not found in the loaded data, Saver Unique ID: %s"), *OwnerUniqueID.ToString());
 	}
-	else
-	{
-		UE_LOG(LogSaveSystem, Warning, TEXT("Owner Unique ID not found in the loaded data"));
-	}
 }
 

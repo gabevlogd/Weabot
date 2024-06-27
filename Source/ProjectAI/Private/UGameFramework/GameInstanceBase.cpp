@@ -9,6 +9,11 @@ void UGameInstanceBase::Init()
 	SetSlateNavigationConfigs();
 }
 
+void UGameInstanceBase::SetSaveMasterID(const FName NewSaveMasterID)
+{
+	SaveMasterID = NewSaveMasterID;
+}
+
 void UGameInstanceBase::SetSlateNavigationConfigs() const
 {
 	FNavigationConfig& NavigationConfig = *FSlateApplication::Get().GetNavigationConfig();

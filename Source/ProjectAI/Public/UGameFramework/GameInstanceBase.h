@@ -12,6 +12,9 @@ class PROJECTAI_API UGameInstanceBase : public UGameInstance
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(BlueprintReadOnly, Category = "Save System")
+	FName SaveMasterID;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Navigation")
 	bool bTabNavigation;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Navigation")
@@ -21,6 +24,8 @@ public:
 	
 public:
 	virtual void Init() override;
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	void SetSaveMasterID(const FName NewSaveMasterID);
 
 private:
 	void SetSlateNavigationConfigs() const;

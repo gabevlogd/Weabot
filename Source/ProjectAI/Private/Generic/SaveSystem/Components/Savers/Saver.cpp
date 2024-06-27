@@ -4,6 +4,7 @@
 #include "Generic/SaveSystem/Utility/SlotsUtility.h"
 #include "Generic/SaveSystem/Utility/SSUtility.h"
 #include "Kismet/GameplayStatics.h"
+#include "UGameFramework/GameInstanceBase.h"
 
 USaver::USaver()
 {
@@ -12,10 +13,16 @@ USaver::USaver()
 
 FName USaver::GetUniqueSaveID() const
 {
-	// const FName SlotInfoName = USSUtility::GetSaveManager()->GetSaveGameInstance()->SlotNameKey;
+	const UGameInstanceBase* GameInstance = Cast<UGameInstanceBase>(UGameplayStatics::GetGameInstance(this));
+	FString MasterID = "Default";
+	if(GameInstance != nullptr)
+		MasterID = GameInstance->SaveMasterID.ToString();
+	else
+		UE_LOG(LogSaveSystem, Warning, TEXT("GameInstanceBase not found, using default Master ID."));
+
 	const FName OwnerName = GetOwner()->GetFName();
 	const FString LevelName = UGameplayStatics::GetCurrentLevelName(this, true);
-	const FString UniqueID = OwnerName.ToString() + "::" + LevelName;
+	const FString UniqueID = OwnerName.ToString() + LevelName + MasterID;
 	const int32 Hash = GetTypeHash(UniqueID);
 	const FString Hex = FString::Printf(TEXT("%08X"), Hash);
 	

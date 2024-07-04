@@ -33,7 +33,7 @@ FQuestSaveData UQuestBase::CreateQuestSaveData() const
 void UQuestBase::LoadSaveData(FQuestSaveData QuestSaveData)
 {
 	ResetQuest();
-	for (auto TaskSaveData : QuestSaveData.Tasks)
+	for (const auto TaskSaveData : QuestSaveData.Tasks)
 	{
 		UTaskBase* Task = GetTaskByFName(TaskSaveData.Key);
 		if (!Task) continue; // If the task is not found, skip it

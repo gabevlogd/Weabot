@@ -12,7 +12,7 @@ void UCountTask::Init(UTaskData* InitData, UQuestBase* Quest)
 		CountToAchieve = CountTaskData->CountToAchieve;
 }
 
-void UCountTask::LoadSaveData(const FTaskSaveData& TaskSaveData)
+void UCountTask::LoadSaveData(FTaskSaveData TaskSaveData)
 {
 	Super::LoadSaveData(TaskSaveData);
 	CurrentCount = TaskSaveData.CurrentAchieveCount;

@@ -15,7 +15,7 @@ FTaskSaveData UTaskBase::CreateTaskSaveData() const
 	return TaskSaveData;
 }
 
-void UTaskBase::LoadSaveData(const FTaskSaveData& TaskSaveData)
+void UTaskBase::LoadSaveData(const FTaskSaveData TaskSaveData)
 {
 	bIsAchieved = TaskSaveData.bIsAchieved;
 	if (bIsAchieved)

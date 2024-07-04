@@ -35,7 +35,7 @@ public:
 	virtual FTaskSaveData CreateTaskSaveData() const;
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
-	virtual void LoadSaveData(const FTaskSaveData& TaskSaveData);
+	virtual void LoadSaveData(FTaskSaveData TaskSaveData);
 	
 	UFUNCTION(BlueprintCallable, Category = "Quest System")
 	virtual void AchieveTask(bool bFullyAchieve = false);

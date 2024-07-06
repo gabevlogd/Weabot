@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Save System")
 	static void ManualSave(UObject* Instigator);
 
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	static void StartTimePlayedTimer();
+	
 private:
 	static bool Check();
 };

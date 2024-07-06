@@ -47,7 +47,7 @@ void USaveManager::Init(const TSubclassOf<USaveGame> SaveClass, const TSubclassO
 	USlotSelectorManager::Init(this);
 	if (bIsAutoSaveEnabled)
 		UAutoSaveManager::Init(this);
-
+	
 	UE_LOG(LogSaveSystem, Display, TEXT("Save System Initialized"));
 }
 
@@ -79,7 +79,7 @@ void USaveManager::DeleteAllSlots()
 void USaveManager::StartNewSaveGame()
 {
 	if (bIsLoading || bIsSaving) return;
-
+	
 	CreateNewSaveInstance();
 	bSaveAsNewGame = true;
 	OnNewSaveGame.Broadcast();
@@ -113,6 +113,16 @@ bool USaveManager::GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const
 	OutbIsLoading = bIsLoading;
 	OutbIsSaving = bIsSaving;
 	return bIsLoading || bIsSaving;
+}
+
+void USaveManager::StartTimePlayedTimer()
+{
+	const UWorld* World = GetWorld();
+	if (!World) return;
+
+	ClearTimePlayed();
+	World->GetTimerManager().ClearTimer(TimePlayedTimerHandle);
+	World->GetTimerManager().SetTimer(TimePlayedTimerHandle, this, &USaveManager::UpdateTimePlayed, TIME_PLAYED_TIMER_RATE, true);
 }
 
 void USaveManager::Save(const FString& SlotName, UObject* Instigator)
@@ -204,7 +214,7 @@ void USaveManager::OnLoadCompleted(const FString& SlotFullPathName, int32 UserIn
 	OnLoadGame.Broadcast(SlotInfoName.ToString(), UserIndex, CurrentSaveGameInstance, CurrentInstigator);
 }
 
-void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey) const
+void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey)
 {
 	if (!CurrentSlotInfos) return;
 
@@ -221,9 +231,7 @@ void USaveManager::UpdateSlotInfo(const FName NewSaveSlotNameKey) const
 	}
 
 	CurrentSlotInfos->SlotInfos[NewSaveSlotNameKey].LastSaveDate = FDateTime::Now();
-
-	if (float TimeSinceCreation; USlotsUtility::TryGetTimeSinceCreation(TimeSinceCreation))
-		CurrentSlotInfos->SlotInfos[NewSaveSlotNameKey].TimePlayed += TimeSinceCreation;
+	CurrentSlotInfos->SlotInfos[NewSaveSlotNameKey].TimePlayed += GetElapsedTimePlayed();
 
 	UGameplayStatics::SaveGameToSlot(CurrentSlotInfos, META_INFOS_PATH, 0);
 	UGameplayStatics::SaveGameToSlot(CurrentSlotInfoItem, META_DIRECTORY + NewSaveSlotNameKey.ToString(), 0);
@@ -273,4 +281,21 @@ void USaveManager::CreateSaveInstances()
 	CreateNewSaveInstance();
 	CurrentSlotInfos = Cast<USlotInfos>(UGameplayStatics::CreateSaveGameObject(USlotInfos::StaticClass()));
 	CurrentSlotInfoItem = Cast<USlotInfoItem>(UGameplayStatics::CreateSaveGameObject(SlotInfoItemClass));
+}
+
+void USaveManager::UpdateTimePlayed()
+{
+	ElapsedTimePlayed += TIME_PLAYED_TIMER_RATE;
+}
+
+void USaveManager::ClearTimePlayed()
+{
+	ElapsedTimePlayed = 0.f;
+}
+
+double USaveManager::GetElapsedTimePlayed()
+{
+	const double TimePlayed = ElapsedTimePlayed;
+	ClearTimePlayed();
+	return TimePlayed;
 }

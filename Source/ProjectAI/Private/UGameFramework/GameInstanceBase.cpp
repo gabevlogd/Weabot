@@ -7,6 +7,8 @@ void UGameInstanceBase::Init()
 {
 	Super::Init();
 	SetSlateNavigationConfigs();
+
+
 }
 
 void UGameInstanceBase::SetSaveMasterID(const FName NewSaveMasterID)

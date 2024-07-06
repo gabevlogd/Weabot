@@ -57,7 +57,9 @@ public:
 	bool bIsAutoSaveEnabled;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
 	FAutoSaveData AutoSaveData;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Save System")
+	double ElapsedTimePlayed;
+	
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
 	FOnPrepareSave OnPrepareSave;
 	UPROPERTY(BlueprintAssignable, Category = "Save System")
@@ -82,6 +84,7 @@ private:
 	bool bIsSaving;
 	FName PreviousSlotNameKey;
 	bool bSaveAsNewGame;
+	FTimerHandle TimePlayedTimerHandle;
 
 public:
 	USaveManager();
@@ -110,15 +113,21 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	bool GetStatus(bool& OutbIsLoading, bool& OutbIsSaving) const;
 
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	void StartTimePlayedTimer();
+
 	void Save(const FString& SlotName, UObject* Instigator);
 	void Load(const FString& SlotName, UObject* Instigator);
 private:
 	void OnSaveCompleted(const FString& SlotFullPathName, int32 UserIndex, bool bSuccess);
 	void OnLoadCompleted(const FString& SlotFullPathName, int32 UserIndex, USaveGame* SaveGame);
-	void UpdateSlotInfo(const FName NewSaveSlotNameKey) const;
+	void UpdateSlotInfo(const FName NewSaveSlotNameKey);
 	void RemoveSlotInfo(const FName& SlotNameKey) const;
 	void ClearSlotInfos() const;
 	void LoadSlotInfos();
 	void CreateNewSaveInstance();
 	void CreateSaveInstances();
+	void UpdateTimePlayed();
+	void ClearTimePlayed();
+	double GetElapsedTimePlayed();
 };

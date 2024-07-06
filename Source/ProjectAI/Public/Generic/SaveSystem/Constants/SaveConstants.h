@@ -2,6 +2,10 @@
 
 #pragma once
 
+// Save System
+#define TIME_PLAYED_TIMER_RATE 0.1f
+
+// Save Files
 #define SAVE_EXTENSION TEXT(".sav")
 #define SAVES_DIRECTORY TEXT("saves/")
 #define SAVES_DIRECTORY_FULLPATH FPaths::Combine(FPaths::ProjectSavedDir(), "SaveGames/", SAVES_DIRECTORY)

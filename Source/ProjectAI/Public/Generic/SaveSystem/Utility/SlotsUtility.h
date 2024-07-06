@@ -13,7 +13,7 @@ UCLASS()
 class PROJECTAI_API USlotsUtility : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-
+	
 private:
 	static USaveManager* CurrentSaveManager;
 
@@ -49,9 +49,6 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Save System")
 	static float GetMostRecentSlotInfoPlayedTime();
-
-	UFUNCTION(BlueprintPure, Category = "Save System")
-	static bool TryGetTimeSinceCreation(float& OutTimeSinceCreation);
 	
 	static bool IsSlotNameValid(const FString& SlotName);
 };

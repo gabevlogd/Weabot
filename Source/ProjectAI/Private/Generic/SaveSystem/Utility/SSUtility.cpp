@@ -32,6 +32,12 @@ void USSUtility::ManualSave(UObject* Instigator)
 	CurrentSaveManager->ManualSave(Instigator);
 }
 
+void USSUtility::StartTimePlayedTimer()
+{
+	if (!Check()) return;
+	CurrentSaveManager->StartTimePlayedTimer();
+}
+
 bool USSUtility::Check()
 {
 	return CurrentSaveManager != nullptr;
